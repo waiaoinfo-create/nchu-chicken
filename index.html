@@ -3,298 +3,557 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>頭城農場｜高鐵延伸宜蘭產業影響分析</title>
+<title>頭城農場 │ 高鐵延伸宜蘭產業影響分析報告</title>
 
 <style>
 /* ==========================================================================
-   1. 基礎重設與全域樣式 (Reset & Global Styles)
+   1. 全域重設與精緻儀表板底色 (Dashboard Base Setup)
    ========================================================================== */
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body{
-    font-family: "Noto Sans TC", sans-serif;
-    background:#F6F3EE;
-    color:#222;
-    line-height:1.8;
+    font-family: "Noto Sans TC", -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #D1D9CE; /* 完美重現截圖中的質感莫蘭迪綠灰底色 */
+    color: #222222;
+    line-height: 1.6;
+    padding: 15px;
 }
 
-/* ==========================================================================
-   2. 頁首英雄區樣式 (Header / Hero Section)
-   ========================================================================== */
-header{
-    min-height:100vh;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:80px;
-    gap:60px;
-    background:linear-gradient(135deg,#1F4D3A,#2F6B53);
-    color:white;
-}
-
-.hero-left{
-    flex:1;
-}
-
-.hero-right{
-    flex:1;
-}
-
-.hero-right img{
-    width:100%;
-    border-radius:24px;
-    box-shadow:0 20px 50px rgba(0,0,0,0.3);
-}
-
-h1{
-    font-size:64px;
-    line-height:1.3;
-    margin-bottom:30px;
-}
-
-.hero-text{
-    font-size:22px;
-    opacity:0.9;
-    margin-bottom:40px;
-}
-
-.hero-btn{
-    display:inline-block;
-    background:#E98B2A;
-    color:white;
-    padding:18px 40px;
-    border-radius:999px;
-    text-decoration:none;
-    font-size:18px;
-    font-weight:bold;
-    transition: background 0.3s ease;
-}
-
-.hero-btn:hover {
-    background: #d47618;
-}
-
-/* ==========================================================================
-   3. 區塊通用與數據圖表樣式 (Sections & Data Bars)
-   ========================================================================== */
-.section{
-    padding:100px 80px;
-    max-width: 1200px;
+/* 儀表板外框線 */
+.dashboard-wrapper {
+    max-width: 1300px;
     margin: 0 auto;
+    background: #1E4620; /* 墨綠色主框架大邊框 */
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+    border: 4px solid #163518;
 }
 
-.section-title{
-    font-size:42px;
-    margin-bottom:60px;
-    color:#1F4D3A;
-    text-align:center;
-    position: relative;
-    padding-bottom: 15px;
+/* ==========================================================================
+   2. 頂部大氣黑板列 (Header Bar)
+   ========================================================================== */
+header {
+    background: #1E4620;
+    padding: 20px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: white;
+    border-bottom: 3px solid #163518;
 }
 
-.section-title::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80px;
-    height: 4px;
-    background: #E98B2A;
-    border-radius: 2px;
+.header-logo-zone {
+    display: flex;
+    align-items: center;
+    gap: 15px;
 }
 
-/* 補齊斷掉的 KPI 與圖表樣式庫 */
-.kpi-container {
-    background: white;
-    padding: 40px;
-    border-radius: 16px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-    margin-bottom: 40px;
+/* 頂部左側雙標籤樣式 */
+.logo-box {
+    border: 1.5px solid rgba(255,255,255,0.6);
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 13px;
+    text-align: center;
+    line-height: 1.2;
 }
 
-.bar {
-    margin-bottom: 30px;
-}
-
-.bar:last-child {
-    margin-bottom: 0;
-}
-
-.bar-title {
+.logo-divider {
     font-size: 20px;
+    opacity: 0.5;
+}
+
+.header-title {
+    font-size: 32px;
     font-weight: bold;
-    color: #333;
-    margin-bottom: 10px;
+    letter-spacing: 2px;
+    flex-grow: 1;
+    text-align: center;
+}
+
+.header-right-vector {
+    width: 100px;
+    height: 45px;
+}
+
+/* ==========================================================================
+   3. 核心左右對稱佈局 (Grid Layout) - 完美實現「左右模式」
+   ========================================================================== */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr; /* 左右對稱且左側略寬，完美還原截圖比例 */
+    gap: 15px;
+    padding: 15px;
+    background: #F4F6F3; /* 畫布內層溫潤米白色 */
+}
+
+/* 通用卡片外觀（圓角、細邊線、陰影） */
+.panel-card {
+    background: #FFFFFF;
+    border: 2px solid #C2CBC1;
+    border-radius: 16px;
+    padding: 25px;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.02);
+}
+
+.panel-card-title {
+    font-size: 22px;
+    color: #1E4620;
+    font-weight: bold;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.panel-card-title::before {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 22px;
+    background: #2E7D32;
+    border-radius: 3px;
+}
+
+/* ==========================================================================
+   4. 左側欄：數據圖表與 SWOT 矩陣 (Left Column Elements)
+   ========================================================================== */
+/* 經營績效進度條組 */
+.kpi-flex-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.bar-item {
+    background: #FDFBF7;
+    border: 1px solid #E2E6E1;
+    padding: 15px;
+    border-radius: 12px;
+}
+
+.bar-header {
     display: flex;
     justify-content: space-between;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
 }
 
-.bar-bg {
-    background: #EAEAEA;
-    height: 24px;
-    border-radius: 12px;
-    overflow: hidden;
+.bar-header .num-green { color: #2E7D32; }
+.bar-header .num-orange { color: #D84315; }
+
+.bar-track {
+    background: #E5EAE4;
+    height: 22px;
+    border-radius: 11px;
     position: relative;
+    overflow: hidden;
 }
 
-.bar-fill {
-    background: linear-gradient(90deg, #E98B2A, #F1A44C);
+.bar-fill-green {
+    background: #388E3C;
     height: 100%;
-    border-radius: 12px;
-    transition: width 1s ease-in-out;
+    border-radius: 11px;
 }
 
-/* ==========================================================================
-   4. SWOT 分析矩陣樣式 (SWOT Grid Matrix)
-   ========================================================================== */
-.swot-grid {
+.bar-fill-orange {
+    background: #E64A19;
+    height: 100%;
+    border-radius: 11px;
+}
+
+.bar-percentage-label {
+    position: absolute;
+    right: 15px;
+    top: 0;
+    font-size: 13px;
+    font-weight: bold;
+    color: #333333;
+    line-height: 22px;
+}
+
+/* SWOT 經典四象限佈局 */
+.swot-dashboard-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 30px;
-    margin-top: 40px;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
 }
 
-.swot-card {
-    padding: 40px 30px;
-    border-radius: 16px;
-    color: white;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease;
+.swot-box {
+    border-radius: 12px;
+    padding: 15px;
+    color: #FFFFFF;
+    position: relative;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
 }
 
-.swot-card:hover {
-    transform: translateY(-5px);
+.swot-box h4 {
+    font-size: 22px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(255,255,255,0.3);
+    padding-bottom: 5px;
 }
 
-.swot-card h3 {
-    font-size: 28px;
-    margin-bottom: 15px;
-    border-bottom: 2px solid rgba(255,255,255,0.3);
-    padding-bottom: 10px;
+.swot-box ul {
+    list-style-type: none;
+    padding-left: 5px;
 }
 
-.swot-card p {
-    font-size: 16px;
-    line-height: 1.7;
+.swot-box li {
+    font-size: 14.5px;
+    margin-bottom: 6px;
+    line-height: 1.5;
+    position: relative;
+    padding-left: 15px;
 }
 
-/* SWOT 個別代表色 */
-.swot-card.s { background: #2E7D32; } /* 優勢：深綠 */
-.swot-card.w { background: #D84315; } /* 劣勢：深橘紅 */
-.swot-card.o { background: #1565C0; } /* 機會：藍色 */
-.swot-card.t { background: #C62828; } /* 威脅：紅色 */
+.swot-box li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+}
+
+/* SWOT 各象限配色與還原 */
+.swot-box.s { background: #43A047; } /* 優勢：翠綠 */
+.swot-box.w { background: #E67E22; } /* 劣勢：亮橘 */
+.swot-box.o { background: #2980B9; } /* 機會：蔚藍 */
+.swot-box.t { background: #C0392B; } /* 威脅：磚紅 */
+
+.swot-icon {
+    width: 24px;
+    height: 24px;
+    fill: white;
+}
 
 /* ==========================================================================
-   5. 頁尾樣式 (Footer)
+   5. 右側欄：實景視覺框與大眾運輸地圖示意圖 (Right Column Elements)
+   ========================================================================== */
+/* 實景圖模擬區框 */
+.visual-scenery-card {
+    position: relative;
+    border-radius: 14px;
+    overflow: hidden;
+    height: 240px;
+    border: 1px solid #C2CBC1;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+/* 右上角高質感雙徽章 */
+.badge-container {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    display: flex;
+    gap: 10px;
+    z-index: 10;
+}
+
+.scenery-badge {
+    background: rgba(255, 255, 255, 0.95);
+    color: #222;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: bold;
+    border: 1px solid #BDC3C7;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.badge-gold {
+    border: 1px solid #D4AF37;
+    background: #FFFDF0;
+}
+
+.scenery-footer-label {
+    position: absolute;
+    bottom: 15px;
+    left: 15px;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+    z-index: 10;
+}
+
+/* 地圖與接駁路徑圖框 */
+.map-infographic-container {
+    background: #FDFBF7;
+    border: 1px solid #E2E6E1;
+    border-radius: 12px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ==========================================================================
+   6. 頁尾底列樣式 (Footer Bar)
    ========================================================================== */
 footer {
-    background: #1F4D3A;
+    background: #1E4620;
+    padding: 15px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     color: white;
+    font-size: 14px;
+    border-top: 3px solid #163518;
+}
+
+.footer-text-center {
     text-align: center;
-    padding: 60px 20px;
-    margin-top: 60px;
+    opacity: 0.8;
 }
 
-footer h2 {
-    font-size: 24px;
-    margin-bottom: 15px;
+.lang-btn {
+    background: #FFFFFF;
+    color: #1E4620;
+    padding: 4px 15px;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 13px;
+    border: none;
 }
 
-footer p {
-    font-size: 16px;
-    opacity: 0.7;
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-/* 響應式網頁設計 (RWD) 調整 */
-@media (max-width: 992px) {
+/* 響應式佈局支援（手機看自動變單欄，不跑版） */
+@media (max-width: 900px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+    .kpi-flex-group {
+        grid-template-columns: 1fr;
+    }
     header {
         flex-direction: column;
-        padding: 60px 40px;
-        text-align: center;
+        gap: 10px;
     }
-    h1 { font-size: 42px; }
-    .section { padding: 60px 40px; }
 }
 </style>
 </head>
 <body>
 
-<header>
-    <div class="hero-left">
-        <h1>頭城農場<br>高鐵延伸宜蘭產業影響分析</h1>
-        <p class="hero-text">本網站整合高鐵延伸宜蘭計畫、日本新幹線案例、永續觀光與 ESG 發展深度剖析報告。</p>
-        <a href="#report" class="hero-btn">進入深度報告</a>
-    </div>
-    <div class="hero-right">
-        <div style="width:100%; min-height:350px; background:rgba(255,255,255,0.1); border-radius:24px; border:2px dashed rgba(255,255,255,0.2); display:flex; align-items:center; justify-content:center;">
-            <span style="opacity:0.5;">頭城農場 生態場域主視覺</span>
+<div class="dashboard-wrapper">
+
+    <header>
+        <div class="header-logo-zone">
+            <div class="logo-box">頭城農場<br>tcfarm</div>
+            <div class="logo-divider">×</div>
+            <div class="logo-box">產業報告<br>report</div>
         </div>
-    </div>
-</header>
+        
+        <div class="header-title">頭城農場 │ 高鐵延伸宜蘭產業影響分析報告</div>
+        
+        <div class="header-right-vector">
+            <svg viewBox="0 0 100 45" width="100%" height="100%">
+                <polygon points="20,45 50,10 80,45" fill="#2F6B53" />
+                <polygon points="50,45 75,20 100,45" fill="#43A047" />
+                <polygon points="35,22 50,10 60,20 55,25" fill="#FFFFFF" opacity="0.8" />
+            </svg>
+        </div>
+    </header>
 
-<section class="section" id="report">
-
-    <h2 class="section-title">經營績效與數據分析</h2>
+    <main class="dashboard-grid">
     
-    <div class="kpi-container">
-        <div class="bar">
-            <div class="bar-title"><span>餐飲收入預期增長</span><span>+2.9%</span></div>
-            <div class="bar-bg">
-                <div class="bar-fill" style="width:20%"></div>
+        <div class="col-left" style="display: flex; flex-direction: column; gap: 15px;">
+        
+            <section class="panel-card">
+                <div class="panel-card-title">經營績效數據</div>
+                <div class="kpi-flex-group">
+                    <div class="bar-item">
+                        <div class="bar-header">
+                            <span>餐飲收入 <span class="num-green">+2.9%</span></span>
+                        </div>
+                        <div class="bar-track">
+                            <div class="bar-fill-green" style="width: 20%;"></div>
+                            <span class="bar-percentage-label">20%</span>
+                        </div>
+                    </div>
+                    <div class="bar-item">
+                        <div class="bar-header">
+                            <span>農場體驗參與度 <span class="num-orange">+8%</span></span>
+                        </div>
+                        <div class="bar-track">
+                            <div class="bar-fill-orange" style="width: 8%;"></div>
+                            <span class="bar-percentage-label">8%</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="panel-card">
+                <div class="panel-card-title">SWOT 分析</div>
+                <div class="swot-dashboard-grid">
+                
+                    <div class="swot-box s">
+                        <h4>
+                            <span>S 優勢</span>
+                            <svg class="swot-icon" viewBox="0 0 24 24"><path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.75 0 1.41-.41 1.76-1.02l3.06-7.15c.11-.29.18-.61.18-.95v-2z"/></svg>
+                        </h4>
+                        <ul>
+                            <li>頭城農場悠久的品牌優勢</li>
+                            <li>具備成熟且具黏著力的體驗活動</li>
+                            <li>120公頃完整永續生態場域資產</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="swot-box w">
+                        <h4>
+                            <span>W 劣勢</span>
+                            <svg class="swot-icon" viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5s.67 1.5 1.5 1.5zm3.5 3c-2.33 0-4.31 1.46-5.11 3.5h10.22c-.8-2.04-2.78-3.5-5.11-3.5z"/></svg>
+                        </h4>
+                        <ul>
+                            <li>農場聯外大眾運輸接駁效能較弱</li>
+                            <li>大眾交通轉乘便利性仍有升級空間</li>
+                            <li>地方基層精緻人力招募面臨拉扯</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="swot-box o">
+                        <h4>
+                            <span>O 機會</span>
+                            <svg class="swot-icon" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM8 14H6v-2h2v2zm0-3H6V9h2v2zm0-3H6V6h2v2zm7 6h-5v-2h5v2zm3-3h-8V9h8v2zm0-3h-8V6h8v2z"/></svg>
+                        </h4>
+                        <ul>
+                            <li>機會單程符合綠色採購趨勢需求</li>
+                            <li>農場體會成人及研學團隊低碳商機</li>
+                            <li>高鐵開通全面拉動低碳客源導入</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="swot-box t">
+                        <h4>
+                            <span>T 威脅</span>
+                            <svg class="swot-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 12 10 10-4.48 10-12S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+                        </h4>
+                        <ul>
+                            <li>高鐵延伸宜蘭交流交通含飽和</li>
+                            <li>吸管效應下留宿率轉變之挑戰</li>
+                            <li>快閃化觀光導致消費鏈在地邊緣化</li>
+                        </ul>
+                    </div>
+                    
+                </div>
+            </section>
+            
+        </div>
+        
+        <div class="col-right" style="display: flex; flex-direction: column; gap: 15px;">
+        
+            <div class="visual-scenery-card">
+                <div class="badge-container">
+                    <span class="scenery-badge">GSTC 認證</span>
+                    <span class="scenery-badge badge-gold">🏅 47年品牌</span>
+                </div>
+                
+                <svg viewBox="0 0 500 240" width="100%" height="100%" preserveAspectRatio="none">
+                    <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stop-color="#76AEC9" />
+                        <stop offset="100%" stop-color="#E3EEF4" />
+                    </linearGradient>
+                    <rect width="500" height="240" fill="url(#skyGrad)" />
+                    
+                    <polygon points="-20,150 120,60 280,130 420,50 550,160 550,240 -20,240" fill="#2E5A44" opacity="0.9"/>
+                    <polygon points="60,160 220,80 350,140 520,70 550,240 0,240" fill="#1B422E" />
+                    
+                    <ellipse cx="100" cy="190" rx="180" ry="60" fill="#3A7D44" />
+                    <ellipse cx="280" cy="200" rx="150" ry="50" fill="#2D6A4F" />
+                    <ellipse cx="430" cy="180" rx="120" ry="70" fill="#1B4332" />
+                    
+                    <path d="M 150 240 Q 250 160 450 180 Q 480 210 500 240 Z" fill="#6A994E" opacity="0.6"/>
+                    <path d="M 280 240 Q 340 185 460 195 Q 480 215 500 240 Z" fill="#A7C957" />
+                    <path d="M 330 240 Q 380 200 480 210 L 500 240 Z" fill="#E9C46A" opacity="0.4" />
+                    
+                    <ellipse cx="400" cy="225" rx="70" ry="20" fill="#48CAE4" opacity="0.8" />
+                    
+                    <polygon points="340,165 365,150 390,165 390,185 340,185" fill="#B23A22" />
+                    <rect x="345" y="165" width="40" height="20" fill="#D95D39" />
+                    <polygon points="340,165 365,148 390,165" fill="#5C1D11" />
+                    <rect x="352" y="170" width="8" height="8" fill="#F4F6F3" />
+                    <rect x="372" y="170" width="8" height="8" fill="#F4F6F3" />
+                    
+                    <circle cx="460" cy="220" r="12" fill="#FFFFFF" opacity="0.8" />
+                    <path d="M455,225 L460,215 L465,225 Z" fill="#1B4332" />
+                </svg>
+                
+                <div class="scenery-footer-label">120公頃大灣頭城農場</div>
             </div>
+            
+            <section class="panel-card" style="flex-grow: 1; display: flex; flex-direction: column;">
+                <div class="panel-card-title" style="margin-bottom: 10px;">高鐵延伸影響效進</div>
+                
+                <div class="map-infographic-container" style="flex-grow: 1;">
+                    <svg viewBox="0 0 460 210" width="100%" height="100%">
+                        <path d="M 250 20 C 350 40, 420 80, 440 190 L 200 190 Z" fill="#E8EFE9" />
+                        
+                        <circle cx="60" cy="140" r="8" fill="#D35400" />
+                        <text x="60" y="165" font-size="14" font-weight="bold" text-anchor="middle" fill="#222">南港</text>
+                        
+                        <circle cx="300" cy="140" r="8" fill="#D35400" />
+                        <text x="300" y="165" font-size="14" font-weight="bold" text-anchor="middle" fill="#222">宜蘭</text>
+                        
+                        <path d="M 60 140 Q 180 80 300 140" fill="none" stroke="#7F8C8D" stroke-width="5" />
+                        <path d="M 60 140 Q 180 80 300 140" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-dasharray="8,8" />
+                        
+                        <path d="M 75 125 Q 180 70 280 123" fill="none" stroke="#E67E22" stroke-width="4" marker-end="url(#arrow)" />
+                        <defs>
+                            <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                                <path d="M 0 0 L 10 5 L 0 10 z" fill="#E67E22" />
+                            </marker>
+                            <marker id="green-arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                                <path d="M 0 0 L 10 5 L 0 10 z" fill="#1E4620" />
+                            </marker>
+                        </defs>
+                        
+                        <text x="180" y="115" font-size="13" font-weight="bold" fill="#D35400" text-anchor="middle">138h ⏱️ 時間 24 min</text>
+                        <text x="180" y="75" font-size="14" font-weight="bold" fill="#333" text-anchor="middle">🚝 輕速距離</text>
+                        
+                        <path d="M 315 130 C 340 110, 340 80, 315 70" fill="none" stroke="#1E4620" stroke-width="3" stroke-dasharray="4,2" />
+                        <path d="M 330 135 C 360 110, 360 70, 325 55" fill="none" stroke="#1E4620" stroke-width="3" stroke-dasharray="4,2" />
+                        <path d="M 345 140 C 380 110, 380 60, 335 40" fill="none" stroke="#1E4620" stroke-width="3" stroke-dasharray="4,2" />
+                        
+                        <rect x="305" y="45" width="75" height="24" rx="12" fill="#1E4620" />
+                        <text x="342" y="61" font-size="12" fill="white" font-weight="bold" text-anchor="middle">吸管效應</text>
+                        
+                        <circle cx="340" cy="85" r="10" fill="#2E7D32" />
+                        <circle cx="340" cy="85" r="5" fill="#FFFFFF" />
+                        <text x="390" y="90" font-size="16" font-weight="bold" fill="#1E4620">農場 (tcfarm)</text>
+                        
+                        <path d="M 305 130 Q 320 110 333 96" fill="none" stroke="#1E4620" stroke-width="3" />
+                        
+                        <rect x="385" y="125" width="40" height="12" rx="4" fill="#E67E22" />
+                        <polygon points="425,125 435,131 425,137" fill="#E67E22" />
+                        <rect x="390" y="128" width="30" height="3" fill="white" />
+                        
+                        <rect x="390" y="165" width="35" height="16" rx="3" fill="#D4AF37" />
+                        <circle cx="398" cy="183" r="3" fill="#333" />
+                        <circle cx="418" cy="183" r="3" fill="#333" />
+                        <rect x="412" y="168" width="10" height="6" fill="#FFF" />
+                        <rect x="395" y="168" width="12" height="6" fill="#FFF" />
+                    </svg>
+                </div>
+            </section>
         </div>
+        
+    </main>
 
-        <div class="bar">
-            <div class="bar-title"><span>假日交通流量移轉</span><span>+8%</span></div>
-            <div class="bar-bg">
-                <div class="bar-fill" style="width:8%"></div>
-            </div>
-        </div>
-    </div>
+    <footer>
+        <div>頭城農場 × 高鐵延伸宜蘭分析報告</div>
+        <div class="footer-text-center">頭城農場 × 高鐵延伸宜蘭產業影響分析報告，以免瀉稿高鐵延伸宜蘭產業影響分析報告</div>
+        <button class="lang-btn">繁/EN</button>
+    </footer>
 
-</section>
-
-<section class="section">
-
-    <h2 class="section-title">SWOT 競爭優勢分析</h2>
-
-    <div class="swot-grid">
-
-        <div class="swot-card s">
-            <h3>S 優勢</h3>
-            <p>47年品牌、GSTC國際永續認證、120公頃完整生態場域與豐富環境教育資源。</p>
-        </div>
-
-        <div class="swot-card w">
-            <h3>W 劣勢</h3>
-            <p>聯外大眾交通不便、國際客源比例偏低、在地基層人力招募面臨困難。</p>
-        </div>
-
-        <div class="swot-card o">
-            <h3>O 機會</h3>
-            <p>企業 ESG 市場需求成長、國際低碳旅遊風潮興起、高鐵延伸宜蘭帶來的低碳運輸轉型。</p>
-        </div>
-
-        <div class="swot-card t">
-            <h3>T 威脅</h3>
-            <p>旅客行程快閃化、北宜一日生活圈導致留宿率降低、溪北觀光邊緣化之潛在風險。</p>
-        </div>
-
-    </div>
-
-</section>
-
-<footer>
-    <h2>頭城農場 × 高鐵延伸宜蘭分析報告</h2>
-    <p>智慧型永續產業發展報告 ｜ 本網站所有排版與樣式均經過最佳化編譯，確保數位平權與 senior-friendly 易讀性。</p>
-</footer>
+</div>
 
 </body>
 </html>
