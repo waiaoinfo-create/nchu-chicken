@@ -5,1443 +5,342 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>頭城農場及藏酒酒莊｜永續深度介紹</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap');
-  
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  
-  html {
-    scroll-behavior: smooth;
-    scroll-snap-type: y mandatory;
-  }
-  
-  body {
-    font-family: 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
-    background: #1a1a2e;
-    color: #2d2d2d;
-    line-height: 1.9;
-    overflow-x: hidden;
-  }
-  
-  .flip-page {
-    min-height: 100vh;
-    min-height: 100dvh;
-    scroll-snap-align: start;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 3rem 2rem;
-    position: relative;
-    overflow: hidden;
-  }
-  
-  .page-inner {
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    position: relative;
-    z-index: 2;
-  }
-  
-  .page-nav {
-    position: fixed;
-    right: 1.5rem;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 999;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-  
-  .page-nav a {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.3);
-    border: 2px solid rgba(255,255,255,0.5);
-    transition: all 0.3s;
-    display: block;
-    position: relative;
-  }
-  
-  .page-nav a:hover,
-  .page-nav a.active {
-    background: #d4a01e;
-    border-color: #d4a01e;
-    transform: scale(1.3);
-  }
-  
-  .page-nav a .tooltip {
-    position: absolute;
-    right: 20px;
-    top: -4px;
-    background: rgba(0,0,0,0.8);
-    color: #fff;
-    padding: 4px 10px;
-    border-radius: 4px;
-    font-size: 0.7rem;
-    white-space: nowrap;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s;
-  }
-  
-  .page-nav a:hover .tooltip {
-    opacity: 1;
-  }
-  
-  .scroll-arrows {
-    position: fixed;
-    bottom: 2rem;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 999;
-    display: flex;
-    gap: 1rem;
-  }
-  
-  .scroll-arrows button {
-    background: rgba(255,255,255,0.15);
-    border: 1px solid rgba(255,255,255,0.3);
-    color: #fff;
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    cursor: pointer;
-    font-size: 1.2rem;
-    transition: all 0.3s;
-    backdrop-filter: blur(10px);
-  }
-  
-  .scroll-arrows button:hover {
-    background: rgba(212,160,30,0.3);
-    border-color: #d4a01e;
-  }
-  
-  .hero-page {
-    background: linear-gradient(135deg, #0d3b1e 0%, #1a5c2e 30%, #2e8b57 60%, #1a5c2e 100%);
-  }
-  
-  .hero-page::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: 
-      radial-gradient(ellipse at 20% 30%, rgba(212,160,30,0.12) 0%, transparent 50%),
-      radial-gradient(ellipse at 80% 70%, rgba(143,188,143,0.15) 0%, transparent 40%),
-      radial-gradient(ellipse at 50% 50%, rgba(26,92,46,0.3) 0%, transparent 60%);
-    pointer-events: none;
-  }
-  
-  .hero-content {
-    text-align: center;
-    padding: 2rem;
-  }
-  
-  .hero-badge {
-    display: inline-block;
-    background: rgba(212,160,30,0.15);
-    border: 1px solid rgba(212,160,30,0.4);
-    color: #d4a01e;
-    padding: 0.5rem 2rem;
-    border-radius: 50px;
-    font-size: 0.85rem;
-    letter-spacing: 4px;
-    margin-bottom: 2rem;
-    font-weight: 500;
-  }
-  
-  .hero-content h1 {
-    font-size: 5rem;
-    font-weight: 900;
-    color: #fff;
-    line-height: 1.1;
-    margin-bottom: 1rem;
-    letter-spacing: 3px;
-    text-shadow: 0 2px 20px rgba(0,0,0,0.2);
-  }
-  
-  .hero-content h1 .ampersand {
-    color: #d4a01e;
-    display: inline-block;
-    margin: 0 0.3rem;
-  }
-  
-  .hero-subtitle {
-    font-size: 1.6rem;
-    color: #8fbc8f;
-    font-weight: 300;
-    margin-bottom: 2rem;
-    letter-spacing: 2px;
-  }
-  
-  .hero-tagline {
-    font-size: 1.1rem;
-    color: rgba(255,255,255,0.65);
-    font-weight: 300;
-    max-width: 750px;
-    margin: 0 auto;
-    line-height: 2;
-  }
-  
-  .hero-stats {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    gap: 1.5rem;
-    margin-top: 3rem;
-    max-width: 900px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  
-  .hero-stat {
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 12px;
-    padding: 1.2rem 1rem;
-    text-align: center;
-    backdrop-filter: blur(5px);
-  }
-  
-  .hero-stat .num {
-    font-size: 2.2rem;
-    font-weight: 900;
-    color: #d4a01e;
-    line-height: 1.2;
-  }
-  
-  .hero-stat .label {
-    font-size: 0.8rem;
-    color: rgba(255,255,255,0.6);
-    margin-top: 0.3rem;
-  }
-  
-  .scroll-hint {
-    margin-top: 3rem;
-    color: rgba(255,255,255,0.35);
-    font-size: 0.75rem;
-    letter-spacing: 3px;
-  }
-  
-  .scroll-hint .arrow {
-    display: block;
-    font-size: 1.8rem;
-    margin-top: 0.5rem;
-    animation: floatDown 2s ease-in-out infinite;
-  }
-  
-  @keyframes floatDown {
-    0%, 100% { transform: translateY(0); opacity: 0.5; }
-    50% { transform: translateY(10px); opacity: 1; }
-  }
-  
-  .content-page {
-    background: #f5f0e0;
-  }
-  
-  .content-page:nth-child(even) {
-    background: #f0f7f0;
-  }
-  
-  .content-page:nth-child(odd) {
-    background: #faf8f2;
-  }
-  
-  .page-header {
-    text-align: center;
-    margin-bottom: 2.5rem;
-  }
-  
-  .page-number-tag {
-    display: inline-block;
-    font-size: 0.75rem;
-    color: #d4a01e;
-    font-weight: 700;
-    letter-spacing: 3px;
-    margin-bottom: 0.5rem;
-  }
-  
-  .page-header h2 {
-    font-size: 2.6rem;
-    font-weight: 700;
-    color: #1a5c2e;
-    margin-bottom: 0.8rem;
-    line-height: 1.3;
-  }
-  
-  .page-header .divider {
-    width: 80px;
-    height: 3px;
-    background: linear-gradient(90deg, #1a5c2e, #d4a01e);
-    margin: 0 auto;
-    border-radius: 2px;
-  }
-  
-  .page-header .subtitle-text {
-    color: #666;
-    font-size: 1rem;
-    margin-top: 1rem;
-    max-width: 700px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  
-  .content-grid-2 {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-    margin-top: 1.5rem;
-  }
-  
-  .content-grid-3 {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 1.5rem;
-    margin-top: 1.5rem;
-  }
-  
-  .content-grid-4 {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    gap: 1.5rem;
-    margin-top: 1.5rem;
-  }
-  
-  .content-card {
-    background: #fff;
-    border-radius: 16px;
-    padding: 1.8rem;
-    box-shadow: 0 4px 30px rgba(0,0,0,0.06);
-    transition: transform 0.3s, box-shadow 0.3s;
-    border: 1px solid rgba(26,92,46,0.06);
-  }
-  
-  .content-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 40px rgba(0,0,0,0.1);
-  }
-  
-  .content-card .card-icon {
-    font-size: 2.2rem;
-    margin-bottom: 0.8rem;
-    display: block;
-  }
-  
-  .content-card h3 {
-    font-size: 1.2rem;
-    color: #1a5c2e;
-    font-weight: 700;
-    margin-bottom: 0.6rem;
-  }
-  
-  .content-card h4 {
-    font-size: 1rem;
-    color: #3a7d44;
-    font-weight: 600;
-    margin: 0.8rem 0 0.3rem;
-  }
-  
-  .content-card p {
-    font-size: 0.9rem;
-    color: #555;
-    line-height: 1.75;
-    margin-bottom: 0.5rem;
-  }
-  
-  .content-card ul {
-    padding-left: 1.2rem;
-    margin-bottom: 0.5rem;
-  }
-  
-  .content-card li {
-    font-size: 0.88rem;
-    color: #555;
-    margin-bottom: 0.3rem;
-    line-height: 1.6;
-  }
-  
-  .content-card li strong {
-    color: #1a5c2e;
-  }
-  
-  .timeline-modern {
-    margin-top: 2rem;
-  }
-  
-  .timeline-item-modern {
-    display: flex;
-    gap: 1.5rem;
-    margin-bottom: 1.5rem;
-    position: relative;
-  }
-  
-  .timeline-item-modern::before {
-    content: '';
-    position: absolute;
-    left: 95px;
-    top: 30px;
-    bottom: -20px;
-    width: 2px;
-    background: linear-gradient(180deg, #1a5c2e, #8fbc8f, #d4a01e);
-  }
-  
-  .timeline-item-modern:last-child::before {
-    display: none;
-  }
-  
-  .timeline-year {
-    flex: 0 0 90px;
-    text-align: right;
-    font-size: 1.1rem;
-    font-weight: 900;
-    color: #d4a01e;
-    padding-top: 0.2rem;
-  }
-  
-  .timeline-content {
-    flex: 1;
-    background: #fff;
-    padding: 1.2rem 1.5rem;
-    border-radius: 12px;
-    box-shadow: 0 2px 15px rgba(0,0,0,0.05);
-    border-left: 3px solid #1a5c2e;
-  }
-  
-  .timeline-content h3 {
-    font-size: 1.05rem;
-    color: #1a5c2e;
-    margin-bottom: 0.3rem;
-  }
-  
-  .timeline-content p {
-    font-size: 0.9rem;
-    color: #555;
-    line-height: 1.7;
-  }
-  
-  .stats-modern {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 1.2rem;
-    margin: 2rem 0;
-  }
-  
-  .stat-modern {
-    background: #fff;
-    border-radius: 16px;
-    padding: 1.8rem 1.2rem;
-    text-align: center;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.04);
-    border-top: 4px solid #1a5c2e;
-  }
-  
-  .stat-modern.gold-border {
-    border-top-color: #d4a01e;
-  }
-  
-  .stat-modern .num {
-    font-size: 2.4rem;
-    font-weight: 900;
-    color: #1a5c2e;
-    line-height: 1.1;
-  }
-  
-  .stat-modern.gold-border .num {
-    color: #d4a01e;
-  }
-  
-  .stat-modern .label {
-    font-size: 0.8rem;
-    color: #666;
-    margin-top: 0.3rem;
-    line-height: 1.4;
-  }
-  
-  .award-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    background: linear-gradient(135deg, #d4a01e, #b8860b);
-    color: #fff;
-    padding: 0.3rem 0.8rem;
-    border-radius: 50px;
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 1px;
-    margin: 0.2rem;
-  }
-  
-  .award-pill.green {
-    background: linear-gradient(135deg, #1a5c2e, #2e8b57);
-  }
-  
-  .block-wide {
-    background: #fff;
-    border-radius: 16px;
-    padding: 2rem 2.5rem;
-    margin-top: 1.5rem;
-    box-shadow: 0 4px 25px rgba(0,0,0,0.04);
-  }
-  
-  .block-wide h3 {
-    font-size: 1.3rem;
-    color: #1a5c2e;
-    font-weight: 700;
-    margin-bottom: 0.8rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 2px solid #8fbc8f;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-  
-  .block-wide h4 {
-    font-size: 1.05rem;
-    color: #3a7d44;
-    font-weight: 600;
-    margin: 1.2rem 0 0.5rem;
-  }
-  
-  .block-wide p {
-    font-size: 0.95rem;
-    color: #444;
-    margin-bottom: 0.6rem;
-    line-height: 1.85;
-  }
-  
-  .block-wide ul {
-    padding-left: 1.5rem;
-    margin-bottom: 0.6rem;
-  }
-  
-  .block-wide li {
-    font-size: 0.92rem;
-    color: #444;
-    margin-bottom: 0.4rem;
-    line-height: 1.7;
-  }
-  
-  .block-wide li strong {
-    color: #1a5c2e;
-  }
-  
-  .block-wide .badge-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-    margin: 0.5rem 0;
-  }
-  
-  .quote-box {
-    background: linear-gradient(135deg, #f0f7f0, #f5f0e0);
-    border-left: 4px solid #d4a01e;
-    border-radius: 0 12px 12px 0;
-    padding: 1.2rem 1.8rem;
-    margin: 1.2rem 0;
-  }
-  
-  .quote-box p {
-    margin-bottom: 0;
-    font-style: italic;
-    color: #555;
-    font-size: 1rem;
-  }
-  
-  .footer-page {
-    background: linear-gradient(135deg, #0d3b1e, #1a5c2e);
-    min-height: 70vh;
-  }
-  
-  .footer-content {
-    text-align: center;
-    color: rgba(255,255,255,0.85);
-  }
-  
-  .footer-content h2 {
-    font-size: 2rem;
-    color: #d4a01e;
-    margin-bottom: 2rem;
-  }
-  
-  .footer-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 2rem;
-    max-width: 1000px;
-    margin: 2rem auto;
-    text-align: left;
-  }
-  
-  .footer-card {
-    background: rgba(255,255,255,0.05);
-    padding: 1.5rem;
-    border-radius: 12px;
-    border: 1px solid rgba(255,255,255,0.08);
-  }
-  
-  .footer-card h4 {
-    color: #d4a01e;
-    font-size: 0.95rem;
-    margin-bottom: 0.8rem;
-    letter-spacing: 1px;
-  }
-  
-  .footer-card p {
-    font-size: 0.85rem;
-    color: rgba(255,255,255,0.65);
-    margin-bottom: 0.3rem;
-    line-height: 1.6;
-  }
-  
-  .footer-card a {
-    color: #8fbc8f;
-    text-decoration: none;
-  }
-  
-  .footer-card a:hover {
-    color: #d4a01e;
-    text-decoration: underline;
-  }
-  
-  .footer-bottom {
-    margin-top: 2.5rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid rgba(255,255,255,0.08);
-    font-size: 0.8rem;
-    color: rgba(255,255,255,0.35);
-  }
-  
-  .footer-warning {
-    margin-top: 1rem;
-    font-size: 0.75rem;
-    color: rgba(255,255,255,0.3);
-    letter-spacing: 1px;
-  }
-  
-  @media (max-width: 1024px) {
-    .content-grid-2, .content-grid-3, .content-grid-4 { grid-template-columns: 1fr 1fr; }
-  }
-  
-  @media (max-width: 768px) {
-    .flip-page { padding: 2rem 1rem; }
-    .hero-content h1 { font-size: 2.8rem; }
-    .hero-subtitle { font-size: 1.2rem; }
-    .page-header h2 { font-size: 1.8rem; }
-    .page-nav { right: 0.8rem; }
-    .page-nav a { width: 10px; height: 10px; }
-    .page-nav a .tooltip { display: none; }
-    .content-grid-2, .content-grid-3, .content-grid-4 { grid-template-columns: 1fr; }
-    .timeline-item-modern { flex-direction: column; gap: 0.5rem; }
-    .timeline-item-modern::before { left: 20px; }
-    .timeline-year { flex: 0; text-align: left; }
-    .stats-modern { grid-template-columns: repeat(2, 1fr); }
-    .block-wide { padding: 1.2rem; }
-    .scroll-arrows button { width: 40px; height: 40px; font-size: 1rem; }
-    .hero-stats { grid-template-columns: repeat(2, 1fr); }
-  }
-  
-  @media (max-width: 480px) {
-    .hero-content h1 { font-size: 2rem; }
-    .hero-subtitle { font-size: 1rem; }
-    .stats-modern, .hero-stats { grid-template-columns: 1fr; }
-  }
-  
-  @media print {
-    .page-nav, .scroll-arrows { display: none; }
-    .flip-page { min-height: auto; scroll-snap-align: none; page-break-after: always; }
-    .content-card { break-inside: avoid; }
-  }
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;font-family:'Noto Sans TC','Segoe UI',-apple-system,BlinkMacSystemFont,sans-serif;background:#1a3c1a}
+
+.deck{width:100%;height:100%;position:relative;overflow:hidden}
+.slides{display:flex;height:100%;transition:transform .6s cubic-bezier(.22,.61,.36,1)}
+.slide{flex:0 0 100%;height:100%;overflow-y:auto;display:flex;flex-direction:column;background:#f5f2eb;padding:36px 48px}
+.slide::-webkit-scrollbar{width:4px}
+.slide::-webkit-scrollbar-thumb{background:#aaa;border-radius:2px}
+
+.nav{position:fixed;bottom:0;left:0;right:0;height:56px;background:rgba(26,60,26,.92);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;gap:20px;z-index:100;padding:0 24px}
+.nav-btn{background:rgba(255,255,255,.15);border:none;color:#fff;width:44px;height:36px;border-radius:8px;cursor:pointer;font-size:1.2rem;display:flex;align-items:center;justify-content:center;transition:background .2s}
+.nav-btn:hover{background:rgba(255,255,255,.28)}
+.nav-btn:disabled{opacity:.3;cursor:default}
+.counter{color:rgba(255,255,255,.8);font-size:.85rem;letter-spacing:1px;min-width:60px;text-align:center}
+.progress{flex:1;max-width:240px;height:4px;background:rgba(255,255,255,.15);border-radius:2px;overflow:hidden}
+.progress-bar{height:100%;background:#6a9e6a;border-radius:2px;transition:width .5s}
+.page-info{color:rgba(255,255,255,.6);font-size:.75rem}
+
+h1{font-size:clamp(1.6rem,3.5vw,2.8rem);font-weight:800;color:#1a3c1a}
+h2{font-size:clamp(1.3rem,2.5vw,1.8rem);color:#1a3c1a;border-left:5px solid #4a7c4a;padding-left:16px;margin:0 0 20px}
+h3{font-size:clamp(1rem,1.8vw,1.3rem);color:#2d5a2d;margin:16px 0 10px}
+h4{font-size:1rem;margin:12px 0 6px;color:#1a3c1a}
+p{font-size:clamp(.85rem,1.4vw,.95rem);line-height:1.7;margin-bottom:10px;color:#2c3e2d}
+.slide-content{max-width:1100px;width:100%;margin:0 auto;flex:1}
+.slide-header{margin-bottom:16px}
+.slide-num{font-size:2.5rem;font-weight:800;color:rgba(26,60,26,.07);position:absolute;top:12px;right:36px;pointer-events:none}
+
+.cover{background:linear-gradient(135deg,#1a3c1a 0%,#3d7a3d 50%,#6a9e6a 100%);justify-content:center;align-items:center;text-align:center}
+.cover h1{color:#fff;text-shadow:0 2px 10px rgba(0,0,0,.3)}
+.cover p{color:#d4e8d4;font-size:1.15rem;margin:8px auto 0;max-width:600px}
+.end{background:linear-gradient(135deg,#1a3c1a 0%,#2d5a2d 100%);justify-content:center;align-items:center;text-align:center}
+.end h1{color:#fff}.end p{color:#b8d4b8}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;margin:10px 0}
+.card{background:#fff;border-radius:10px;box-shadow:0 1px 8px rgba(0,0,0,.06);overflow:hidden;padding:16px}
+.card h4{font-size:.95rem;margin:0 0 6px}
+.card p{font-size:.82rem;color:#555;margin:0;line-height:1.5}
+.card ul{font-size:.82rem;color:#555;padding-left:18px}
+.card li{margin-bottom:3px}
+table{width:100%;border-collapse:collapse;margin:10px 0;font-size:clamp(.75rem,1.2vw,.85rem)}
+th{background:#1a3c1a;color:#fff;padding:8px 10px;text-align:left;font-weight:500}
+td{padding:7px 10px;border-bottom:1px solid #ddd}
+tr:nth-child(even){background:#f9f8f5}
+.box{background:#e8f0e8;border-left:4px solid #4a7c4a;padding:12px 16px;margin:8px 0;border-radius:0 6px 6px 0;font-size:clamp(.78rem,1.2vw,.88rem)}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:768px){.slide{padding:20px 16px}.grid,.two-col{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-
-<nav class="page-nav" id="pageNav"></nav>
-
-<div class="scroll-arrows">
-  <button onclick="scrollPage(-1)" title="上一頁">&#9650;</button>
-  <button onclick="scrollPage(1)" title="下一頁">&#9660;</button>
+<div class="deck">
+<div class="slides" id="slides">
+<div class="slide cover">
+<div class="slide-content" style="max-width:800px">
+<h1 style="font-size:clamp(2.5rem,5vw,4.5rem);color:#fff;text-shadow:0 2px 20px rgba(0,0,0,.3)">頭城農場 · 藏酒酒莊</h1>
+<p style="color:#d4e8d4;font-size:clamp(1.1rem,2vw,1.6rem);margin:20px 0 10px">永續農業 · 生態旅遊 · 在地釀造</p>
+<p style="color:rgba(255,255,255,.7);font-size:.95rem;line-height:1.8">從雪山山脈到太平洋，從120公頃有機農場到國際金牌生態酒莊<br>用近半世紀的堅持，守護這片土地的純淨與美好</p>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin:32px 0 0;text-align:center">
+<div style="background:rgba(255,255,255,.08);border-radius:8px;padding:12px 8px"><div style="font-size:1.8rem;font-weight:900;color:#f0d080">1979</div><div style="font-size:.75rem;color:rgba(255,255,255,.6)">創立 · 逾47年</div></div>
+<div style="background:rgba(255,255,255,.08);border-radius:8px;padding:12px 8px"><div style="font-size:1.8rem;font-weight:900;color:#f0d080">120</div><div style="font-size:.75rem;color:rgba(255,255,255,.6)">公頃 · 生態農場</div></div>
+<div style="background:rgba(255,255,255,.08);border-radius:8px;padding:12px 8px"><div style="font-size:1.8rem;font-weight:900;color:#f0d080">20,000+</div><div style="font-size:.75rem;color:rgba(255,255,255,.6)">株原生樹種復育</div></div>
+<div style="background:rgba(255,255,255,.08);border-radius:8px;padding:12px 8px"><div style="font-size:1.2rem;font-weight:900;color:#f0d080">Grand Or</div><div style="font-size:.75rem;color:rgba(255,255,255,.6)">2026國際金牌</div></div>
 </div>
-
-<!-- HERO -->
-<section class="flip-page hero-page" id="page-0">
-  <div class="page-inner">
-    <div class="hero-content">
-      <div class="hero-badge">✦ 1979 – 2026 ✦</div>
-      <h1>頭城農場 <span class="ampersand">&amp;</span> 藏酒酒莊</h1>
-      <p class="hero-subtitle">永續農業 · 生態旅遊 · 在地釀造</p>
-      <p class="hero-tagline">
-        從雪山山脈到太平洋，從120公頃的有機農場到獲得國際金牌的生態酒莊<br>
-        我們用近半世紀的堅持，守護這片土地的純淨與美好<br>
-        讓永續看得見、也吃得到
-      </p>
-      <div class="hero-stats">
-        <div class="hero-stat"><div class="num">1979</div><div class="label">創立 · 逾47年</div></div>
-        <div class="hero-stat"><div class="num">120</div><div class="label">公頃 · 生態農場</div></div>
-        <div class="hero-stat"><div class="num">3</div><div class="label">條天然溪流貫穿</div></div>
-        <div class="hero-stat"><div class="num">20,000+</div><div class="label">株原生樹種復育</div></div>
-        <div class="hero-stat"><div class="num">Grand Or</div><div class="label">2026國際金牌</div></div>
-      </div>
-      <div class="scroll-hint">向下瀏覽 <span class="arrow">&#9660;</span></div>
-    </div>
-  </div>
-</section>
-
-<!-- 01 農場概覽 -->
-<section class="flip-page content-page" id="page-1">
-  <div class="page-inner">
-    <div class="page-header">
-      <div class="page-number-tag">SECTION 01</div>
-      <h2>頭城農場概覽</h2>
-      <div class="divider"></div>
-      <p class="subtitle-text">Toucheng Leisure Farm — 台灣東北角的永續農業典範</p>
-    </div>
-    <div class="stats-modern">
-      <div class="stat-modern"><div class="num">1979</div><div class="label">創立 · 逾47年歷史</div></div>
-      <div class="stat-modern"><div class="num">120</div><div class="label">公頃 · 約4.5個大安森林公園</div></div>
-      <div class="stat-modern gold-border"><div class="num">3</div><div class="label">條天然溪流貫穿園區</div></div>
-      <div class="stat-modern gold-border"><div class="num">2</div><div class="label">公頃有機菜園</div></div>
-      <div class="stat-modern"><div class="num">50</div><div class="label">公頃桂竹林</div></div>
-      <div class="stat-modern"><div class="num">500+</div><div class="label">棵金桔金棗樹</div></div>
-    </div>
-    <div class="content-grid-3">
-      <div class="content-card">
-        <span class="card-icon">📍</span>
-        <h3>地理位置</h3>
-        <p>宜蘭縣頭城鎮更新路125-1號。倚山面海，位於東北角海岸與雪山山脈交界，距台北市約2小時車程。屬東北角海岸國家風景區範圍。</p>
-      </div>
-      <div class="content-card">
-        <span class="card-icon">📞</span>
-        <h3>聯絡方式</h3>
-        <p>電話：03-9772222（08:00-17:30）<br>傳真：03-9778688<br>Email：tcfarminfo@gmail.com<br>官網：www.tcfarm.com.tw<br>LINE：@tc039772000</p>
-      </div>
-      <div class="content-card">
-        <span class="card-icon">🏛️</span>
-        <h3>經營團隊與理念</h3>
-        <p><strong>創辦人：</strong>卓陳明女士（教育家出身，人稱卓媽媽）<br><strong>董事長：</strong>卓志宏（宜蘭縣觀光協會理事長）<br><strong>理念：</strong>健康、快樂、體驗、學習、永續<br><strong>集團：</strong>同集團另有藏酒酒莊</p>
-      </div>
-    </div>
-    <div class="block-wide" style="margin-top:1rem;">
-      <h3>核心價值</h3>
-      <div style="display:flex;flex-wrap:wrap;gap:1.5rem;">
-        <div style="flex:1;min-width:200px;"><strong style="color:#1a5c2e;">🌱 三生一體</strong><br><span style="font-size:0.9rem;color:#555;">農村生態 · 農業生產 · 農民生活</span></div>
-        <div style="flex:1;min-width:200px;"><strong style="color:#1a5c2e;">🎯 五大主軸</strong><br><span style="font-size:0.9rem;color:#555;">環境教育 · 戶外學習 · 健康養身 · 樂活慢遊 · 生命教育</span></div>
-        <div style="flex:1;min-width:200px;"><strong style="color:#1a5c2e;">🤝 企業願景</strong><br><span style="font-size:0.9rem;color:#555;">成為國內外休閒農業之標竿農場</span></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- 02 歷史轉型 -->
-<section class="flip-page content-page" id="page-2">
-  <div class="page-inner">
-    <div class="page-header">
-      <div class="page-number-tag">SECTION 02</div>
-      <h2>創立歷史與轉型歷程</h2>
-      <div class="divider"></div>
-      <p class="subtitle-text">從傳統農田到永續標竿 — 頭城農場的半世紀演化</p>
-    </div>
-    <div class="timeline-modern">
-      <div class="timeline-item-modern">
-        <div class="timeline-year">1979-1990</div>
-        <div class="timeline-content">
-          <h3>第一階段：生產型農場</h3>
-          <p>以傳統農業生產為主，種植果樹、蔬菜。創辦人卓陳明女士原為學校教師，帶著年幼的孩子來到宜蘭落地生根，開創農場事業。</p>
-        </div>
-      </div>
-      <div class="timeline-item-modern">
-        <div class="timeline-year">1990-2000</div>
-        <div class="timeline-content">
-          <h3>第二階段：轉型休閒農場</h3>
-          <p>順應台灣休閒農業浪潮，開放觀光提供農村生活體驗。成為北台灣幼兒園、國小校外教學熱門地點，赤腳下田插秧、餵牛吃草成為經典童年回憶。</p>
-        </div>
-      </div>
-      <div class="timeline-item-modern">
-        <div class="timeline-year">2000-2015</div>
-        <div class="timeline-content">
-          <h3>第三階段：深度體驗旅遊</h3>
-          <p>導入DIY手作、生態導覽、住宿餐飲。建立環境教育課程體系，從觀光休閒升級到環境生態教育與深度旅遊。</p>
-        </div>
-      </div>
-      <div class="timeline-item-modern">
-        <div class="timeline-year">2015-2019</div>
-        <div class="timeline-content">
-          <h3>第四階段：接軌國際永續標準</h3>
-          <p>2018年取得GSTC全球永續旅遊委員會旅館認證，為東北角國家風景區首個國際永續認證旅館。2019年正式獲頒證書，導入系統化永續管理架構。</p>
-        </div>
-      </div>
-      <div class="timeline-item-modern">
-        <div class="timeline-year">2020-至今</div>
-        <div class="timeline-content" style="border-left-color:#d4a01e;">
-          <h3>第五階段：ESG與森川里海</h3>
-          <p>2021年取得環保標章旅館與綠色餐廳，2023年取得GTS綠色旅行標章。推動森川里海整合策略，串聯企業ESG合作與社區共好，從休閒農場進化為山海環境守護者。</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- 03 自然環境 -->
-<section class="flip-page content-page" id="page-3">
-  <div class="page-inner">
-    <div class="page-header">
-      <div class="page-number-tag">SECTION 03</div>
-      <h2>地理環境與自然資源</h2>
-      <div class="divider"></div>
-      <p class="subtitle-text">雪山山脈與太平洋交會的得天獨厚之地</p>
-    </div>
-    <div class="stats-modern">
-      <div class="stat-modern"><div class="num">50</div><div class="label">公頃桂竹林</div></div>
-      <div class="stat-modern gold-border"><div class="num">500+</div><div class="label">棵金桔金棗樹</div></div>
-      <div class="stat-modern"><div class="num">2</div><div class="label">公頃有機菜園</div></div>
-      <div class="stat-modern gold-border"><div class="num">4</div><div class="label">種螢火蟲復育</div></div>
-    </div>
-    <div class="content-grid-2">
-      <div class="content-card">
-        <span class="card-icon">🏔️</span>
-        <h3>地形地貌</h3>
-        <p>位於雪山山脈山腳下，海拔50-300公尺，倚山面海。保留原始次生林，林相包含桂竹林（50公頃）、相思樹林、楓香林及果園樹林。屬於東北角海岸國家風景區範圍。</p>
-      </div>
-      <div class="content-card">
-        <span class="card-icon">💧</span>
-        <h3>水資源系統</h3>
-        <p>三條溪流貫穿：平溪、桃子林溪、梗枋溪（已列入國土生態綠網重點保育）。雪山山脈天然水源，水質純淨無污染。溪畔滿布野薑花，夏季飄香為農場芳香秘境。</p>
-      </div>
-      <div class="content-card">
-        <span class="card-icon">🌿</span>
-        <h3>植物資源</h3>
-        <p>50公頃桂竹林（每年清明舉辦桂竹筍祭）、500多棵金桔金棗樹（宜蘭最具特色水果）、2公頃有機菜園、水稻田、果園（火龍果、柑橘等）。蔬菜供應餐廳及鄰近小學營養午餐。</p>
-      </div>
-      <div class="content-card">
-        <span class="card-icon">🦌</span>
-        <h3>動物生態</h3>
-        <p>紅外線自動相機監測：山羌、山豬、獼猴、食蟹獴、穿山甲、台灣藍鵲。螢火蟲四種復育：擬紋螢、紅胸黑翅螢、黃緣螢、山窗螢。大白斑蝶、翡翠樹蛙、竹節蟲、青山蝸牛等。</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- 04 認證體系 -->
-<section class="flip-page content-page" id="page-4">
-  <div class="page-inner">
-    <div class="page-header">
-      <div class="page-number-tag">SECTION 04</div>
-      <h2>認證體系與國際肯定</h2>
-      <div class="divider"></div>
-      <p class="subtitle-text">台灣少數同時取得多項國際與國內永續認證的休閒農場</p>
-    </div>
-    <div class="stats-modern">
-      <div class="stat-modern"><div class="num">7</div><div class="label">項國際與國內認證</div></div>
-      <div class="stat-modern gold-border"><div class="num">2018</div><div class="label">GSTC永續旅館認證</div></div>
-      <div class="stat-modern"><div class="num">2023</div><div class="label">GTS綠色旅行標章</div></div>
-      <div class="stat-modern gold-border"><div class="num">1</div><div class="label">東北角首個GSTC認證</div></div>
-    </div>
-    <div class="block-wide">
-      <h3>🌍 GSTC 全球永續旅遊委員會認證</h3>
-      <p><strong>GSTC（Global Sustainable Tourism Council）</strong> 由聯合國基金會（UN Foundation）、聯合國世界旅遊組織（UNWTO）、雨林聯盟（Rainforest Alliance）於2008年共同發起，為全球最具公信力的永續旅遊標準。</p>
-      <ul>
-        <li><strong>取得年份：</strong>2018年通過Control Union稽核，2019年正式獲頒</li>
-        <li><strong>驗證類別：</strong>旅館類經營（GSTC Hotel Criteria）</li>
-        <li><strong>證書編號：</strong>C863511 GSTC-07-2019</li>
-        <li><strong>認證效期：</strong>持續換證中</li>
-        <li><strong>歷史意義：</strong>東北角國家風景區內第一個通過國際永續認證的旅館</li>
-      </ul>
-      <div class="badge-row">
-        <span class="award-pill">GSTC Certified</span>
-        <span class="award-pill green">UNWTO</span>
-        <span class="award-pill green">UN Foundation</span>
-        <span class="award-pill">Rainforest Alliance</span>
-      </div>
-    </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-top:1.2rem;">
-      <div class="content-card">
-        <h3>✅ GTS 綠色旅行標章</h3>
-        <p>荷蘭創立的標章制度，專為中小型旅宿設計，準則對接國際永續標準。2023年取得。2026年將遵循歐盟強化消費者綠色轉型指令進行轉換升級。</p>
-      </div>
-      <div class="content-card">
-        <h3>♻️ 環保標章（環境部）</h3>
-        <p>2021年取得環保標章旅館與綠色餐廳。落實廢棄物回收再生、續住重複使用寢具毛巾、熱泵鍋爐節能設備、太陽能熱水系統、汙水處理監測。</p>
-      </div>
-      <div class="content-card">
-        <h3>📚 環境教育設施場所認證</h3>
-        <p>核准字號：(102)環署訓證字第EC103001-02號。核准日期：2023/3/18，有效期限：2028/3/17。課程對象：幼稚園至大學/成人，全年提供。</p>
-      </div>
-      <div class="content-card">
-        <h3>🏆 亞洲生態旅遊網絡創新大獎</h3>
-        <p>AEN Innovation Award。以綠色廚房與永續餐桌設計獲得國際肯定。另獲第一屆大東北角永續實踐故事綠色業者第一名（2025年）。</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- 05 ESG -->
-<section class="flip-page content-page" id="page-5">
-  <div class="page-inner">
-    <div class="page-header">
-      <div class="page-number-tag">SECTION 05</div>
-      <h2>永續發展與ESG實踐</h2>
-      <div class="divider"></div>
-      <p class="subtitle-text">環境 Environmental × 社會 Social × 治理 Governance</p>
-    </div>
-    <div class="block-wide">
-      <h3>🌲 環境面 E — Environmental</h3>
-      <div class="content-grid-2" style="margin-top:0.5rem;">
-        <div>
-          <h4>森林復育與碳匯行動</h4>
-          <ul>
-            <li>與林業署宜蘭分署合作，5年種植<strong>20,000+</strong>株原生樹種（相思樹、楓香等）</li>
-            <li><strong>16,000+</strong>株桂竹復育</li>
-            <li>2025年起日月光投控與基金會支持造林</li>
-          </ul>
-          <h4>螢火蟲復育與循環農業</h4>
-          <ul>
-            <li>與在地菇農合作，廢棄菇包→復育介質→螢火蟲棲地→生態旅遊</li>
-            <li>復育四種：擬紋螢、紅胸黑翅螢、黃緣螢、山窗螢</li>
-            <li>每年4-5月賞螢季吸引大量遊客</li>
-          </ul>
-        </div>
-        <div>
-          <h4>瀕危物種復育 — 葦草蘭（鳥仔花）</h4>
-          <ul>
-            <li>昔水稻田梗常見，因農藥與除草劑濫用在野外幾乎消失</li>
-            <li>2026年4月啟動復育，與日月光基金會、林業署合作</li>
-            <li>關鍵蜜源植物，象徵淺山生態系重建</li>
-          </ul>
-          <h4>海廢治理 — Eco Box</h4>
-          <ul>
-            <li>與大溪漁港船長黃士洋合作，循環箱取代保麗龍</li>
-            <li>海廢經熱壓處理變成再生板材，設立海廢再生園區</li>
-          </ul>
-          <h4>廚餘循環</h4>
-          <ul>
-            <li>蚯蚓箱系統：廚餘→有機微生物土壤→回歸菜園果園</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <div class="content-grid-2" style="margin-top:1.2rem;">
-      <div class="content-card">
-        <h3>👥 社會面 S — Social</h3>
-        <ul>
-          <li><strong>環境教育：</strong>通過認證設施場所，全年提供課程，含食農教育、自然生態、文化資產</li>
-          <li><strong>三種特色餐桌：</strong>鳥類、蜜蜂、山豬，用食物說生態故事，獲AEN創新大獎</li>
-          <li><strong>社區參與：</strong>梗枋學童植樹、桂竹筍祭假日市集、蔬菜供應小學營養午餐</li>
-        </ul>
-      </div>
-      <div class="content-card">
-        <h3>🏛️ 治理面 G — Governance</h3>
-        <ul>
-          <li><strong>企業ESG合作：</strong>日月光投控造林與瀕危物種保育</li>
-          <li><strong>SDGs對應：</strong>SDG4優質教育、SDG12責任消費、SDG13氣候行動、SDG15陸域生態</li>
-          <li><strong>國際交流：</strong>50團以上國內外團體參訪、5場駐台使節交流會、GSTC亞太會議</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- 06 森川里海 -->
-<section class="flip-page content-page" id="page-6">
-  <div class="page-inner">
-    <div class="page-header">
-      <div class="page-number-tag">SECTION 06</div>
-      <h2>森川里海核心策略</h2>
-      <div class="divider"></div>
-      <p class="subtitle-text">從農場出發，連結山海，串聯企業與社區</p>
-    </div>
-    <div class="content-grid-4">
-      <div class="content-card" style="text-align:center;">
-        <span class="card-icon" style="font-size:3rem;">🌲</span>
-        <h3>森林 森</h3>
-        <p>山林復育與棲地連結。原生樹種種植、除伐撫育、碳匯行動。紅外線監測山羌、穿山甲、食蟹獴等。目標成為國土生態綠網行動節點。</p>
-      </div>
-      <div class="content-card" style="text-align:center;">
-        <span class="card-icon" style="font-size:3rem;">🏞️</span>
-        <h3>溪流 川</h3>
-        <p>水域生態守護。梗枋溪列國土生態綠網重點保育。定期水質檢測、生物監測。溪畔環境教育：溪流靜心疊石、花草曼陀羅。野薑花芳香秘境。</p>
-      </div>
-      <div class="content-card" style="text-align:center;">
-        <span class="card-icon" style="font-size:3rem;">🌊</span>
-        <h3>海洋 海</h3>
-        <p>海廢治理與漁業支持。Eco Box循環箱、海廢再生板材。深度旅遊：漁獲拍賣、Eco Box體驗。支持定置漁網、一支釣等永續漁法。</p>
-      </div>
-      <div class="content-card" style="text-align:center;">
-        <span class="card-icon" style="font-size:3rem;">🌾</span>
-        <h3>里山 里</h3>
-        <p>社區共好與在地產業。梗枋社區學童參與、桂竹筍祭市集。綠色廚房連結友善生產者與消費者，帶動地方經濟與就業。</p>
-      </div>
-    </div>
-    <div class="quote-box">
-      <p>「頭城農場不再單純只是一處旅遊景點，而是逐步把經營重心從場域內部延伸到更大的山海環境中，以森川里海為核心，推動森林復育、漁港行動、餐桌轉譯與環境教育。」</p>
-    </div>
-  </div>
-</section>
-
-<!-- 07 酒莊 -->
-<section class="flip-page content-page" id="page-7">
-  <div class="page-inner">
-    <div class="page-header">
-      <div class="page-number-tag">SECTION 07</div>
-      <h2>藏酒酒莊深度介紹</h2>
-      <div class="divider"></div>
-      <p class="subtitle-text">Cang Jiu Winery — 台灣第一家六級化產業生態酒莊</p>
-    </div>
-    <div class="stats-modern">
-      <div class="stat-modern"><div class="num">台灣第一家</div><div class="label">六級化產業生態酒莊</div></div>
-      <div class="stat-modern gold-border"><div class="num">Grand Or</div><div class="label">2026國際金牌最高榮譽</div></div>
-      <div class="stat-modern"><div class="num">雪山泉水</div><div class="label">純淨釀造水源</div></div>
-      <div class="stat-modern gold-border"><div class="num">四季</div><div class="label">春梅 · 夏葡 · 秋米 · 冬棗</div></div>
-    </div>
-    <div class="content-grid-3">
-      <div class="content-card">
-        <span class="card-icon">🏠</span>
-        <h3>基本資訊</h3>
-        <p><strong>地址：</strong>宜蘭縣頭城鎮更新路126-50號<br><strong>電話：</strong>03-9778555<br><strong>Email：</strong>service@cjwine.com<br><strong>官網：</strong>www.cjwine.com<br><strong>LINE：</strong>@amb5687a</p>
-      </div>
-      <div class="content-card">
-        <span class="card-icon">🌱</span>
-        <h3>定位與理念</h3>
-        <p>台灣第一家結合「農業生產+釀酒加工+體驗休閒+健康療癒」的生態酒莊。致力將在地農產品升級再利用，打造六級化產業服務。核心精神：品佳釀、品美食、品自然、品生活。</p>
-      </div>
-      <div class="content-card">
-        <span class="card-icon">🏗️</span>
-        <h3>綠建築設計</h3>
-        <p>以綠建築概念為主軸，導入完整水系統將山區水源引進灌溉樹木與生態池。運用漂流木與浮標打造南洋庭園風格。深藏梗枋山上，臨濱海坐臥山谷當中。</p>
-      </div>
-    </div>
-    <div class="content-grid-2" style="margin-top:1rem;">
-      <div class="block-wide" style="margin-top:0;">
-        <h3>🍷 四季佳釀</h3>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.8rem;">
-          <div><strong style="color:#1a5c2e;">🌸 春梅</strong><br><span style="font-size:0.9rem;color:#555;">春日青梅酒，清新爽口</span></div>
-          <div><strong style="color:#1a5c2e;">☀️ 夏葡</strong><br><span style="font-size:0.9rem;color:#555;">夏日葡萄酒，季節限定</span></div>
-          <div><strong style="color:#1a5c2e;">🌾 秋米</strong><br><span style="font-size:0.9rem;color:#555;">秋日米酒，醇厚溫潤</span></div>
-          <div><strong style="color:#1a5c2e;">❄️ 冬棗</strong><br><span style="font-size:0.9rem;color:#555;">冬日金棗酒，果香濃郁</span></div>
-        </div>
-      </div>
-      <div class="block-wide" style="margin-top:0;">
-        <h3>🏆 龜山朝日-金棗酒</h3>
-        <p>嚴選莊園內老欉金棗，以壓榨、冷藏、浸放等複雜程序去苦澀、增香氣。百分之百純釀工法。口感金棗果香微酸，入喉回韻帶蜂蜜香氣。瓶身以龜山島景觀圖騰與跳躍海豚設計。水源來自雪山泉水，水質得天獨厚。</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- 08 得獎 -->
-<section class="flip-page content-page" id="page-8">
-  <div class="page-inner">
-    <div class="page-header">
-      <div class="page-number-tag">SECTION 08</div>
-      <h2>得獎紀錄與國際殊榮</h2>
-      <div class="divider"></div>
-      <p class="subtitle-text">台灣金柑釀造工藝站上世界舞台</p>
-    </div>
-    <div class="block-wide" style="border:2px solid #d4a01e;position:relative;">
-      <div style="position:absolute;top:-1px;right:2rem;background:#d4a01e;color:#fff;padding:0.3rem 1.5rem;border-radius:0 0 8px 8px;font-size:0.8rem;font-weight:700;letter-spacing:2px;">HIGHLIGHT</div>
-      <h3 style="border-bottom-color:#d4a01e;">🥇 2026年 Vinalies Internationales Grand Or 大金牌獎</h3>
-      <div class="content-grid-2" style="margin-top:0.5rem;">
-        <div>
-          <ul>
-            <li><strong>主辦單位：</strong>法國釀酒師協會（Œnologues de France）</li>
-            <li><strong>得獎酒款：</strong>藏金柑（金柑白蘭地 / Kumquat Brandy）</li>
-            <li><strong>獎項等級：</strong>Grand Or（大金牌獎）— 最高等級肯定</li>
-            <li><strong>競賽規模：</strong>全球40多國、90多支酒品參賽</li>
-            <li><strong>評審評價：</strong>果香濃郁、酸甜平衡、細緻層次，具金桔水果香與濃郁柚木香</li>
-          </ul>
-        </div>
-        <div>
-          <ul>
-            <li><strong>獲獎意義：</strong>台灣少數以金柑釀造獲國際大獎之代表作</li>
-            <li><strong>官方祝賀：</strong>代理縣長林茂盛親赴酒莊貼紅榜祝賀</li>
-            <li><strong>市場效應：</strong>國際訂單湧入，價格翻倍</li>
-            <li><strong>產業升級：</strong>金柑從加工食品躍升國際精品酒款</li>
-            <li><strong>窖藏年份：</strong>5至6年窖藏，短期供不應求</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <div class="content-grid-2" style="margin-top:1.2rem;">
-      <div class="content-card">
-        <h3>2024年 Vinalies Internationales 銀牌獎</h3>
-        <p><strong>得獎酒款：</strong>龜山朝日-金棗酒。該屆台灣農村酒莊共獲2特級金牌、5金牌、3銀牌，展現台灣農村酒莊製酒技術已達國際一流水準。</p>
-      </div>
-      <div class="content-card">
-        <h3>藏金柑白蘭地 — 產品特色</h3>
-        <p>嚴選宜蘭在地金柑，最佳成熟時節採收。細膩發酵與蒸餾工藝，完整保留果實香氣結構。酒體呈現優雅柑橘果香，細緻油脂氣息與柔順口感，層次分明、尾韻悠長。</p>
-      </div>
-    </div>
-    <div class="block-wide" style="margin-top:1rem;">
-      <h3>金柑產業背景</h3>
-      <div style="display:flex;gap:2rem;flex-wrap:wrap;">
-        <div style="flex:1;min-width:150px;text-align:center;padding:1rem;background:#f0f7f0;border-radius:8px;"><strong style="font-size:1.5rem;color:#1a5c2e;">194</strong><br><span style="font-size:0.85rem;color:#555;">公頃 · 宜蘭金柑種植面積</span></div>
-        <div style="flex:1;min-width:150px;text-align:center;padding:1rem;background:#f0f7f0;border-radius:8px;"><strong style="font-size:1.5rem;color:#d4a01e;">2,000</strong><br><span style="font-size:0.85rem;color:#555;">公噸 · 年產量</span></div>
-        <div style="flex:1;min-width:150px;text-align:center;padding:1rem;background:#f0f7f0;border-radius:8px;"><strong style="font-size:1.5rem;color:#1a5c2e;">Grand Or</strong><br><span style="font-size:0.85rem;color:#555;">2026國際最高榮譽</span></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- 09 體驗活動 -->
-<section class="flip-page content-page" id="page-9">
-  <div class="page-inner">
-    <div class="page-header">
-      <div class="page-number-tag">SECTION 09</div>
-      <h2>體驗活動與套裝行程</h2>
-      <div class="divider"></div>
-      <p class="subtitle-text">從半日遊到二日遊，從賞螢到品酒，從親子到企業</p>
-    </div>
-    <div class="content-grid-3">
-      <div class="content-card">
-        <span class="card-icon">🌙</span>
-        <h3>夏日賞螢季</h3>
-        <p>每年4/15-5/15限定。內容：自由遊園、傳統小吃、自助晚餐、賞螢生態講座。螢火蟲種類：擬紋螢、紅胸黑翅螢、黃緣螢、山窗螢。2026年加碼1-2-3活動。</p>
-      </div>
-      <div class="content-card">
-        <span class="card-icon">🎨</span>
-        <h3>DIY手作體驗</h3>
-        <p>葉拓T恤（將農場植物拓印在衣物上）、農產品DIY（金桔醋、金棗蜜餞）、草本手作DIY。可將農場自然元素化為專屬紀念品。</p>
-      </div>
-      <div class="content-card">
-        <span class="card-icon">📖</span>
-        <h3>環境教育課程</h3>
-        <p>通過認證之正式課程：水稻文化體驗（插秧、收割、曬稻穀、推石磨、做米食）、種菜樂趣多、生態探索。全年提供，對象涵蓋幼稚園至成人。</p>
-      </div>
-      <div class="content-card">
-        <span class="card-icon">🏡</span>
-        <h3>住宿體驗</h3>
-        <p>頭城休閒旅館，35間客房。一泊三食五體驗：住宿、早餐、晚餐、DIY、導覽。近期改善硬體設施更趨友善長者及幼童。</p>
-      </div>
-      <div class="content-card">
-        <span class="card-icon">🧗</span>
-        <h3>高空繩索訓練場域</h3>
-        <p>多處半室內多功能空間及高空繩索訓練場域，適合企業Team Building、團隊凝聚訓練、主管共識營。</p>
-      </div>
-      <div class="content-card">
-        <span class="card-icon">🍷</span>
-        <h3>藏酒酒莊體驗</h3>
-        <p>酒窖深度巡禮（專業侍酒導覽）、微醺品酒搭配無菜單料理饗宴、DIY梅燦星空酒手作、森林微醺盛宴。夏季限定「藏夏避暑提案」。</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- 10 在地餐桌 -->
-<section class="flip-page content-page" id="page-10">
-  <div class="page-inner">
-    <div class="page-header">
-      <div class="page-number-tag">SECTION 10</div>
-      <h2>在地餐桌與餐飲特色</h2>
-      <div class="divider"></div>
-      <p class="subtitle-text">用食物說土地的故事 — 從產地到餐桌的永續飲食革命</p>
-    </div>
-    <div class="stats-modern">
-      <div class="stat-modern"><div class="num">2022</div><div class="label">綠色餐飲指南大獎</div></div>
-      <div class="stat-modern gold-border"><div class="num">50+</div><div class="label">國內外團體參訪觀摩</div></div>
-      <div class="stat-modern"><div class="num">3</div><div class="label">種特色生態餐桌</div></div>
-      <div class="stat-modern gold-border"><div class="num">AEN</div><div class="label">亞洲生態旅遊創新大獎</div></div>
-    </div>
-    <div class="block-wide">
-      <h3>🌿 綠色廚房 — 大東北角永續實踐第一名</h3>
-      <p>農場自有品牌餐廳，連結在地友善生產者與消費者。使用農場有機菜園和宜蘭當地肉類海鮮，以低碳里程食物支持友善農作與漁業。</p>
-    </div>
-    <div class="content-grid-3" style="margin-top:1rem;">
-      <div class="content-card" style="text-align:center;">
-        <span style="font-size:2.5rem;">🌳</span>
-        <h3>鳥類的餐桌</h3>
-        <p>蜜漬金柑象徵果實、花蜜，代表樹冠層生態。鳥類把大樹當成遊樂場，以果實為食物。</p>
-      </div>
-      <div class="content-card" style="text-align:center;">
-        <span style="font-size:2.5rem;">🌸</span>
-        <h3>蜜蜂的餐桌</h3>
-        <p>運用海廢做成花朵容器，芳香萬壽菊涼糕沾蜂蜜模仿授粉，代表灌木層生態。</p>
-      </div>
-      <div class="content-card" style="text-align:center;">
-        <span style="font-size:2.5rem;">🐗</span>
-        <h3>山豬的餐桌</h3>
-        <p>黑糖粉象徵土壤，炸地瓜球模仿山豬掘地覓食，代表地面層生態。</p>
-      </div>
-    </div>
-    <div class="block-wide">
-      <h3>森川里海主題餐桌 — 生態廚師謝燦祥策劃</h3>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem 2rem;">
-        <div><strong style="color:#1a5c2e;">前菜：</strong>林下多層次綠沙拉（紅心芭樂、採集野菜、薄荷香草醬）</div>
-        <div><strong style="color:#1a5c2e;">湯品：</strong>古道裡生物多樣性（破布雞肉丸、桂竹筍、馬告澄清湯）</div>
-        <div><strong style="color:#1a5c2e;">主菜：</strong>海洋永續（大溪漁港一支釣鬼頭刀）</div>
-        <div><strong style="color:#1a5c2e;">主食：</strong>水稻米食（櫻花蝦與米苔目交織）</div>
-        <div><strong style="color:#1a5c2e;">甜點：</strong>大地饋贈（蜜漬金棗與金柑豆沙）</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- 11 案例：日月光 -->
-<section class="flip-page content-page" id="page-11">
-  <div class="page-inner">
-    <div class="page-header">
-      <div class="page-number-tag">SECTION 11</div>
-      <h2>案例分享：企業ESG合作</h2>
-      <div class="divider"></div>
-      <p class="subtitle-text">從森林復育到瀕危物種保育 — 企業與農場的永續夥伴關係</p>
-    </div>
-    <div class="content-grid-3">
-      <div class="content-card" style="text-align:center;">
-        <span style="font-size:2.5rem;">🌲</span>
-        <h3>森林復育</h3>
-        <p>2025年起半導體企業支持農場造林計畫。除伐撫育、種植台灣原生樹種，增加碳匯、提升生物多樣性。目標成為國土生態綠網行動節點。</p>
-      </div>
-      <div class="content-card" style="text-align:center;">
-        <span style="font-size:2.5rem;">🌱</span>
-        <h3>瀕危物種復育</h3>
-        <p>2026年4月啟動葦草蘭棲地復育，恢復東北角原生基因。企業基金會團隊親自參與栽種。作為關鍵蜜源植物，重建淺山生態系。</p>
-      </div>
-      <div class="content-card" style="text-align:center;">
-        <span style="font-size:2.5rem;">👨‍👩‍👧‍👦</span>
-        <h3>環境教育扎根</h3>
-        <p>在地國小師生走入林場，親手植樹認識瀕危物種。讓學童體悟「森林和大海是連在一起的」，從教育扎根培養下一代環境公民。</p>
-      </div>
-    </div>
-    <div class="block-wide">
-      <h3>ESG合作效益</h3>
-      <div class="content-grid-4" style="margin-top:0.5rem;">
-        <div style="text-align:center;padding:0.8rem;background:#f0f7f0;border-radius:8px;"><strong style="color:#1a5c2e;">碳抵換</strong><br><span style="font-size:0.8rem;color:#555;">與生物多樣性貢獻</span></div>
-        <div style="text-align:center;padding:0.8rem;background:#f0f7f0;border-radius:8px;"><strong style="color:#1a5c2e;">CSR實踐</strong><br><span style="font-size:0.8rem;color:#555;">企業社會責任落實</span></div>
-        <div style="text-align:center;padding:0.8rem;background:#f0f7f0;border-radius:8px;"><strong style="color:#1a5c2e;">員工參與</strong><br><span style="font-size:0.8rem;color:#555;">志工活動提升認同感</span></div>
-        <div style="text-align:center;padding:0.8rem;background:#f0f7f0;border-radius:8px;"><strong style="color:#1a5c2e;">量化數據</strong><br><span style="font-size:0.8rem;color:#555;">供ESG報告使用</span></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- 12 案例：海廢 -->
-<section class="flip-page content-page" id="page-12">
-  <div class="page-inner">
-    <div class="page-header">
-      <div class="page-number-tag">SECTION 12</div>
-      <h2>案例分享：大溪漁港海廢治理</h2>
-      <div class="divider"></div>
-      <p class="subtitle-text">Eco Box 循環箱 — 從漁港出發的海洋革命</p>
-    </div>
-    <div class="stats-modern">
-      <div class="stat-modern"><div class="num">6+</div><div class="label">年海廢帶回行動</div></div>
-      <div class="stat-modern gold-border"><div class="num">Eco Box</div><div class="label">循環箱取代保麗龍</div></div>
-      <div class="stat-modern"><div class="num">♻️</div><div class="label">海廢再生板材</div></div>
-      <div class="stat-modern gold-border"><div class="num">🏭</div><div class="label">海廢再生園區成立</div></div>
-    </div>
-    <div class="content-grid-2">
-      <div class="content-card">
-        <span style="font-size:2rem;">👨‍✈️</span>
-        <h3>發起人：船長黃士洋</h3>
-        <p>6年多前開始將撈到的海洋廢棄物帶回岸上，而非再次丟入海中。發現海中廢棄物一大部分為漁獲保冰用的保麗龍，決心從源頭解決問題。</p>
-        <h4>Eco Box 解決方案</h4>
-        <ul>
-          <li>以可重複使用的循環箱取代一次性保麗龍</li>
-          <li>海廢經熱壓處理變成再生板材</li>
-          <li>已成功設立海廢再生園區</li>
-        </ul>
-      </div>
-      <div class="content-card">
-        <span style="font-size:2rem;">🌿</span>
-        <h3>頭城農場的角色</h3>
-        <p>農場將大溪漁港納入走讀深度旅遊行程，帶客人體驗漁獲拍賣、實際使用Eco Box。由船長親自介紹撈捕海鮮與海洋廢棄物，親眼見證秤重、紀錄、回收。</p>
-        <h4>成果與意義</h4>
-        <ul>
-          <li>公私協力讓永續資源進入漁港最前線</li>
-          <li>建立山、川、里、海之間的流動關係</li>
-          <li>讓永續不再只是口號，而是人人能實踐的日常行動</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- 13 合作方案 -->
-<section class="flip-page content-page" id="page-13">
-  <div class="page-inner">
-    <div class="page-header">
-      <div class="page-number-tag">SECTION 13</div>
-      <h2>合作方案與企業對接</h2>
-      <div class="divider"></div>
-      <p class="subtitle-text">五種合作模式，滿足多元需求</p>
-    </div>
-    <div class="content-grid-3">
-      <div class="content-card" style="border-top:3px solid #1a5c2e;">
-        <span class="card-icon">📦</span>
-        <h3>方案A：ESG永續旅遊套裝</h3>
-        <p>「Unboxing TFL ESG」— 生態遊程、循環體驗、碳匯見學、餐桌轉譯。對應SDG 4、12、13、15。適合企業ESG報告與CSR需求。</p>
-      </div>
-      <div class="content-card" style="border-top:3px solid #2e8b57;">
-        <span class="card-icon">👨‍👩‍👧‍👦</span>
-        <h3>方案B：綠色員工旅遊</h3>
-        <p>一至二日行程，農場導覽、DIY體驗、生態旅遊。可客製化調整內容與行程長度。適合企業員工福利、家庭親子活動。</p>
-      </div>
-      <div class="content-card" style="border-top:3px solid #d4a01e;">
-        <span class="card-icon">🤝</span>
-        <h3>方案C：Team Building</h3>
-        <p>高空繩索訓練場域，團隊合作挑戰。環境教育課程融入團隊建立。適合企業團隊建立、主管共識營。</p>
-      </div>
-      <div class="content-card" style="border-top:3px solid #3a7d44;">
-        <span class="card-icon">📖</span>
-        <h3>方案D：環境教育訓練</h3>
-        <p>食農教育、森林療育、環境教育正式課程。通過認證之環境教育設施場所。適合人資教育訓練、員工成長課程。</p>
-      </div>
-      <div class="content-card" style="border-top:3px solid #b8860b;">
-        <span class="card-icon">♻️</span>
-        <h3>方案E：循環經濟夥伴</h3>
-        <p>員工志工、在地認養、廢棄物減量。長期合作框架，持續深化夥伴關係。適合重視永續供應鏈的企業。</p>
-      </div>
-    </div>
-    <div class="block-wide" style="margin-top:1.5rem;">
-      <h3>合作流程</h3>
-      <div style="display:flex;flex-wrap:wrap;gap:0.5rem;justify-content:center;">
-        <div style="background:#1a5c2e;color:#fff;padding:0.5rem 1rem;border-radius:8px;font-size:0.85rem;">Step 1 初步聯繫</div>
-        <div style="background:#2e8b57;color:#fff;padding:0.5rem 1rem;border-radius:8px;font-size:0.85rem;">Step 2 需求確認</div>
-        <div style="background:#3a7d44;color:#fff;padding:0.5rem 1rem;border-radius:8px;font-size:0.85rem;">Step 3 現地勘查</div>
-        <div style="background:#d4a01e;color:#fff;padding:0.5rem 1rem;border-radius:8px;font-size:0.85rem;">Step 4 客製提案</div>
-        <div style="background:#b8860b;color:#fff;padding:0.5rem 1rem;border-radius:8px;font-size:0.85rem;">Step 5 簽約確認</div>
-        <div style="background:#1a5c2e;color:#fff;padding:0.5rem 1rem;border-radius:8px;font-size:0.85rem;">Step 6 活動執行</div>
-        <div style="background:#8fbc8f;color:#1a5c2e;padding:0.5rem 1rem;border-radius:8px;font-size:0.85rem;font-weight:700;">Step 7 成效報告</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- 14 未來展望 -->
-<section class="flip-page content-page" id="page-14">
-  <div class="page-inner">
-    <div class="page-header">
-      <div class="page-number-tag">SECTION 14</div>
-      <h2>未來展望</h2>
-      <div class="divider"></div>
-      <p class="subtitle-text">從台灣東北角出發，邁向國際永續標竿</p>
-    </div>
-    <div class="content-grid-3">
-      <div class="content-card" style="text-align:center;border-top:4px solid #1a5c2e;">
-        <span style="font-size:2.5rem;">🎯</span>
-        <h3>短期目標<br><span style="font-size:0.85rem;color:#d4a01e;">2026-2027</span></h3>
-        <ul style="text-align:left;">
-          <li>深化森川里海四大面向整合</li>
-          <li>擴大企業ESG合作夥伴網絡</li>
-          <li>優化硬體設施全年齡友善</li>
-          <li>酒莊拓展國際市場通路</li>
-        </ul>
-      </div>
-      <div class="content-card" style="text-align:center;border-top:4px solid #2e8b57;">
-        <span style="font-size:2.5rem;">🚀</span>
-        <h3>中期目標<br><span style="font-size:0.85rem;color:#d4a01e;">2027-2029</span></h3>
-        <ul style="text-align:left;">
-          <li>建立休閒農業ESG標竿模式</li>
-          <li>碳抵換與生物多樣性信用機制</li>
-          <li>森川里海永續生活圈示範基地</li>
-          <li>國際永續旅遊經驗輸出</li>
-        </ul>
-      </div>
-      <div class="content-card" style="text-align:center;border-top:4px solid #d4a01e;">
-        <span style="font-size:2.5rem;">🌟</span>
-        <h3>長期願景</h3>
-        <ul style="text-align:left;">
-          <li>成為國土生態綠網關鍵節點</li>
-          <li>推動亞洲生態旅遊網絡經驗交流</li>
-          <li>建構企業、社區、環境三方共好</li>
-          <li>讓台灣休閒農業成為全球永續典範</li>
-        </ul>
-      </div>
-    </div>
-    <div class="quote-box">
-      <p>「從農場出發，串連山海，連結企業與社區，讓永續看得見、也吃得到。」</p>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<section class="flip-page footer-page" id="page-15">
-  <div class="page-inner">
-    <div class="footer-content">
-      <h2>聯絡資訊</h2>
-      <div class="footer-grid">
-        <div class="footer-card">
-          <h4>🌿 頭城休閒農場</h4>
-          <p>地址：宜蘭縣頭城鎮更新路125-1號</p>
-          <p>電話：03-9772222（08:00-17:30）</p>
-          <p>傳真：03-9778688</p>
-          <p>Email：tcfarminfo@gmail.com</p>
-          <p>官網：<a href="https://www.tcfarm.com.tw" target="_blank">www.tcfarm.com.tw</a></p>
-          <p>LINE：@tc039772000</p>
-        </div>
-        <div class="footer-card">
-          <h4>🍷 藏酒酒莊</h4>
-          <p>地址：宜蘭縣頭城鎮更新路126-50號</p>
-          <p>電話：03-9778555</p>
-          <p>Email：service@cjwine.com</p>
-          <p>官網：<a href="https://www.cjwine.com" target="_blank">www.cjwine.com</a></p>
-          <p>LINE：@amb5687a</p>
-        </div>
-        <div class="footer-card">
-          <h4>🚗 交通資訊</h4>
-          <p><strong>自行開車：</strong>國道5號頭城交流道下 → 台2線濱海公路往北 → 梗枋橋頭轉入更新路</p>
-          <p><strong>大眾運輸：</strong>台鐵頭城站或龜山站，轉搭計程車約10分鐘</p>
-          <p><strong>營業時間：</strong>全年無休，詢問處 08:30-17:30</p>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <p>© 2026 頭城休閒農場 Toucheng Leisure Farm &amp; 藏酒酒莊 Cang Jiu Winery</p>
-        <p style="margin-top:0.5rem;">歡迎蒞臨頭城農場與藏酒酒莊，體驗永續旅遊與在地釀造的美好</p>
-      </div>
-      <div class="footer-warning">🚫 禁止酒駕 · 未滿18歲禁止飲酒</div>
-    </div>
-  </div>
-</section>
-
+</div>
+</div>
+<div class="slide">
+<div class="slide-content">
+<div class="slide-header"><h2>頭城農場概覽</h2><p style="color:#666;font-size:.85rem">Toucheng Leisure Farm — 台灣東北角的永續農業典範</p></div>
+<div class="two-col">
+<div>
+<div class="card"><h4>📍 地理位置</h4><p>宜蘭縣頭城鎮更新路125-1號。倚山面海，位於東北角海岸與雪山山脈交界，距台北約2小時車程。屬東北角海岸國家風景區範圍。</p></div>
+<div class="card"><h4>📞 聯絡方式</h4><p>電話：03-9772222（08:00-17:30）<br>Email：tcfarminfo@gmail.com<br>官網：www.tcfarm.com.tw<br>LINE：@tc039772000</p></div>
+</div>
+<div>
+<div class="card"><h4>🏛️ 經營團隊與理念</h4><p><strong>創辦人：</strong>卓陳明女士（教育家出身，人稱卓媽媽）<br><strong>董事長：</strong>卓志宏（宜蘭縣觀光協會理事長）<br><strong>理念：</strong>健康、快樂、體驗、學習、永續<br><strong>集團：</strong>同集團另有藏酒酒莊</p></div>
+<div class="card"><h4>🎯 核心價值</h4><p><strong>三生一體：</strong>農村生態 · 農業生產 · 農民生活<br><strong>五大主軸：</strong>環境教育 · 戶外學習 · 健康養身 · 樂活慢遊 · 生命教育</p></div>
+</div>
+</div>
+<div style="display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-top:10px;text-align:center;font-size:.75rem">
+<div style="background:#e8f0e8;border-radius:6px;padding:8px 4px"><div style="font-weight:900;color:#1a3c1a">1979</div>創立</div>
+<div style="background:#e8f0e8;border-radius:6px;padding:8px 4px"><div style="font-weight:900;color:#1a3c1a">120</div>公頃</div>
+<div style="background:#e8f0e8;border-radius:6px;padding:8px 4px"><div style="font-weight:900;color:#1a3c1a">3</div>條溪流</div>
+<div style="background:#e8f0e8;border-radius:6px;padding:8px 4px"><div style="font-weight:900;color:#1a3c1a">2</div>公頃菜園</div>
+<div style="background:#e8f0e8;border-radius:6px;padding:8px 4px"><div style="font-weight:900;color:#1a3c1a">50</div>公頃竹林</div>
+<div style="background:#e8f0e8;border-radius:6px;padding:8px 4px"><div style="font-weight:900;color:#1a3c1a">500+</div>棵金棗樹</div>
+</div>
+</div>
+<div class="slide-num">壹</div>
+</div>
+<div class="slide">
+<div class="slide-content">
+<div class="slide-header"><h2>創立歷史與轉型歷程</h2><p style="color:#666;font-size:.85rem">從傳統農田到永續標竿 — 半世紀演化</p></div>
+<div class="two-col">
+<div>
+<div class="card"><h4>1979-1990 · 生產型農場</h4><p>傳統農業生產為主，種植果樹、蔬菜。創辦人卓陳明女士原為教師，帶著孩子來到宜蘭落地生根，開創農場事業。</p></div>
+<div class="card"><h4>1990-2000 · 休閒農場轉型</h4><p>順應休閒農業浪潮，開放觀光提供農村體驗。成為北台灣校外教學熱門地點，赤腳插秧、餵牛吃草成為經典童年回憶。</p></div>
+<div class="card"><h4>2000-2015 · 深度體驗旅遊</h4><p>導入DIY手作、生態導覽、住宿餐飲。建立環境教育課程體系，從觀光升級到深度生態旅遊。</p></div>
+</div>
+<div>
+<div class="card"><h4>2015-2019 · 接軌國際永續標準</h4><p>2018年取得GSTC全球永續旅遊認證，為東北角國家風景區首個國際永續認證旅館。導入系統化永續管理架構。</p></div>
+<div class="card"><h4>2020-至今 · ESG與森川里海</h4><p>2021年取得環保標章旅館與綠色餐廳，2023年取得GTS綠色旅行標章。推動森川里海整合策略，從休閒農場進化為山海環境守護者。</p></div>
+</div>
+</div>
+</div>
+<div class="slide-num">貳</div>
+</div>
+<div class="slide">
+<div class="slide-content">
+<div class="slide-header"><h2>地理環境與自然資源</h2><p style="color:#666;font-size:.85rem">雪山山脈與太平洋交會的得天獨厚之地</p></div>
+<div class="grid">
+<div class="card"><h4>🏔️ 地形地貌</h4><p>位於雪山山脈山腳下，海拔50-300公尺。保留原始次生林，林相包含桂竹林（50公頃）、相思樹林、楓香林及果園。屬東北角海岸國家風景區。</p></div>
+<div class="card"><h4>💧 水資源系統</h4><p>三條溪流貫穿：平溪、桃子林溪、梗枋溪（國土生態綠網重點保育）。雪山山脈天然水源，溪畔滿布野薑花，夏季飄香為農場芳香秘境。</p></div>
+<div class="card"><h4>🌿 植物資源</h4><p>50公頃桂竹林（每年清明桂竹筍祭）、500多棵金桔金棗樹、2公頃有機菜園、水稻田、果園。蔬菜供應餐廳及鄰近小學營養午餐。</p></div>
+<div class="card"><h4>🦌 動物生態</h4><p>紅外線監測：山羌、山豬、獼猴、食蟹獴、穿山甲、台灣藍鵲。螢火蟲四種復育：擬紋螢、紅胸黑翅螢、黃緣螢、山窗螢。大白斑蝶、翡翠樹蛙等。</p></div>
+</div>
+<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:8px;text-align:center;font-size:.8rem">
+<div style="background:#e8f0e8;border-radius:6px;padding:10px"><strong>50</strong> 公頃桂竹林</div>
+<div style="background:#e8f0e8;border-radius:6px;padding:10px"><strong>500+</strong> 棵金桔金棗</div>
+<div style="background:#e8f0e8;border-radius:6px;padding:10px"><strong>2</strong> 公頃有機菜園</div>
+<div style="background:#e8f0e8;border-radius:6px;padding:10px"><strong>4</strong> 種螢火蟲復育</div>
+</div>
+</div>
+<div class="slide-num">參</div>
+</div>
+<div class="slide">
+<div class="slide-content">
+<div class="slide-header"><h2>認證體系與國際肯定</h2><p style="color:#666;font-size:.85rem">台灣少數同時取得多項國際與國內永續認證的休閒農場</p></div>
+<div class="grid">
+<div class="card"><h4>🌍 GSTC 全球永續旅遊認證</h4><p>由UN Foundation、UNWTO、Rainforest Alliance於2008年共同發起。2018年通過Control Union稽核，2019年獲頒。東北角首個國際永續旅館認證。證書編號：C863511 GSTC-07-2019</p></div>
+<div class="card"><h4>✅ GTS 綠色旅行標章</h4><p>荷蘭創立，專為中小型旅宿設計。2023年取得。2026年將遵循歐盟強化消費者綠色轉型指令進行轉換升級。</p></div>
+<div class="card"><h4>♻️ 環保標章（環境部）</h4><p>2021年取得環保標章旅館與綠色餐廳。落實廢棄物回收、熱泵鍋爐節能、太陽能熱水系統、汙水處理監測。</p></div>
+<div class="card"><h4>📚 環境教育設施場所</h4><p>核准字號：(102)環署訓證字第EC103001-02號。核准日期：2023/3/18，有效期限：2028/3/17。課程對象：幼稚園至大學/成人。</p></div>
+<div class="card"><h4>🏆 AEN生態旅遊創新大獎</h4><p>亞洲生態旅遊網絡頒發，以綠色廚房與永續餐桌設計獲獎。另獲第一屆大東北角永續實踐故事綠色業者第一名（2025年）。</p></div>
+</div>
+</div>
+<div class="slide-num">肆</div>
+</div>
+<div class="slide">
+<div class="slide-content">
+<div class="slide-header"><h2>永續發展與ESG實踐</h2><p style="color:#666;font-size:.85rem">環境 Environmental × 社會 Social × 治理 Governance</p></div>
+<div class="two-col">
+<div>
+<div class="card"><h4>🌲 環境面 E</h4><p><strong>森林復育：</strong>與林業署合作，5年種植20,000+株原生樹種。日月光投控支持造林。<br><strong>螢火蟲復育：</strong>廢棄菇包→復育介質→螢火蟲棲地→生態旅遊循環。<br><strong>瀕危物種：</strong>2026年4月啟動葦草蘭（鳥仔花）復育。<br><strong>海廢治理：</strong>Eco Box循環箱取代保麗龍，海廢再生板材。<br><strong>廚餘循環：</strong>蚯蚓箱系統→有機微生物土壤→回歸菜園。</p></div>
+</div>
+<div>
+<div class="card"><h4>👥 社會面 S</h4><p><strong>環境教育：</strong>通過認證設施場所，全年提供食農教育、自然生態、文化資產課程。<br><strong>特色生態餐桌：</strong>鳥類、蜜蜂、山豬三種餐桌，用食物說生態故事，獲AEN創新大獎。<br><strong>社區參與：</strong>梗枋學童植樹、桂竹筍祭市集、蔬菜供應小學營養午餐。</p></div>
+<div class="card"><h4>🏛️ 治理面 G</h4><p><strong>企業ESG合作：</strong>日月光投控造林與瀕危物種保育。<br><strong>SDGs對應：</strong>SDG4優質教育、SDG12責任消費、SDG13氣候行動、SDG15陸域生態。<br><strong>國際交流：</strong>50團以上國內外參訪、5場駐台使節交流、GSTC亞太會議。</p></div>
+</div>
+</div>
+</div>
+<div class="slide-num">伍</div>
+</div>
+<div class="slide">
+<div class="slide-content">
+<div class="slide-header"><h2>森川里海核心策略</h2><p style="color:#666;font-size:.85rem">從農場出發，連結山海，串聯企業與社區</p></div>
+<div class="grid">
+<div class="card" style="text-align:center"><h4>🌲 森林 森</h4><p>山林復育與棲地連結。原生樹種種植、除伐撫育、碳匯行動。紅外線監測山羌、穿山甲、食蟹獴。目標成為國土生態綠網行動節點。</p></div>
+<div class="card" style="text-align:center"><h4>🏞️ 溪流 川</h4><p>水域生態守護。梗枋溪列國土生態綠網重點保育。定期水質檢測、生物監測。溪畔環境教育：溪流靜心疊石、花草曼陀羅。</p></div>
+<div class="card" style="text-align:center"><h4>🌊 海洋 海</h4><p>海廢治理與漁業支持。Eco Box循環箱、海廢再生板材。深度旅遊：漁獲拍賣、Eco Box體驗。支持定置漁網、一支釣等永續漁法。</p></div>
+<div class="card" style="text-align:center"><h4>🌾 里山 里</h4><p>社區共好與在地產業。梗枋社區學童參與、桂竹筍祭市集。綠色廚房連結友善生產者與消費者，帶動地方經濟。</p></div>
+</div>
+<div class="box">「頭城農場不再單純只是一處旅遊景點，而是逐步把經營重心從場域內部延伸到更大的山海環境中，以森川里海為核心，推動森林復育、漁港行動、餐桌轉譯與環境教育。」</div>
+</div>
+<div class="slide-num">陸</div>
+</div>
+<div class="slide">
+<div class="slide-content">
+<div class="slide-header"><h2>藏酒酒莊深度介紹</h2><p style="color:#666;font-size:.85rem">Cang Jiu Winery — 台灣第一家六級化產業生態酒莊</p></div>
+<div class="two-col">
+<div>
+<div class="card"><h4>🏠 基本資訊</h4><p>地址：宜蘭縣頭城鎮更新路126-50號<br>電話：03-9778555<br>Email：service@cjwine.com<br>官網：www.cjwine.com<br>LINE：@amb5687a</p></div>
+<div class="card"><h4>🌱 定位與理念</h4><p>台灣第一家結合「農業生產+釀酒加工+體驗休閒+健康療癒」的生態酒莊。核心精神：品佳釀、品美食、品自然、品生活。</p></div>
+<div class="card"><h4>🏗️ 綠建築設計</h4><p>導入完整水系統引進山區水源。運用漂流木與浮標打造南洋庭園風格。深藏梗枋山上，臨濱海坐臥山谷當中。</p></div>
+</div>
+<div>
+<div class="card"><h4>🍷 四季佳釀</h4><div style="display:grid;grid-template-columns:1fr 1fr;gap:6px"><div><strong>🌸 春梅</strong> — 青梅酒</div><div><strong>☀️ 夏葡</strong> — 葡萄酒</div><div><strong>🌾 秋米</strong> — 米酒</div><div><strong>❄️ 冬棗</strong> — 金棗酒</div></div></div>
+<div class="card"><h4>🏆 龜山朝日-金棗酒</h4><p>嚴選莊園老欉金棗，百分之百純釀工法。口感金棗果香微酸，入喉回韻帶蜂蜜香氣。瓶身龜山島景觀圖騰設計。水源來自雪山泉水。</p></div>
+</div>
+</div>
+<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px;text-align:center;font-size:.75rem">
+<div style="background:#e8f0e8;border-radius:6px;padding:8px 4px"><strong>台灣第一家</strong><br>六級化生態酒莊</div>
+<div style="background:#f5e8c8;border-radius:6px;padding:8px 4px"><strong>Grand Or</strong><br>2026國際金牌</div>
+<div style="background:#e8f0e8;border-radius:6px;padding:8px 4px"><strong>雪山泉水</strong><br>純淨釀造水源</div>
+<div style="background:#e8f0e8;border-radius:6px;padding:8px 4px"><strong>四季</strong><br>春梅夏葡秋米冬棗</div>
+</div>
+</div>
+<div class="slide-num">柒</div>
+</div>
+<div class="slide">
+<div class="slide-content">
+<div class="slide-header"><h2>得獎紀錄與國際殊榮</h2><p style="color:#666;font-size:.85rem">台灣金柑釀造工藝站上世界舞台</p></div>
+<div class="box" style="background:#f5e8c8;border-left-color:#b8860b"><h4 style="margin:0 0 6px">🥇 2026年 Vinalies Internationales Grand Or 大金牌獎</h4>
+<div class="two-col" style="font-size:.85rem">
+<div><strong>得獎酒款：</strong>藏金柑（金柑白蘭地）<br><strong>主辦：</strong>法國釀酒師協會<br><strong>獎項：</strong>Grand Or 最高等級</div>
+<div><strong>競賽規模：</strong>全球40多國參賽<br><strong>官方祝賀：</strong>代理縣長林茂盛親赴貼紅榜<br><strong>窖藏年份：</strong>5至6年</div>
+</div>
+</div>
+<div class="grid">
+<div class="card"><h4>2024年 Vinalies 銀牌獎</h4><p>得獎酒款：龜山朝日-金棗酒。該屆台灣農村酒莊共獲2特級金牌、5金牌、3銀牌，展現台灣農村酒莊國際一流水準。</p></div>
+<div class="card"><h4>藏金柑白蘭地產品特色</h4><p>嚴選宜蘭在地金柑，細膩發酵與蒸餾工藝。酒體呈現優雅柑橘果香，細緻油脂氣息，層次分明、尾韻悠長。</p></div>
+<div class="card"><h4>金柑產業背景</h4><p>宜蘭金柑種植面積194公頃，年產量約2,000公噸。藏金柑白蘭地獲Grand Or後，國際訂單湧入，金柑從加工食品躍升國際精品酒款。</p></div>
+</div>
+</div>
+<div class="slide-num">捌</div>
+</div>
+<div class="slide">
+<div class="slide-content">
+<div class="slide-header"><h2>體驗活動與套裝行程</h2><p style="color:#666;font-size:.85rem">從半日遊到二日遊，從賞螢到品酒</p></div>
+<div class="grid">
+<div class="card"><h4>🌙 夏日賞螢季</h4><p>每年4/15-5/15限定。內容：自由遊園、傳統小吃、自助晚餐、賞螢講座。四種螢火蟲：擬紋螢、紅胸黑翅螢、黃緣螢、山窗螢。</p></div>
+<div class="card"><h4>🎨 DIY手作體驗</h4><p>葉拓T恤（植物拓印）、農產品DIY（金桔醋、金棗蜜餞）、草本手作。可將農場自然元素化為專屬紀念品。</p></div>
+<div class="card"><h4>📖 環境教育課程</h4><p>通過認證正式課程：水稻文化體驗（插秧、收割、碾米）、種菜樂趣多、生態探索。全年提供，對象涵蓋幼稚園至成人。</p></div>
+<div class="card"><h4>🏡 住宿體驗</h4><p>頭城休閒旅館35間客房。一泊三食五體驗：住宿、早餐、晚餐、DIY、導覽。近期改善硬體設施更趨友善長者及幼童。</p></div>
+<div class="card"><h4>🧗 高空繩索訓練</h4><p>多處多功能空間及高空繩索訓練場域，適合企業Team Building、團隊凝聚訓練、主管共識營。</p></div>
+<div class="card"><h4>🍷 藏酒酒莊體驗</h4><p>酒窖深度巡禮、微醺品酒搭配無菜單料理、DIY梅燦星空酒手作、森林微醺盛宴。夏季限定藏夏避暑提案。</p></div>
+</div>
+</div>
+<div class="slide-num">玖</div>
+</div>
+<div class="slide">
+<div class="slide-content">
+<div class="slide-header"><h2>在地餐桌與餐飲特色</h2><p style="color:#666;font-size:.85rem">用食物說土地的故事 — 從產地到餐桌的永續飲食革命</p></div>
+<div class="box"><h4 style="margin:0 0 4px">🌿 綠色廚房</h4><p>農場自有品牌餐廳，連結在地友善生產者與消費者。使用農場有機菜園和宜蘭當地肉類海鮮。獲綠色餐飲指南大獎、大東北角永續實踐第一名。</p></div>
+<div class="grid">
+<div class="card" style="text-align:center"><h4>🌳 鳥類的餐桌</h4><p>蜜漬金柑象徵果實、花蜜，代表樹冠層生態。鳥類把大樹當成遊樂場，以果實為食物。</p></div>
+<div class="card" style="text-align:center"><h4>🌸 蜜蜂的餐桌</h4><p>運用海廢做成花朵容器，芳香萬壽菊涼糕沾蜂蜜模仿授粉，代表灌木層生態。</p></div>
+<div class="card" style="text-align:center"><h4>🐗 山豬的餐桌</h4><p>黑糖粉象徵土壤，炸地瓜球模仿山豬掘地覓食，代表地面層生態。</p></div>
+</div>
+<div class="box"><h4 style="margin:0 0 6px">🍽️ 森川里海主題餐桌 — 生態廚師謝燦祥策劃</h4><div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:.82rem"><div><strong>前菜：</strong>林下多層次綠沙拉</div><div><strong>湯品：</strong>古道裡生物多樣性</div><div><strong>主菜：</strong>海洋永續鬼頭刀</div><div><strong>主食：</strong>櫻花蝦米苔目</div><div><strong>甜點：</strong>蜜漬金棗金柑豆沙</div></div></div>
+</div>
+<div class="slide-num">拾</div>
+</div>
+<div class="slide">
+<div class="slide-content">
+<div class="slide-header"><h2>案例分享：企業ESG合作</h2><p style="color:#666;font-size:.85rem">從森林復育到瀕危物種保育</p></div>
+<div class="grid">
+<div class="card" style="text-align:center"><h4>🌲 森林復育</h4><p>2025年起半導體企業支持農場造林計畫。除伐撫育、種植台灣原生樹種，增加碳匯、提升生物多樣性。目標成為國土生態綠網行動節點。</p></div>
+<div class="card" style="text-align:center"><h4>🌱 瀕危物種復育</h4><p>2026年4月啟動葦草蘭棲地復育，恢復東北角原生基因。企業基金會團隊親自參與栽種。作為關鍵蜜源植物，重建淺山生態系。</p></div>
+<div class="card" style="text-align:center"><h4>👨‍👩‍👧‍👦 環境教育扎根</h4><p>在地國小師生走入林場，親手植樹認識瀕危物種。讓學童體悟「森林和大海是連在一起的」，從教育扎根培養下一代環境公民。</p></div>
+</div>
+<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:10px;text-align:center;font-size:.8rem">
+<div style="background:#e8f0e8;border-radius:8px;padding:12px 8px"><strong>碳抵換</strong><br>與生物多樣性貢獻</div>
+<div style="background:#e8f0e8;border-radius:8px;padding:12px 8px"><strong>CSR實踐</strong><br>企業社會責任落實</div>
+<div style="background:#e8f0e8;border-radius:8px;padding:12px 8px"><strong>員工參與</strong><br>志工活動提升認同</div>
+<div style="background:#e8f0e8;border-radius:8px;padding:12px 8px"><strong>量化數據</strong><br>供ESG報告使用</div>
+</div>
+</div>
+<div class="slide-num">拾壹</div>
+</div>
+<div class="slide">
+<div class="slide-content">
+<div class="slide-header"><h2>案例分享：大溪漁港海廢治理</h2><p style="color:#666;font-size:.85rem">Eco Box 循環箱 — 從漁港出發的海洋革命</p></div>
+<div class="two-col">
+<div>
+<div class="card"><h4>👨‍✈️ 發起人：船長黃士洋</h4><p>6年多前開始將撈到的海洋廢棄物帶回岸上。發現海中廢棄物一大部分為漁獲保冰用的保麗龍，決心從源頭解決問題。</p><h4>Eco Box 解決方案</h4><ul style="font-size:.85rem"><li>可重複使用的循環箱取代一次性保麗龍</li><li>海廢經熱壓處理變成再生板材</li><li>已成功設立海廢再生園區</li></ul></div>
+</div>
+<div>
+<div class="card"><h4>🌿 頭城農場的角色</h4><p>農場將大溪漁港納入走讀深度旅遊行程，帶客人體驗漁獲拍賣、實際使用Eco Box。由船長親自介紹撈捕海鮮與海洋廢棄物，親眼見證秤重、紀錄、回收。</p><h4>成果與意義</h4><ul style="font-size:.85rem"><li>公私協力讓永續資源進入漁港最前線</li><li>建立山、川、里、海之間的流動關係</li><li>讓永續不再只是口號，而是人人能實踐的日常行動</li></ul></div>
+</div>
+</div>
+<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px;text-align:center;font-size:.75rem">
+<div style="background:#e8f0e8;border-radius:6px;padding:8px"><strong>6+</strong> 年海廢帶回行動</div>
+<div style="background:#e8f0e8;border-radius:6px;padding:8px"><strong>Eco Box</strong> 循環箱</div>
+<div style="background:#e8f0e8;border-radius:6px;padding:8px"><strong>♻️</strong> 海廢再生板材</div>
+<div style="background:#e8f0e8;border-radius:6px;padding:8px"><strong>🏭</strong> 海廢再生園區</div>
+</div>
+</div>
+<div class="slide-num">拾貳</div>
+</div>
+<div class="slide">
+<div class="slide-content">
+<div class="slide-header"><h2>合作方案與企業對接</h2><p style="color:#666;font-size:.85rem">五種合作模式，滿足多元需求</p></div>
+<div class="grid">
+<div class="card" style="border-top:3px solid #1a3c1a"><h4>📦 方案A：ESG永續旅遊</h4><p>生態遊程、循環體驗、碳匯見學、餐桌轉譯。對應SDG 4、12、13、15。適合企業ESG報告與CSR需求。</p></div>
+<div class="card" style="border-top:3px solid #3d7a3d"><h4>👨‍👩‍👧‍👦 方案B：綠色員工旅遊</h4><p>一至二日行程，農場導覽、DIY體驗、生態旅遊。可客製化調整。適合企業員工福利、家庭親子活動。</p></div>
+<div class="card" style="border-top:3px solid #b8860b"><h4>🤝 方案C：Team Building</h4><p>高空繩索訓練場域，團隊合作挑戰。環境教育課程融入團隊建立。適合主管共識營。</p></div>
+<div class="card" style="border-top:3px solid #4a7c4a"><h4>📖 方案D：環境教育訓練</h4><p>食農教育、森林療育、環境教育正式課程。通過認證之環境教育設施場所。適合人資教育訓練。</p></div>
+<div class="card" style="border-top:3px solid #8f6b1a"><h4>♻️ 方案E：循環經濟夥伴</h4><p>員工志工、在地認養、廢棄物減量。長期合作框架。適合重視永續供應鏈的企業。</p></div>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:10px">
+<div style="background:#1a3c1a;color:#fff;padding:4px 12px;border-radius:20px;font-size:.75rem">Step 1 初步聯繫</div>
+<div style="background:#2d5a2d;color:#fff;padding:4px 12px;border-radius:20px;font-size:.75rem">Step 2 需求確認</div>
+<div style="background:#3d7a3d;color:#fff;padding:4px 12px;border-radius:20px;font-size:.75rem">Step 3 現地勘查</div>
+<div style="background:#b8860b;color:#fff;padding:4px 12px;border-radius:20px;font-size:.75rem">Step 4 客製提案</div>
+<div style="background:#8f6b1a;color:#fff;padding:4px 12px;border-radius:20px;font-size:.75rem">Step 5 簽約確認</div>
+<div style="background:#1a3c1a;color:#fff;padding:4px 12px;border-radius:20px;font-size:.75rem">Step 6 活動執行</div>
+<div style="background:#6a9e6a;color:#1a3c1a;padding:4px 12px;border-radius:20px;font-size:.75rem;font-weight:700">Step 7 成效報告</div>
+</div>
+</div>
+<div class="slide-num">拾參</div>
+</div>
+<div class="slide">
+<div class="slide-content">
+<div class="slide-header"><h2>未來展望</h2><p style="color:#666;font-size:.85rem">從台灣東北角出發，邁向國際永續標竿</p></div>
+<div class="grid">
+<div class="card" style="text-align:center;border-top:4px solid #1a3c1a"><h4>🎯 短期目標 2026-2027</h4><ul style="text-align:left;font-size:.85rem"><li>深化森川里海四大面向整合</li><li>擴大企業ESG合作夥伴網絡</li><li>優化硬體設施全年齡友善</li><li>酒莊拓展國際市場通路</li></ul></div>
+<div class="card" style="text-align:center;border-top:4px solid #3d7a3d"><h4>🚀 中期目標 2027-2029</h4><ul style="text-align:left;font-size:.85rem"><li>建立休閒農業ESG標竿模式</li><li>碳抵換與生物多樣性信用機制</li><li>森川里海永續生活圈示範基地</li><li>國際永續旅遊經驗輸出</li></ul></div>
+<div class="card" style="text-align:center;border-top:4px solid #b8860b"><h4>🌟 長期願景</h4><ul style="text-align:left;font-size:.85rem"><li>成為國土生態綠網關鍵節點</li><li>推動亞洲生態旅遊網絡經驗交流</li><li>建構企業、社區、環境三方共好</li><li>讓台灣休閒農業成為全球永續典範</li></ul></div>
+</div>
+<div class="box">「從農場出發，串連山海，連結企業與社區，讓永續看得見、也吃得到。」</div>
+</div>
+<div class="slide-num">拾肆</div>
+</div>
+<div class="slide end">
+<div class="slide-content" style="max-width:700px">
+<h1 style="color:#fff">感謝您的關注</h1>
+<p style="color:#d4e8d4;font-size:1.1rem;margin:20px 0">歡迎蒞臨頭城農場與藏酒酒莊<br>體驗永續旅遊與在地釀造的美好</p>
+<div class="two-col" style="margin:32px 0;text-align:left;font-size:.85rem">
+<div style="color:rgba(255,255,255,.8)">
+<h4 style="color:#f0d080;margin:0 0 8px">🌿 頭城休閒農場</h4>
+<p style="color:rgba(255,255,255,.7)">宜蘭縣頭城鎮更新路125-1號<br>03-9772222<br>www.tcfarm.com.tw<br>LINE：@tc039772000</p>
+</div>
+<div style="color:rgba(255,255,255,.8)">
+<h4 style="color:#f0d080;margin:0 0 8px">🍷 藏酒酒莊</h4>
+<p style="color:rgba(255,255,255,.7)">宜蘭縣頭城鎮更新路126-50號<br>03-9778555<br>www.cjwine.com<br>LINE：@amb5687a</p>
+</div>
+</div>
+<p style="color:rgba(255,255,255,.35);font-size:.7rem;margin-top:20px">© 2026 頭城休閒農場 &amp; 藏酒酒莊</p>
+<p style="color:rgba(255,255,255,.35);font-size:.7rem">🚫 禁止酒駕 · 未滿18歲禁止飲酒</p>
+</div>
+</div>
+</div>
+<div class="nav">
+<button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">‹</button>
+<span class="counter" id="counter">1 / 16</span>
+<div class="progress"><div class="progress-bar" id="progressBar" style="width:0%"></div></div>
+<span class="page-info" id="pageInfo"></span>
+<button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">›</button>
+</div>
+</div>
 <script>
-(function() {
-  const pages = document.querySelectorAll('.flip-page');
-  const nav = document.getElementById('pageNav');
-  const pageNames = [
-    '封面','農場概覽','歷史轉型','自然環境','認證體系',
-    'ESG實踐','森川里海','酒莊介紹','得獎紀錄','體驗活動',
-    '在地餐桌','ESG案例','海廢案例','合作方案','未來展望','聯絡資訊'
-  ];
-  pages.forEach((page, i) => {
-    const a = document.createElement('a');
-    a.href = '#page-' + i;
-    a.title = pageNames[i] || '';
-    const tooltip = document.createElement('span');
-    tooltip.className = 'tooltip';
-    tooltip.textContent = pageNames[i] || '';
-    a.appendChild(tooltip);
-    nav.appendChild(a);
-  });
-  const links = nav.querySelectorAll('a');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const id = entry.target.id;
-        const idx = parseInt(id.split('-')[1]);
-        links.forEach((link, i) => {
-          link.classList.toggle('active', i === idx);
-        });
-      }
-    });
-  }, { threshold: 0.5 });
-  pages.forEach(page => observer.observe(page));
-})();
-
-function scrollPage(dir) {
-  const pages = document.querySelectorAll('.flip-page');
-  let current = 0;
-  pages.forEach((p, i) => {
-    const rect = p.getBoundingClientRect();
-    if (rect.top <= window.innerHeight/2 && rect.bottom >= window.innerHeight/2) {
-      current = i;
-    }
-  });
-  const target = Math.max(0, Math.min(pages.length-1, current + dir));
-  pages[target].scrollIntoView({ behavior: 'smooth' });
-}
-
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'ArrowDown' || e.key === 'ArrowRight') { e.preventDefault(); scrollPage(1); }
-  if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') { e.preventDefault(); scrollPage(-1); }
-});
+const slideNames=['封面','農場概覽','歷史轉型','自然環境','認證體系','ESG實踐','森川里海','酒莊介紹','得獎紀錄','體驗活動','在地餐桌','ESG案例','海廢案例','合作方案','未來展望','結尾'];
+let cur=0,total=0;
+function init(){const s=document.getElementById('slides');total=s.children.length;update();document.addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key==='ArrowDown'){e.preventDefault();changeSlide(1)}else if(e.key==='ArrowLeft'||e.key==='ArrowUp'){e.preventDefault();changeSlide(-1)}});let t=0;document.addEventListener('touchstart',function(e){t=e.changedTouches[0].screenX});document.addEventListener('touchend',function(e){const d=t-e.changedTouches[0].screenX;if(Math.abs(d)>50)changeSlide(d>0?1:-1)})}
+function changeSlide(d){const s=document.getElementById('slides');total=s.children.length;const n=cur+d;if(n<0||n>=total)return;cur=n;s.style.transform='translateX(-'+(cur*100)+'%)';update()}
+function update(){document.getElementById('counter').textContent=(cur+1)+' / '+total;document.getElementById('progressBar').style.width=((cur+1)/total*100)+'%';document.getElementById('pageInfo').textContent=slideNames[cur]||'';document.getElementById('prevBtn').disabled=cur===0;document.getElementById('nextBtn').disabled=cur===total-1}
+init()
 </script>
-
 </body>
 </html>
