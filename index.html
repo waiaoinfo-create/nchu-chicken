@@ -12,11 +12,11 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Noto Sans TC','Mic
 .deck{width:100%;height:100%;position:relative;overflow:hidden}
 .track{display:flex;height:100%;transition:transform .55s cubic-bezier(.25,.46,.45,.94)}
 
-.slide{flex:0 0 100%;height:100%;overflow-y:auto;display:flex;flex-direction:column;justify-content:center;background:linear-gradient(135deg,#f7f3ea 0%,#f0ece0 100%);padding:36px 48px 76px;position:relative}
-.slide::-webkit-scrollbar{width:5px}
-.slide::-webkit-scrollbar-thumb{background:#bbb;border-radius:3px}
+.slide{flex:0 0 100%;height:100%;overflow-y:auto;display:flex;flex-direction:column;justify-content:center;background:linear-gradient(135deg,#f7f3ea 0%,#f0ece0 100%);padding:40px 52px 80px;position:relative}
+.slide::-webkit-scrollbar{width:6px}
+.slide::-webkit-scrollbar-thumb{background:#999;border-radius:3px}
 .s-inner{max-width:1100px;width:100%;margin:0 auto;flex:1;display:flex;flex-direction:column;justify-content:center}
-.s-num{position:absolute;top:18px;right:28px;font-size:3.2rem;font-weight:900;color:rgba(26,60,26,.06);pointer-events:none;letter-spacing:2px}
+.s-num{position:absolute;top:20px;right:30px;font-size:3.8rem;font-weight:900;color:rgba(26,60,26,.06);pointer-events:none;letter-spacing:2px}
 
 .cover{position:relative;background:transparent;justify-content:center;align-items:center;text-align:center;padding:36px}
 .cover-bg{position:absolute;inset:0;background:linear-gradient(135deg,#0d3b1e 0%,#1a5c2e 30%,#2e8b57 60%,#1a5c2e 100%);z-index:0}
@@ -27,99 +27,106 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Noto Sans TC','Mic
 .cover h1 .gold{color:#d4a01e;margin:0 .3rem}
 .cover-sub{font-size:clamp(1.1rem,1.8vw,1.6rem);color:#8fbc8f;font-weight:300;letter-spacing:2px;margin-bottom:1.2rem}
 .cover-desc{font-size:.95rem;color:rgba(255,255,255,.65);line-height:1.9;max-width:750px;margin:0 auto}
-.cover-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:.8rem;margin-top:2rem;max-width:850px;margin-left:auto;margin-right:auto}
+.cover-main{display:flex;align-items:center;justify-content:center;gap:2rem;margin-top:2rem;max-width:950px;margin-left:auto;margin-right:auto}
+.cover-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:.8rem;flex:1}
 .cstat{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:.9rem .6rem;text-align:center;backdrop-filter:blur(5px)}
 .cnum{font-size:1.8rem;font-weight:900;color:#d4a01e;line-height:1.2}
 .cnum.gold{font-size:1.1rem}
 .clabel{font-size:.7rem;color:rgba(255,255,255,.6);margin-top:.15rem;line-height:1.3}
+.cover-qr{text-align:center;flex:0 0 120px}
+.qr-img{display:block;width:110px;height:110px;border-radius:8px;border:2px solid rgba(255,255,255,.15)}
+.qr-label{display:block;color:rgba(255,255,255,.5);font-size:.65rem;margin-top:4px;letter-spacing:1px}
 .scroll-hint2{margin-top:1.5rem;color:rgba(255,255,255,.35);font-size:.75rem;letter-spacing:3px}
 .scroll-hint2 span{display:inline-block;animation:pl 1.5s ease-in-out infinite;margin-left:6px}
 @keyframes pl{0%,100%{transform:translateX(0);opacity:.5}50%{transform:translateX(6px);opacity:1}}
 
-.s-head{margin-bottom:16px}
-.s-head h2{font-size:clamp(1.3rem,2.5vw,2rem);font-weight:700;color:#1a5c2e;line-height:1.3}
-.s-head h2::after{content:'';display:block;width:60px;height:3px;background:linear-gradient(90deg,#1a5c2e,#d4a01e);border-radius:2px;margin-top:6px}
-.s-head p{color:#777;font-size:.85rem;margin-top:4px}
+.s-head{margin-bottom:20px}
+.s-head h2{font-size:clamp(1.6rem,2.8vw,2.2rem);font-weight:700;color:#1a5c2e;line-height:1.35}
+.s-head h2::after{content:'';display:block;width:60px;height:3px;background:linear-gradient(90deg,#1a5c2e,#d4a01e);border-radius:2px;margin-top:8px}
+.s-head p{color:#777;font-size:.95rem;margin-top:6px}
 
-.s-contact{display:flex;gap:16px;flex-wrap:wrap;margin-top:6px;font-size:.78rem;color:#666}
-.s-contact span{background:#f0f7f0;padding:3px 12px;border-radius:6px}
+.s-contact{display:flex;gap:16px;flex-wrap:wrap;margin-top:8px;font-size:.85rem;color:#666}
+.s-contact span{background:#f0f7f0;padding:4px 14px;border-radius:8px}
+.clink{color:#1a5c2e;text-decoration:none;font-weight:600}
+.clink:hover{color:#d4a01e;text-decoration:underline}
 
-.s-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(105px,1fr));gap:8px;margin-bottom:14px}
-.ss{background:#fff;border-radius:10px;padding:12px 8px;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,.03);border-top:3px solid #1a5c2e}
+.s-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(115px,1fr));gap:10px;margin-bottom:18px}
+.ss{background:#fff;border-radius:12px;padding:14px 10px;text-align:center;box-shadow:0 3px 14px rgba(0,0,0,.04);border-top:3px solid #1a5c2e}
 .ss.gold-b{border-top-color:#d4a01e}
-.ss-n{display:block;font-size:1.3rem;font-weight:900;color:#1a5c2e;line-height:1.1}
+.ss-n{display:block;font-size:1.5rem;font-weight:900;color:#1a5c2e;line-height:1.15}
 .ss.gold-b .ss-n{color:#d4a01e}
-.ss-l{display:block;font-size:.65rem;color:#666;margin-top:3px;line-height:1.3}
+.ss-l{display:block;font-size:.75rem;color:#666;margin-top:4px;line-height:1.35}
 
 .s-grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;flex:1}
 .s-grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;flex:1}
 .s-grid4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;flex:1}
 
-.scard{background:#fff;border-radius:12px;padding:14px 14px;box-shadow:0 2px 14px rgba(0,0,0,.04);border:1px solid rgba(26,92,46,.04);transition:transform .2s}
-.scard:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.07)}
-.scard h3{font-size:.95rem;font-weight:700;color:#1a5c2e;margin-bottom:6px}
-.scard h4{font-size:.85rem;font-weight:600;color:#3a7d44;margin:8px 0 3px}
-.scard p{font-size:.8rem;color:#555;line-height:1.65;margin-bottom:3px}
-.scard ul{padding-left:15px;font-size:.8rem;color:#555;line-height:1.55}
-.scard li{margin-bottom:3px}
+.scard{background:#fff;border-radius:14px;padding:18px 18px;box-shadow:0 3px 18px rgba(0,0,0,.05);border:1px solid rgba(26,92,46,.06);transition:transform .2s}
+.scard:hover{transform:translateY(-3px);box-shadow:0 8px 28px rgba(0,0,0,.09)}
+.scard h3{font-size:1.1rem;font-weight:700;color:#1a5c2e;margin-bottom:8px}
+.scard h4{font-size:.95rem;font-weight:600;color:#3a7d44;margin:10px 0 5px}
+.scard p{font-size:.9rem;color:#444;line-height:1.75;margin-bottom:4px}
+.scard ul{padding-left:18px;font-size:.88rem;color:#444;line-height:1.65}
+.scard li{margin-bottom:4px}
 .scard li strong{color:#1a5c2e}
-.sci{font-size:1.7rem;margin-bottom:4px;display:block}
-.sci.lg{font-size:2.2rem}
-.scard.acc{border-left:3px solid #1a5c2e}
-.scard.esg{border-left:3px solid #d4a01e;padding:12px 14px}
-.scard.esg h3{font-size:.9rem;margin-bottom:4px}
-.scard.esg ul{font-size:.75rem;line-height:1.5}
-.scard.esg li{margin-bottom:2px}
-.scard.cc{text-align:center;padding:14px 12px}
-.scard.cc ul{text-align:left;font-size:.78rem}
-.scard.cc li{margin-bottom:2px}
+.sci{font-size:2rem;margin-bottom:6px;display:block}
+.sci.lg{font-size:2.5rem}
+.scard.acc{border-left:4px solid #1a5c2e}
+.scard.esg{border-left:4px solid #d4a01e;padding:15px 16px}
+.scard.esg h3{font-size:1rem;margin-bottom:6px}
+.scard.esg ul{font-size:.82rem;line-height:1.6}
+.scard.esg li{margin-bottom:3px}
+.scard.cc{text-align:center;padding:16px 14px}
+.scard.cc ul{text-align:left;font-size:.85rem}
+.scard.cc li{margin-bottom:3px}
 .scard.bp{border-top:3px solid #1a5c2e}
 .y{font-size:.75rem;color:#d4a01e;font-weight:400}
 
-.timeline{display:flex;flex-direction:column;gap:6px}
-.tl{display:flex;gap:12px;align-items:flex-start}
-.tl-y{flex:0 0 110px;text-align:right;font-size:.85rem;font-weight:700;color:#d4a01e;padding-top:2px}
-.tl-c{flex:1;background:#fff;border-radius:8px;padding:8px 12px;box-shadow:0 1px 6px rgba(0,0,0,.03);border-left:3px solid #1a5c2e}
+.timeline{display:flex;flex-direction:column;gap:8px}
+.tl{display:flex;gap:14px;align-items:flex-start}
+.tl-y{flex:0 0 120px;text-align:right;font-size:.95rem;font-weight:700;color:#d4a01e;padding-top:3px}
+.tl-c{flex:1;background:#fff;border-radius:10px;padding:10px 14px;box-shadow:0 2px 10px rgba(0,0,0,.04);border-left:4px solid #1a5c2e}
 .tl-c.gold-l{border-left-color:#d4a01e}
-.tl-c h4{font-size:.85rem;color:#1a5c2e;margin-bottom:1px}
-.tl-c p{font-size:.78rem;color:#555;line-height:1.45;margin:0}
+.tl-c h4{font-size:.95rem;color:#1a5c2e;margin-bottom:3px}
+.tl-c p{font-size:.88rem;color:#444;line-height:1.55;margin:0}
 
-.s-badge-row{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px;justify-content:center}
-.badge{background:linear-gradient(135deg,#1a5c2e,#2e8b57);color:#fff;padding:3px 10px;border-radius:50px;font-size:.65rem;font-weight:600;letter-spacing:.5px}
+.s-badge-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;justify-content:center}
+.badge{background:linear-gradient(135deg,#1a5c2e,#2e8b57);color:#fff;padding:4px 12px;border-radius:50px;font-size:.72rem;font-weight:600;letter-spacing:.5px}
 .badge.gstc{background:linear-gradient(135deg,#d4a01e,#b8860b)}
 .badge.grn{background:linear-gradient(135deg,#3a7d44,#6a9e6a)}
 
-.s-highlight{background:#fff;border:2px solid #d4a01e;border-radius:12px;padding:16px 18px;margin-bottom:10px;position:relative}
-.hl-badge{position:absolute;top:-1px;right:20px;background:#d4a01e;color:#fff;padding:2px 14px;border-radius:0 0 8px 8px;font-size:.65rem;font-weight:700;letter-spacing:1.5px}
-.s-highlight h3{font-size:1rem;color:#1a5c2e;margin-bottom:3px}
-.s-highlight ul{padding-left:15px;font-size:.82rem;color:#555;line-height:1.6}
-.s-highlight li{margin-bottom:3px}
+.s-highlight{background:#fff;border:2px solid #d4a01e;border-radius:14px;padding:18px 22px;margin-bottom:12px;position:relative}
+.hl-badge{position:absolute;top:-1px;right:22px;background:#d4a01e;color:#fff;padding:3px 16px;border-radius:0 0 8px 8px;font-size:.7rem;font-weight:700;letter-spacing:1.5px}
+.s-highlight h3{font-size:1.1rem;color:#1a5c2e;margin-bottom:5px}
+.s-highlight ul{padding-left:18px;font-size:.9rem;color:#444;line-height:1.7}
+.s-highlight li{margin-bottom:4px}
 .s-highlight li strong{color:#1a5c2e}
 
-.s-quote{background:linear-gradient(135deg,#f0f7f0,#f5f0e0);border-left:4px solid #d4a01e;border-radius:0 8px 8px 0;padding:8px 14px;margin-top:10px;font-size:.82rem;color:#555;line-height:1.55;font-style:italic}
+.s-quote{background:linear-gradient(135deg,#f0f7f0,#f5f0e0);border-left:4px solid #d4a01e;border-radius:0 10px 10px 0;padding:10px 18px;margin-top:12px;font-size:.9rem;color:#444;line-height:1.65;font-style:italic}
 .s-quote.green{border-left-color:#1a5c2e;font-style:normal}
 .s-quote strong{color:#1a5c2e}
 
-.s-benefits{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}
-.s-benefits div{text-align:center;background:#f0f7f0;border-radius:8px;padding:10px 6px}
-.s-benefits strong{display:block;font-size:.8rem;color:#1a5c2e;margin-bottom:2px}
-.s-benefits span{font-size:.7rem;color:#666}
+.s-benefits{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:12px}
+.s-benefits div{text-align:center;background:#f0f7f0;border-radius:10px;padding:12px 8px}
+.s-benefits strong{display:block;font-size:.9rem;color:#1a5c2e;margin-bottom:3px}
+.s-benefits span{font-size:.78rem;color:#666}
 
-.s-steps{display:flex;flex-wrap:wrap;gap:5px;justify-content:center;margin-top:10px}
-.s-steps span{background:#1a5c2e;color:#fff;padding:3px 10px;border-radius:20px;font-size:.68rem;font-weight:500}
+.s-steps{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:12px}
+.s-steps span{background:#1a5c2e;color:#fff;padding:5px 12px;border-radius:20px;font-size:.75rem;font-weight:500}
 .s-steps span:nth-child(7){background:#6a9e6a;color:#1a5c2e;font-weight:700}
 
 .end{position:relative;justify-content:center;align-items:center;text-align:center;background:transparent;padding:36px}
 .end-bg{position:absolute;inset:0;background:linear-gradient(135deg,#0d3b1e,#1a5c2e);z-index:0}
 .end-content{position:relative;z-index:2;max-width:900px;margin:0 auto}
-.end h2{font-size:clamp(1.6rem,2.8vw,2.2rem);color:#d4a01e;margin-bottom:1.2rem;font-weight:700}
+.end h2{font-size:clamp(1.8rem,3.2vw,2.6rem);color:#d4a01e;margin-bottom:1.5rem;font-weight:700}
 .end h2::after{display:none}
-.end-sub{font-size:.95rem;color:rgba(255,255,255,.7);margin-bottom:1.5rem}
-.end-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.2rem;max-width:800px;margin:0 auto}
-.ecard{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:1.2rem;text-align:left}
-.ecard h4{color:#d4a01e;font-size:.85rem;margin-bottom:.5rem;letter-spacing:1px}
-.ecard p{font-size:.78rem;color:rgba(255,255,255,.65);line-height:1.55;margin:0}
-.end-foot{margin-top:1.5rem;font-size:.72rem;color:rgba(255,255,255,.35)}
+.end-sub{font-size:1rem;color:rgba(255,255,255,.7);margin-bottom:2rem}
+.end-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.5rem;max-width:850px;margin:0 auto}
+.ecard{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:1.5rem;text-align:left}
+.ecard h4{color:#d4a01e;font-size:.95rem;margin-bottom:.6rem;letter-spacing:1px}
+.ecard p{font-size:.85rem;color:rgba(255,255,255,.65);line-height:1.65;margin:0}
+.end-rep{margin-top:1.5rem;padding:.5rem 2rem;background:rgba(212,160,30,.1);border:1px solid rgba(212,160,30,.25);border-radius:50px;display:inline-block;color:#d4a01e;font-size:.95rem;letter-spacing:1px}
+.end-foot{margin-top:1.5rem;font-size:.78rem;color:rgba(255,255,255,.35)}
 
 .nav{position:fixed;bottom:0;left:0;right:0;height:48px;background:rgba(13,59,30,.95);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;gap:14px;z-index:999;padding:0 16px;border-top:1px solid rgba(255,255,255,.06)}
 .nav-btn{background:rgba(255,255,255,.1);border:none;color:#fff;width:36px;height:30px;border-radius:6px;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all .2s}
@@ -130,22 +137,24 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Noto Sans TC','Mic
 .nav-progress-bar{height:100%;background:linear-gradient(90deg,#d4a01e,#f0d080);border-radius:2px;transition:width .5s}
 .nav-title{color:rgba(255,255,255,.45);font-size:.65rem;max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 
-@media(max-width:900px){.s-grid2,.s-grid3,.s-grid4{grid-template-columns:1fr 1fr}.tl-y{flex:0 0 80px;font-size:.8rem}.s-benefits{grid-template-columns:1fr 1fr}.s-contact{font-size:.72rem;gap:8px}.cover-stats{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:900px){.cover-main{flex-direction:column;gap:1rem}.cover-qr{flex:0 0 auto}.s-grid2,.s-grid3,.s-grid4{grid-template-columns:1fr 1fr}.tl-y{flex:0 0 90px;font-size:.85rem}.s-benefits{grid-template-columns:1fr 1fr}.s-contact{font-size:.8rem;gap:8px}.cover-stats{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:640px){
-.slide{padding:16px 14px 68px}
+.slide{padding:18px 16px 68px}
+.cover-main{flex-direction:column;gap:1rem}
+.cover-qr{flex:0 0 auto}
 .s-grid2,.s-grid3,.s-grid4{grid-template-columns:1fr}
 .s-stats{grid-template-columns:repeat(2,1fr)}
-.s-num{font-size:2.2rem;top:8px;right:12px}
-.cover h1{font-size:2rem}
+.s-num{font-size:2.5rem;top:10px;right:14px}
+.cover h1{font-size:2.2rem}
 .cover-stats{grid-template-columns:repeat(2,1fr)}
-.tl{flex-direction:column;gap:2px}
+.tl{flex-direction:column;gap:3px}
 .tl-y{text-align:left}
 .s-benefits{grid-template-columns:1fr 1fr}
-.s-highlight{padding:12px}
+.s-highlight{padding:14px}
 .nav-title{display:none}
 .end-grid{grid-template-columns:1fr}
-.cover-desc{font-size:.85rem}
-.s-head h2{font-size:1.2rem}
+.cover-desc{font-size:.9rem}
+.s-head h2{font-size:1.3rem}
 }
 </style>
 </head>
@@ -158,12 +167,18 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Noto Sans TC','Mic
 <h1>頭城農場 <span class="gold">&amp;</span> 藏酒酒莊</h1>
 <p class="cover-sub">永續農業 · 生態旅遊 · 在地釀造</p>
 <p class="cover-desc">從雪山山脈到太平洋，從120公頃的有機農場到獲得國際金牌的生態酒莊<br>用近半世紀的堅持，守護這片土地的純淨與美好</p>
+<div class="cover-main">
 <div class="cover-stats">
 <div class="cstat"><div class="cnum">1979</div><div class="clabel">創立 · 逾47年</div></div>
 <div class="cstat"><div class="cnum">120</div><div class="clabel">公頃 · 生態農場</div></div>
 <div class="cstat"><div class="cnum">7</div><div class="clabel">項永續認證</div></div>
 <div class="cstat"><div class="cnum gold">Grand Or</div><div class="clabel">2026國際金牌</div></div>
 <div class="cstat"><div class="cnum">10.18</div><div class="clabel">kgCO2e/人次遊程</div></div>
+</div>
+<div class="cover-qr">
+<img src="https://api.qrserver.com/v1/create-qr-code/?size=110x110&data=https://waiaoinfo-create.github.io/tcfarm/" alt="QR Code" class="qr-img">
+<span class="qr-label">手機掃碼閱讀</span>
+</div>
 </div>
 <div class="scroll-hint2">按下一頁或按 → 鍵繼續 <span>▶</span></div>
 </div>
@@ -185,7 +200,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Noto Sans TC','Mic
 <div class="scard"><div class="sci">🏛️</div><h3>經營團隊</h3><p><strong>創辦人：</strong>卓陳明女士（教育家出身，人稱卓媽媽）<br><strong>董事長：</strong>卓志宏（宜蘭縣觀光協會理事長）<br><strong>集團：</strong>同集團另有藏酒酒莊、頭城休閒旅館</p></div>
 <div class="scard"><div class="sci">🎯</div><h3>核心理念</h3><p><strong>三生一體：</strong>生態·生產·生活<br><strong>五大主軸：</strong>環境教育、戶外學習、健康養身、樂活慢遊、生命教育<br><strong>願景：</strong>成為國內外休閒農業標竿農場</p></div>
 </div>
-<div class="s-contact"><span>📞 03-9772220</span><span>✉ tcfarminfo@gmail.com</span><span>🌐 www.tcfarm.com.tw</span></div>
+<div class="s-contact"><span>📞 <a href="tel:+88639772220" class="clink">03-9772220</a></span><span>✉ <a href="mailto:tcfarminfo@gmail.com" class="clink">tcfarminfo@gmail.com</a></span><span>🌐 <a href="https://www.tcfarm.com.tw" target="_blank" class="clink">www.tcfarm.com.tw</a></span></div>
 </div>
 </section>
 <section class="slide" data-title="歷史轉型">
@@ -334,7 +349,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Noto Sans TC','Mic
 <section class="slide" data-title="酒莊介紹">
 <div class="s-num">09</div>
 <div class="s-inner">
-<div class="s-head"><h2>藏酒酒莊深度介紹</h2><p>Cang Jiu Winery — 台灣第一家六級化產業生態酒莊</p></div>
+<div class="s-head"><h2>藏酒酒莊介紹</h2><p>Cang Jiu Winery — 台灣第一家六級化產業生態酒莊</p></div>
 <div class="s-stats">
 <div class="ss"><span class="ss-n">台灣第一家</span><span class="ss-l">六級化生態酒莊</span></div>
 <div class="ss gold-b"><span class="ss-n">Grand Or</span><span class="ss-l">2026國際金牌</span></div>
@@ -440,7 +455,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Noto Sans TC','Mic
 <div class="s-inner">
 <div class="s-head"><h2>體驗活動與套裝行程</h2><p>從半日遊到二日遊，從賞螢到品酒，從親子到企業</p></div>
 <div class="s-grid3">
-<div class="scard"><div class="sci">🌙</div><h3>夏日賞螢季</h3><p>每年4/15-5/15限定。自由遊園、傳統小吃、自助晚餐、賞螢生態講座。2026年加碼1-2-3活動，宜蘭縣民兩人成行999元。四種螢火蟲：擬紋螢、紅胸黑翅螢、黃緣螢、山窗螢。</p></div>
+<div class="scard"><div class="sci">🌙</div><h3>夏日賞螢季</h3><p>每年4/15-5/15限定。自由遊園、傳統小吃、自助晚餐、賞螢生態講座。四種螢火蟲：擬紋螢、紅胸黑翅螢、黃緣螢、山窗螢。</p></div>
 <div class="scard"><div class="sci">🎨</div><h3>DIY手作體驗</h3><p>葉拓T恤（將農場植物拓印在衣物上）、金桔醋、金棗蜜餞DIY、草本手作DIY。將農場自然元素化為專屬紀念品。</p></div>
 <div class="scard"><div class="sci">📖</div><h3>環境教育課程</h3><p>水稻文化體驗（插秧、收割、碾米）、種菜樂趣多、生態探索。通過環境教育認證之正式課程，全年提供，幼稚園至成人。</p></div>
 <div class="scard"><div class="sci">🏡</div><h3>住宿一泊三食</h3><p>頭城休閒旅館35間客房。一泊三食五體驗：住宿＋早餐＋晚餐＋DIY＋導覽。近期改善硬體設施，更友善長者及幼童。</p></div>
@@ -505,7 +520,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Noto Sans TC','Mic
 <div class="s-grid3">
 <div class="scard bp" style="border-top-color:#1a5c2e"><div class="sci">📦</div><h3>方案A：ESG永續旅遊</h3><p>「Unboxing TFL ESG」— 生態遊程、循環體驗、碳匯見學、餐桌轉譯。對應SDG4/12/13/15。適合企業ESG報告。</p></div>
 <div class="scard bp" style="border-top-color:#2e8b57"><div class="sci">👨‍👩‍👧‍👦</div><h3>方案B：綠色員工旅遊</h3><p>一至二日行程，農場導覽、DIY體驗、生態旅遊。可客製化調整。適合員工福利、家庭親子活動。</p></div>
-<div class="scard bp" style="border-top-color:#d4a01e"><div class="sci">🤝</div><h3>方案C：Team Building</h3><p>高空繩索訓練場域，團隊合作挑戰。環境教育融入團隊建立。適合主管共識營、團隊凝聚訓練。</p></div>
+<div class="scard bp" style="border-top-color:#d4a01e"><div class="sci">🤝</div><h3>方案C：Team Building</h3><p>團隊合作挑戰訓練。環境教育融入團隊建立。適合主管共識營、團隊凝聚訓練。</p></div>
 <div class="scard bp" style="border-top-color:#3a7d44"><div class="sci">📖</div><h3>方案D：環境教育訓練</h3><p>食農教育、森林療育、環教正式課程。通過認證環境教育設施場所。適合人資教育訓練。</p></div>
 <div class="scard bp" style="border-top-color:#b8860b"><div class="sci">♻️</div><h3>方案E：循環經濟夥伴</h3><p>員工志工、在地認養、廢棄物減量。長期合作框架。適合重視永續供應鏈的企業。</p></div>
 </div>
@@ -527,13 +542,14 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Noto Sans TC','Mic
 <section class="slide end" data-title="結尾">
 <div class="end-bg"></div>
 <div class="end-content">
-<h2>感謝您的關注</h2>
+<h2>謝謝您的聆聽</h2>
 <p class="end-sub">歡迎蒞臨頭城農場與藏酒酒莊，體驗永續旅遊與在地釀造的美好</p>
 <div class="end-grid">
 <div class="ecard"><h4>🌿 頭城休閒農場</h4><p>宜蘭縣頭城鎮更新路125-1號<br>03-9772220<br>tcfarminfo@gmail.com<br>www.tcfarm.com.tw<br>LINE：@tc039772000</p></div>
 <div class="ecard"><h4>🍷 藏酒酒莊</h4><p>宜蘭縣頭城鎮更新路126-50號<br>03-9778555<br>service@cjwine.com<br>www.cjwine.com<br>LINE：@amb5687a</p></div>
 <div class="ecard"><h4>🚗 交通資訊</h4><p>自行開車：國道5號頭城交流道→台2線濱海公路→梗枋橋頭轉更新路<br>大眾運輸：台鐵頭城站或龜山站，轉計程車約10分鐘<br>全年無休，詢問處08:30-17:30</p></div>
 </div>
+<div class="end-rep">代表人 &nbsp;<strong>卓志宏</strong></div>
 <p class="end-foot">© 2026 頭城休閒農場 Toucheng Leisure Farm &amp; 藏酒酒莊 Cang Jiu Winery</p>
 <p class="end-foot" style="margin-top:6px;color:rgba(255,255,255,.25)">🚫 禁止酒駕 · 未滿18歲禁止飲酒</p>
 </div>
