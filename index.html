@@ -1,651 +1,346 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="zh-TW">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>頭城農場 │ 高鐵延伸宜蘭產業影響分析報告（終極完整版）</title>
-
+<title>頭城農場及藏酒酒莊｜永續深度介紹</title>
 <style>
-/* ==========================================================================
-   1. 全域重設與精緻儀表板底色 (Dashboard Base Setup)
-   ========================================================================== */
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;font-family:'Noto Sans TC','Segoe UI',-apple-system,BlinkMacSystemFont,sans-serif;background:#1a3c1a}
 
-body{
-    font-family: "Noto Sans TC", -apple-system, BlinkMacSystemFont, sans-serif;
-    background: #D1D9CE; /* 質感莫蘭迪綠灰底色 */
-    color: #222222;
-    line-height: 1.8;
-    padding: 15px;
-}
+.deck{width:100%;height:100%;position:relative;overflow:hidden}
+.slides{display:flex;height:100%;transition:transform .6s cubic-bezier(.22,.61,.36,1)}
+.slide{flex:0 0 100%;height:100%;overflow-y:auto;display:flex;flex-direction:column;background:#f5f2eb;padding:36px 48px}
+.slide::-webkit-scrollbar{width:4px}
+.slide::-webkit-scrollbar-thumb{background:#aaa;border-radius:2px}
 
-/* 儀表板外框線 */
-.dashboard-wrapper {
-    max-width: 1400px;
-    margin: 0 auto;
-    background: #1E4620; /* 墨綠色主框架大邊框 */
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-    border: 4px solid #163518;
-}
+.nav{position:fixed;bottom:0;left:0;right:0;height:56px;background:rgba(26,60,26,.92);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;gap:20px;z-index:100;padding:0 24px}
+.nav-btn{background:rgba(255,255,255,.15);border:none;color:#fff;width:44px;height:36px;border-radius:8px;cursor:pointer;font-size:1.2rem;display:flex;align-items:center;justify-content:center;transition:background .2s}
+.nav-btn:hover{background:rgba(255,255,255,.28)}
+.nav-btn:disabled{opacity:.3;cursor:default}
+.counter{color:rgba(255,255,255,.8);font-size:.85rem;letter-spacing:1px;min-width:60px;text-align:center}
+.progress{flex:1;max-width:240px;height:4px;background:rgba(255,255,255,.15);border-radius:2px;overflow:hidden}
+.progress-bar{height:100%;background:#6a9e6a;border-radius:2px;transition:width .5s}
+.page-info{color:rgba(255,255,255,.6);font-size:.75rem}
 
-/* ==========================================================================
-   2. 頂部大氣黑板列 (Header Bar)
-   ========================================================================== */
-header {
-    background: #1E4620;
-    padding: 25px 40px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    color: white;
-    border-bottom: 3px solid #163518;
-}
+h1{font-size:clamp(1.6rem,3.5vw,2.8rem);font-weight:800;color:#1a3c1a}
+h2{font-size:clamp(1.3rem,2.5vw,1.8rem);color:#1a3c1a;border-left:5px solid #4a7c4a;padding-left:16px;margin:0 0 20px}
+h3{font-size:clamp(1rem,1.8vw,1.3rem);color:#2d5a2d;margin:16px 0 10px}
+h4{font-size:1rem;margin:12px 0 6px;color:#1a3c1a}
+p{font-size:clamp(.85rem,1.4vw,.95rem);line-height:1.7;margin-bottom:10px;color:#2c3e2d}
+.slide-content{max-width:1100px;width:100%;margin:0 auto;flex:1}
+.slide-header{margin-bottom:16px}
+.slide-num{font-size:2.5rem;font-weight:800;color:rgba(26,60,26,.07);position:absolute;top:12px;right:36px;pointer-events:none}
 
-.header-logo-zone {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
+.cover{background:linear-gradient(135deg,#1a3c1a 0%,#3d7a3d 50%,#6a9e6a 100%);justify-content:center;align-items:center;text-align:center}
+.cover h1{color:#fff;text-shadow:0 2px 10px rgba(0,0,0,.3)}
+.cover p{color:#d4e8d4;font-size:1.15rem;margin:8px auto 0;max-width:600px}
+.end{background:linear-gradient(135deg,#1a3c1a 0%,#2d5a2d 100%);justify-content:center;align-items:center;text-align:center}
+.end h1{color:#fff}.end p{color:#b8d4b8}
 
-.logo-box {
-    border: 1.5px solid rgba(255,255,255,0.6);
-    padding: 4px 10px;
-    border-radius: 6px;
-    font-size: 13px;
-    text-align: center;
-    line-height: 1.2;
-}
-
-.logo-divider {
-    font-size: 20px;
-    opacity: 0.5;
-}
-
-.header-title {
-    font-size: 30px;
-    font-weight: bold;
-    letter-spacing: 2px;
-    flex-grow: 1;
-    text-align: center;
-}
-
-.header-right-vector {
-    width: 100px;
-    height: 45px;
-}
-
-/* ==========================================================================
-   3. 核心左右對稱佈局 (Grid Layout) - 視覺摘要區
-   ========================================================================== */
-.dashboard-grid {
-    display: grid;
-    grid-template-columns: 1.1fr 0.9fr;
-    gap: 15px;
-    padding: 15px;
-    background: #F4F6F3;
-    border-bottom: 3px solid #E2E6E1;
-}
-
-.panel-card {
-    background: #FFFFFF;
-    border: 2px solid #C2CBC1;
-    border-radius: 16px;
-    padding: 25px;
-    box-shadow: inset 0 0 10px rgba(0,0,0,0.02);
-}
-
-.panel-card-title {
-    font-size: 22px;
-    color: #1E4620;
-    font-weight: bold;
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.panel-card-title::before {
-    content: '';
-    display: inline-block;
-    width: 6px;
-    height: 22px;
-    background: #2E7D32;
-    border-radius: 3px;
-}
-
-/* 經營績效進度條組 */
-.kpi-flex-group {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-}
-
-.bar-item {
-    background: #FDFBF7;
-    border: 1px solid #E2E6E1;
-    padding: 15px;
-    border-radius: 12px;
-}
-
-.bar-header {
-    display: flex;
-    justify-content: space-between;
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 10px;
-}
-
-.bar-header .num-green { color: #2E7D32; }
-.bar-header .num-orange { color: #D84315; }
-
-.bar-track {
-    background: #E5EAE4;
-    height: 22px;
-    border-radius: 11px;
-    position: relative;
-    overflow: hidden;
-}
-
-.bar-fill-green { background: #388E3C; height: 100%; border-radius: 11px; }
-.bar-fill-orange { background: #E64A19; height: 100%; border-radius: 11px; }
-
-.bar-percentage-label {
-    position: absolute;
-    right: 15px;
-    top: 0;
-    font-size: 13px;
-    font-weight: bold;
-    color: #333333;
-    line-height: 22px;
-}
-
-/* SWOT 四象限佈局 */
-.swot-dashboard-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
-}
-
-.swot-box {
-    border-radius: 12px;
-    padding: 15px;
-    color: #FFFFFF;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-}
-
-.swot-box h4 {
-    font-size: 20px;
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 1px solid rgba(255,255,255,0.3);
-    padding-bottom: 5px;
-}
-
-.swot-box ul { list-style-type: none; padding-left: 5px; }
-.swot-box li { font-size: 14px; margin-bottom: 4px; position: relative; padding-left: 12px; }
-.swot-box li::before { content: '•'; position: absolute; left: 0; }
-
-.swot-box.s { background: #43A047; }
-.swot-box.w { background: #E67E22; }
-.swot-box.o { background: #2980B9; }
-.swot-box.t { background: #C0392B; }
-.swot-icon { width: 22px; height: 22px; fill: white; }
-
-/* 右側欄：實景與地圖 */
-.visual-scenery-card {
-    position: relative;
-    border-radius: 14px;
-    overflow: hidden;
-    height: 220px;
-    border: 1px solid #C2CBC1;
-}
-
-.badge-container { position: absolute; top: 15px; right: 15px; display: flex; gap: 10px; z-index: 10; }
-.scenery-badge { background: rgba(255, 255, 255, 0.95); color: #222; padding: 4px 12px; border-radius: 20px; font-size: 13px; font-weight: bold; border: 1px solid #BDC3C7; }
-.badge-gold { border: 1px solid #D4AF37; background: #FFFDF0; }
-.scenery-footer-label { position: absolute; bottom: 15px; left: 15px; color: white; font-size: 20px; font-weight: bold; text-shadow: 0 2px 8px rgba(0,0,0,0.8); z-index: 10; }
-
-.map-infographic-container {
-    background: #FDFBF7;
-    border: 1px solid #E2E6E1;
-    border-radius: 12px;
-    padding: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-/* ==========================================================================
-   4. 下方終極報告專區 (Exhaustive 12-Chapter Report Section)
-   ========================================================================== */
-.report-long-content {
-    background: #FDFBF7;
-    padding: 50px 60px;
-}
-
-.report-intro-callout {
-    background: #EAEFE9;
-    border-left: 6px solid #1E4620;
-    padding: 25px;
-    border-radius: 8px;
-    margin-bottom: 40px;
-    font-size: 18px;
-    color: #1E4620;
-    font-weight: 500;
-}
-
-.chapter-block {
-    margin-bottom: 60px;
-    padding-bottom: 40px;
-    border-bottom: 2px dashed #D2DCD1;
-}
-
-.chapter-block:last-child {
-    margin-bottom: 0;
-    padding-bottom: 0;
-    border-bottom: none;
-}
-
-.chapter-num {
-    font-size: 16px;
-    text-transform: uppercase;
-    color: #E64A19;
-    font-weight: bold;
-    letter-spacing: 1px;
-    margin-bottom: 5px;
-}
-
-.chapter-title {
-    font-size: 32px;
-    color: #1E4620;
-    margin-bottom: 25px;
-    font-weight: 700;
-}
-
-.chapter-subtitle {
-    font-size: 20px;
-    color: #2F6B53;
-    margin: 25px 0 15px 0;
-    font-weight: 600;
-    border-bottom: 1px solid #E2E6E1;
-    padding-bottom: 5px;
-}
-
-.report-text {
-    font-size: 17px;
-    color: #333333;
-    text-align: justify;
-    margin-bottom: 20px;
-    text-indent: 34px;
-}
-
-.report-list {
-    margin-left: 35px;
-    margin-bottom: 20px;
-    font-size: 17px;
-    color: #444;
-}
-
-.report-list li {
-    margin-bottom: 10px;
-    text-align: justify;
-}
-
-.report-list strong {
-    color: #1E4620;
-}
-
-/* 數據化表格樣式 */
-.report-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 25px 0;
-    background: white;
-    border: 2px solid #1E4620;
-    border-radius: 8px;
-    overflow: hidden;
-}
-
-.report-table th {
-    background: #1E4620;
-    color: white;
-    padding: 15px 20px;
-    font-weight: bold;
-    font-size: 17px;
-    text-align: left;
-}
-
-.report-table td {
-    padding: 14px 20px;
-    border-bottom: 1px solid #E5EAE4;
-    font-size: 16px;
-    color: #333;
-}
-
-.report-table tr:nth-child(even) {
-    background: #F4F6F3;
-}
-
-.report-table tr:hover {
-    background: #EAEDE9;
-}
-
-/* ==========================================================================
-   5. 頁尾底列樣式 (Footer Bar)
-   ========================================================================== */
-footer {
-    background: #1E4620;
-    padding: 20px 40px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    color: white;
-    font-size: 14px;
-    border-top: 3px solid #163518;
-}
-
-.footer-text-center { text-align: center; opacity: 0.8; }
-.lang-btn { background: #FFFFFF; color: #1E4620; padding: 4px 15px; border-radius: 20px; font-weight: bold; font-size: 13px; border: none; }
-
-/* 響應式佈局支援 */
-@media (max-width: 1024px) {
-    .dashboard-grid { grid-template-columns: 1fr; }
-    .kpi-flex-group { grid-template-columns: 1fr; }
-    .report-long-content { padding: 30px 25px; }
-    header, footer { flex-direction: column; gap: 15px; text-align: center; }
-}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;margin:10px 0}
+.card{background:#fff;border-radius:10px;box-shadow:0 1px 8px rgba(0,0,0,.06);overflow:hidden;padding:16px}
+.card h4{font-size:.95rem;margin:0 0 6px}
+.card p{font-size:.82rem;color:#555;margin:0;line-height:1.5}
+.card ul{font-size:.82rem;color:#555;padding-left:18px}
+.card li{margin-bottom:3px}
+table{width:100%;border-collapse:collapse;margin:10px 0;font-size:clamp(.75rem,1.2vw,.85rem)}
+th{background:#1a3c1a;color:#fff;padding:8px 10px;text-align:left;font-weight:500}
+td{padding:7px 10px;border-bottom:1px solid #ddd}
+tr:nth-child(even){background:#f9f8f5}
+.box{background:#e8f0e8;border-left:4px solid #4a7c4a;padding:12px 16px;margin:8px 0;border-radius:0 6px 6px 0;font-size:clamp(.78rem,1.2vw,.88rem)}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:768px){.slide{padding:20px 16px}.grid,.two-col{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-
-<div class="dashboard-wrapper">
-
-    <header>
-        <div class="header-logo-zone">
-            <div class="logo-box">頭城農場<br>tcfarm</div>
-            <div class="logo-divider">×</div>
-            <div class="logo-box">產業報告<br>report</div>
-        </div>
-        
-        <div class="header-title">頭城農場 │ 高鐵延伸宜蘭產業影響分析報告</div>
-        
-        <div class="header-right-vector">
-            <svg viewBox="0 0 100 45" width="100%" height="100%">
-                <polygon points="20,45 50,10 80,45" fill="#2F6B53" />
-                <polygon points="50,45 75,20 100,45" fill="#43A047" />
-                <polygon points="35,22 50,10 60,20 55,25" fill="#FFFFFF" opacity="0.8" />
-            </svg>
-        </div>
-    </header>
-
-    <main class="dashboard-grid">
-    
-        <div class="col-left" style="display: flex; flex-direction: column; gap: 15px;">
-            <section class="panel-card">
-                <div class="panel-card-title">經營績效數據摘要</div>
-                <div class="kpi-flex-group">
-                    <div class="bar-item">
-                        <div class="bar-header"><span>餐飲收入 <span class="num-green">+2.9%</span></span></div>
-                        <div class="bar-track">
-                            <div class="bar-fill-green" style="width: 20%;"></div>
-                            <span class="bar-percentage-label">20%</span>
-                        </div>
-                    </div>
-                    <div class="bar-item">
-                        <div class="bar-header"><span>農場體驗參與度 <span class="num-orange">+8%</span></span></div>
-                        <div class="bar-track">
-                            <div class="bar-fill-orange" style="width: 8%;"></div>
-                            <span class="bar-percentage-label">8%</span>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            
-            <section class="panel-card">
-                <div class="panel-card-title">SWOT 矩陣核心速覽</div>
-                <div class="swot-dashboard-grid">
-                    <div class="swot-box s">
-                        <h4><span>S 優勢</span><svg class="swot-icon" viewBox="0 0 24 24"><path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.75 0 1.41-.41 1.76-1.02l3.06-7.15c.11-.29.18-.61.18-.95v-2z"/></svg></h4>
-                        <ul><li>47年厚實品牌誠信力與口碑</li><li>120公頃完整永續生態場域</li></ul>
-                    </div>
-                    <div class="swot-box w">
-                        <h4><span>W 劣勢</span><svg class="swot-icon" viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5s.67 1.5 1.5 1.5zm3.5 3c-2.33 0-4.31 1.46-5.11 3.5h10.22c-.8-2.04-2.78-3.5-5.11-3.5z"/></svg></h4>
-                        <ul><li>大眾運輸轉乘便利性仍須升級</li><li>溪北偏遠地區基層人力流失</li></ul>
-                    </div>
-                    <div class="swot-box o">
-                        <h4><span>O 機會</span><svg class="swot-icon" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM8 14H6v-2h2v2zm0-3H6V9h2v2zm0-3H6V6h2v2zm7 6h-5v-2h5v2zm3-3h-8V9h8v2zm0-3h-8V6h8v2z"/></svg></h4>
-                        <ul><li>上市櫃企業對 ESG 綠色採購剛需</li><li>高鐵串聯低碳綠色客源直達</li></ul>
-                    </div>
-                    <div class="swot-box t">
-                        <h4><span>T 威脅</span><svg class="swot-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 12 10 10-4.48 10-12S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg></h4>
-                        <ul><li>一日生活圈導致旅客快閃不留宿</li><li>觀光核心南移造成溪北邊緣化</li></ul>
-                    </div>
-                </div>
-            </section>
-        </div>
-        
-        <div class="col-right" style="display: flex; flex-direction: column; gap: 15px;">
-            <div class="visual-scenery-card">
-                <div class="badge-container">
-                    <span class="scenery-badge">GSTC 認證</span>
-                    <span class="scenery-badge badge-gold">🏅 47年品牌</span>
-                </div>
-                <svg viewBox="0 0 500 240" width="100%" height="100%" preserveAspectRatio="none">
-                    <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#76AEC9" /><stop offset="100%" stop-color="#E3EEF4" /></linearGradient>
-                    <rect width="500" height="240" fill="url(#skyGrad)" />
-                    <polygon points="-20,150 120,60 280,130 420,50 550,160 550,240 -20,240" fill="#2E5A44" opacity="0.9"/>
-                    <polygon points="60,160 220,80 350,140 520,70 550,240 0,240" fill="#1B422E" />
-                    <ellipse cx="100" cy="190" rx="180" ry="60" fill="#3A7D44" />
-                    <ellipse cx="280" cy="200" rx="150" ry="50" fill="#2D6A4F" />
-                    <ellipse cx="430" cy="180" rx="120" ry="70" fill="#1B4332" />
-                    <path d="M 150 240 Q 250 160 450 180 Q 480 210 500 240 Z" fill="#6A994E" opacity="0.6"/>
-                    <path d="M 280 240 Q 340 185 460 195 Q 480 215 500 240 Z" fill="#A7C957" />
-                    <ellipse cx="400" cy="225" rx="70" ry="20" fill="#48CAE4" opacity="0.8" />
-                    <polygon points="340,165 365,150 390,165 390,185 340,185" fill="#B23A22" />
-                    <rect x="345" y="165" width="40" height="20" fill="#D95D39" />
-                    <polygon points="340,165 365,148 390,165" fill="#5C1D11" />
-                    <rect x="352" y="170" width="8" height="8" fill="#F4F6F3" />
-                    <rect x="372" y="170" width="8" height="8" fill="#F4F6F3" />
-                    <circle cx="460" cy="220" r="12" fill="#FFFFFF" opacity="0.8" />
-                    <path d="M455,225 L460,215 L465,225 Z" fill="#1B4332" />
-                </svg>
-                <div class="scenery-footer-label">120公頃大灣頭城農場</div>
-            </div>
-            
-            <section class="panel-card" style="flex-grow: 1; display: flex; flex-direction: column;">
-                <div class="panel-card-title" style="margin-bottom: 10px;">高鐵延伸與吸管效應軌道示意圖</div>
-                <div class="map-infographic-container" style="flex-grow: 1;">
-                    <svg viewBox="0 0 460 210" width="100%" height="100%">
-                        <path d="M 250 20 C 350 40, 420 80, 440 190 L 200 190 Z" fill="#E8EFE9" />
-                        <circle cx="60" cy="140" r="8" fill="#D35400" />
-                        <text x="60" y="165" font-size="14" font-weight="bold" text-anchor="middle" fill="#222">南港</text>
-                        <circle cx="300" cy="140" r="8" fill="#D35400" />
-                        <text x="300" y="165" font-size="14" font-weight="bold" text-anchor="middle" fill="#222">宜蘭</text>
-                        <path d="M 60 140 Q 180 80 300 140" fill="none" stroke="#7F8C8D" stroke-width="5" />
-                        <path d="M 60 140 Q 180 80 300 140" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-dasharray="8,8" />
-                        <path d="M 75 125 Q 180 70 280 123" fill="none" stroke="#E67E22" stroke-width="4" marker-end="url(#arrow)" />
-                        <defs>
-                            <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#E67E22" /></marker>
-                        </defs>
-                        <text x="180" y="115" font-size="13" font-weight="bold" fill="#D35400" text-anchor="middle">138h ⏱️ 時間 24 min</text>
-                        <text x="180" y="75" font-size="14" font-weight="bold" fill="#333" text-anchor="middle">🚝 輕速距離</text>
-                        <path d="M 315 130 C 340 110, 340 80, 315 70" fill="none" stroke="#1E4620" stroke-width="3" stroke-dasharray="4,2" />
-                        <path d="M 330 135 C 360 110, 360 70, 325 55" fill="none" stroke="#1E4620" stroke-width="3" stroke-dasharray="4,2" />
-                        <rect x="305" y="45" width="75" height="24" rx="12" fill="#1E4620" />
-                        <text x="342" y="61" font-size="12" fill="white" font-weight="bold" text-anchor="middle">吸管效應</text>
-                        <circle cx="340" cy="85" r="10" fill="#2E7D32" /><circle cx="340" cy="85" r="5" fill="#FFFFFF" />
-                        <text x="390" y="90" font-size="16" font-weight="bold" fill="#1E4620">農場 (tcfarm)</text>
-                        <path d="M 305 130 Q 320 110 333 96" fill="none" stroke="#1E4620" stroke-width="3" />
-                        <rect x="385" y="125" width="40" height="12" rx="4" fill="#E67E22" /><polygon points="425,125 435,131 425,137" fill="#E67E22" />
-                        <rect x="390" y="165" width="35" height="16" rx="3" fill="#D4AF37" /><circle cx="398" cy="183" r="3" fill="#333" /><circle cx="418" cy="183" r="3" fill="#333" />
-                    </svg>
-                </div>
-            </section>
-        </div>
-    </main>
-
-    <div class="report-long-content" id="report">
-        
-        <div class="report-intro-callout">
-            報告前言：本篇為頭城農場應對「高鐵延伸宜蘭計畫」之全方位前瞻戰略報告。報告嚴格保留原始案例深度，對全案進行極致拆解，量化各項經營指標，全面對接企業永續採購與綠色軌道經濟轉型。
-        </div>
-
-        <article class="chapter-block">
-            <div class="chapter-num">Chapter 01</div>
-            <h2 class="chapter-title">官方計畫總覽與交通方案深度比對</h2>
-            <p class="report-text">「高鐵延伸宜蘭計畫」是北台灣近年最龐大的軌道經濟建設，官方設定的計畫總經費高達新台幣 1,720 億元。路線總長度由台北南港站至宜蘭縣政中心以南，精準量化為 59.3 公里。此建設開通後，南港與宜蘭之間的行車時間將從傳統台鐵或客運的 1 小時以上，大幅度壓縮至僅需 24 分鐘。官方目前的環評與動工目標，預計在 2036 年達成完工通車時程。</p>
-            <p class="report-text">在歷史決策中，此方案曾與「北宜直鐵方案」進行長期的效益與環境拉扯。北宜直鐵預估行車時間需 36 分鐘，且線路必須直接橫切穿透翡翠水庫集水區，引發極大生態與水源保育爭議。最終定案的高鐵延伸方案，雖然經費從直鐵的數百億暴增至 1,720 億，但線路成功繞開翡翠水庫集水區，有效降低了環境衝擊評估的破壞性，然宜蘭端的多條斷層帶與地下水豐沛地質，仍為後續高架工程帶來高技術考驗。</p>
-        </article>
-
-        <article class="chapter-block">
-            <div class="chapter-num">Chapter 02</div>
-            <h2 class="chapter-title">國際實證案例分析：日本西九州新幹線的吸管效應</h2>
-            <p class="report-text">借鏡國際軌道交通實證案例，日本西九州新幹線（武雄溫泉至長崎段）開通後的實測數據顯示，高速鐵路雖能為核心停靠站點帶來爆發性的瞬時觀光流量，但也引發了劇烈的「吸管效應」與「快閃化」衝擊。新幹線開通後，旅客往返大都市的便利性極致提升，導致在二線城鎮的平均留宿時間縮短了 15.4%。</p>
-            <p class="report-text">這對台灣宜蘭的啟示在於，非高鐵特區核心的周邊區域（如溪北頭城段），若無建立完善的「二級智慧綠色接駁系統」，地方觀光資源與勞動力將迅速被高鐵特區與台北都會區吸走，面臨嚴重的「溪北邊緣化風險」。一日生活圈一旦成型，常態性觀光將全面走向快閃化，兩天一夜的慢遊行程極易被「早出晚歸」的一日快閃遊徹底取代。</p>
-        </article>
-
-        <article class="chapter-block">
-            <div class="chapter-num">Chapter 03</div>
-            <h2 class="chapter-title">頭城農場營運營收與財務衝擊預估</h2>
-            <p class="report-text">頭城休閒農場股份有限公司創立於 1979 年，至今已累積 47 年品牌誠信歷史，目前資本額登記為新台幣 2,900 萬元，在頭城在地合法深耕，場域佔地廣達 120 公頃，且榮獲 GSTC（全球永續旅遊委員會）國際永續觀光認證。面對 2036 年高鐵全面通車的預期衝擊，農場財務與營運模式將面臨結構性轉變。</p>
-            <p class="report-text">經過量化財務模型推估，高鐵開通將為農場帶來雙向洗牌。在正向營收方面，預期企業團體採購 ESG 綠色低碳體驗的參與度將大幅增長 +20%，散客的交通流量與一日遊周邊消費亦可穩健提升 +8%。然而，在負向衝擊方面，傳統純住宿型客源若無提供差異化護城河，將面臨留宿率衰退 -15% 的快閃化失血。以下為營運數據變動的量化趨勢分析：</p>
-            <table class="report-table">
-                <thead>
-                    <tr>
-                        <th>營運指標項目</th>
-                        <th>預期變動幅度</th>
-                        <th>核心財務影響說明</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>企業團體 ESG 綠色低碳體驗參與度</td>
-                        <td style="color: #2E7D32; font-weight: bold;">+20%</td>
-                        <td>上市櫃公司因應金管會減碳要求，綠色員工旅遊採購量大增。</td>
-                    </tr>
-                    <tr>
-                        <td>散客與一日遊交通消費流量</td>
-                        <td style="color: #2E7D32; font-weight: bold;">+8%</td>
-                        <td>南港至宜蘭24分鐘便利性，有效拉動非假日之中高齡散客自由行。</td>
-                    </tr>
-                    <tr>
-                        <td>傳統純住宿過夜型客源流失率</td>
-                        <td style="color: #C62828; font-weight: bold;">-15%</td>
-                        <td>北宜一日生活圈導致普通客源過夜留宿意願大幅滑落。</td>
-                    </tr>
-                </tbody>
-            </table>
-        </article>
-
-        <article class="chapter-block">
-            <div class="chapter-num">Chapter 04</div>
-            <h2 class="chapter-title">監察院政策爭議論述：環境保育與選址角力</h2>
-            <p class="report-text">高鐵延伸宜蘭計畫在推進過程中，曾引發監察院等監察機關之高度關切，其政策核心爭議主要圍繞在「站址變更決策」與「蘭陽平原土地永續性」。站址從最初的四城方案、宜蘭方案、縣政中心方案，一路演變到最終定案的「宜蘭高鐵特定區方案」，決策的頻繁更迭對地方產業動線、農地劃分及公共投資配置造成巨大震盪。</p>
-            <p class="report-text">監察院報告精神強烈提醒，伴隨高鐵特區炒作而引發的周圍農地地價狂飆，對在地小農與農村地方創生造成嚴重的排擠效應。此外，宜蘭端發達的地下水系、湧泉層與脆弱地質結構，在承受時速高達 300 公里的高速鐵路高架巨型工程時，對於地下水源涵養與水質是否會造成不可逆的長期衝擊，至今仍是在地產業與環境學者強烈要求公開透明監測的核心爭議。</p>
-        </article>
-
-        <article class="chapter-block">
-            <div class="chapter-num">Chapter 05</div>
-            <h2 class="chapter-title">SWOT 競爭優勢全面剖析與交叉策略矩陣</h2>
-            <p class="report-text">面對軌道經濟帶來的重新洗牌，頭城農場必須運用 SWOT 模型進行極致細部拆解，藉此擬定精準的防禦與反擊策略，拒絕虛構與表面化應對。以下為核心交叉矩陣結構：</p>
-            <p class="report-text"><strong>1. S 優勢 (Strengths)：</strong>47 年深厚的老字號品牌誠信與市場口碑；全台灣極少數榮獲 GSTC 國際永續觀光認證之農場；120 公頃完全合法的巨型獨立自然生態場域；以及具備成熟環境教育課程開發能力的專業師資團隊。</p>
-            <p class="report-text"><strong>2. W 劣勢 (Weaknesses)：</strong>地理位置地處宜蘭溪北頭城段，偏離未來的高鐵特區核心站點，大眾運輸二級轉乘效能較弱；目前營收結構中，跨國國際觀光客比例偏低；偏遠農村環境面臨在地基層勞動力招募困難與少子化拉扯。</p>
-            <p class="report-text"><strong>3. O 機會 (Opportunities)：</strong>全球與國內上市櫃公司因應企業永續報告書（ESG）指標，對綠色低碳員工旅遊與碳中和研學具備剛性採購需求；高鐵綠色軌道帶動的低碳旅遊新型態風潮。</p>
-            <p class="report-text"><strong>4. T 威脅 (Threats)：</strong>一日生活圈成型導致觀光快閃化，傳統過夜留宿率面臨整體衰退；公共資源與散客流量向高鐵特區與溪南高度集中，造成溪北觀光資源面臨邊緣化诅咒。</p>
-            <p class="report-text"><strong>SO 增長戰略：</strong>全面將「高鐵低碳軌道經濟」與「農場 GSTC 國際認證」綁定。全面開發從台北南港站出發、全程搭乘高鐵加上在地綠色電動接駁車的「減碳綠色企業旅遊」利基產品，將碳足跡數據化提供給上市櫃企業作為 ESG 抵換報告，化威脅為綠色營收最大推力。</p>
-        </article>
-
-        <article class="chapter-block">
-            <div class="chapter-num">Chapter 06</div>
-            <h2 class="chapter-title">永續觀光與 ESG 發展深度轉型路徑</h2>
-            <p class="report-text">永續觀光不再是口號，而是未來企業採購的剛性存活指標。頭城農場憑藉 120 公頃完整生態林相，具備發展天然碳匯與環境教育的絕佳天然防線。在轉型路徑上，農場應啟動自主場域「碳足跡盤查」，精算每位旅客進駐後的排碳量，並透過有機耕作、循環農業（如廚餘化為有機肥、友善農法稻田）達成實質減碳。</p>
-            <p class="report-text">對接國際 ESG 市場，農場必須將環境教育升級為「企業綠色公民認證課程」。讓前來體驗的上市櫃高階主管與員工，實質參與林相修枝、生物多樣性棲地維護，並核發具備碳足跡追溯紀錄的綠色體驗證書。這將使頭城農場在傳統娛樂型休閒農場中脫穎而出，建立無法複製的 ESG 綠色競爭護城河。</p>
-        </article>
-
-        <article class="chapter-block">
-            <div class="chapter-num">Chapter 07</div>
-            <h2 class="chapter-title">數位 accessibility 與 Senior-Friendly 凰金旅遊設計方案</h2>
-            <p class="report-text">高鐵通車帶來的一大主流客群為退休後的銀髮長者（凰金旅遊市場）。長輩對於數位工具的依賴度高但適應力較慢，為此，農場的數位化升級必須徹底遵循「Accessibility（數位平權與可接近性）」原則。首要行動為全面簡化 LINE 官方帳號的互動介面，拒絕複雜、多層級的選單，改採大字體、高對比色、一鍵語音預約與直覺式圖示設計。</p>
-            <p class="report-text">在場域體驗設計上，針對行動力稍弱的長者，設計無障礙生態步道與友善長輩的發酵 DIY（如味噌、泡菜、友善蛋品）職人體驗。數位介面從預約、接駁通知、現場解說導覽到電子發票開立，全面實施「一條龍無障礙數位客服」，讓新手小白或中高齡長者皆能無痛操作，極致提升銀髮永續旅遊的黏著度。</p>
-        </article>
-
-        <article class="chapter-block">
-            <div class="chapter-num">Chapter 08</div>
-            <h2 class="chapter-title">國際觀光市場拓展與海外低碳引流策略</h2>
-            <p class="report-text">為解決高鐵通車後島內市場快閃化的問題，拓展留宿時間較長的國際觀光客是財務穩固的關鍵。頭城農場應利用 GSTC 國際永續認證之國際金字招牌，直接對接歐美、東南亞（如新加坡、馬來西亞）之國際綠色旅行社與永續組織。這類客群來台平均留宿天數高達 3 至 5 天，能有效填補非假日的住房率空白。</p>
-            <p class="report-text">引流策略應主打「台灣高鐵+深度生態研學」。國際旅客從桃園機場出發，可一路無縫搭乘高鐵轉乘至宜蘭，無須忍受崎嶇的公路交通。農場可配合推出跨國學校的「國際生態夏令營」與「亞太永續農業研討會」，將地理劣勢轉化為跨國隔離塵囂的低碳世外桃源，擴大國際營收佔比。</p>
-        </article>
-
-        <article class="chapter-block">
-            <div class="chapter-num">Chapter 09</div>
-            <h2 class="chapter-title">地方基層人力資源穩固與產學合作落地路徑</h2>
-            <p class="report-text">交通工具的極速化必然引發人口與人才的拉扯。當台北宜蘭通勤時間縮短至 24 分鐘，地方精緻休閒產業將面臨基層優秀勞動力往北部都會區流失的嚴峻考驗。頭城農場為穩固核心服務品質與環教人才，必須立即啟動「在地人才護城河計畫」。</p>
-            <p class="report-text">具體落地路徑包括：與宜蘭大學、國立專業觀光與環境教育學系建立長期「ESG 產學合作產學專班」，提供大三、大四學生高於產業平均之實習津貼，並保障畢業即就業。在留才福利上，農場應擴建現代化員工宿舍、提撥績效簽約獎金，並建立明確的「永續規畫師」職涯晉升通道，以高規格福利與品牌願景對抗都市磁吸效應。</p>
-        </article>
-
-        <article class="chapter-block">
-            <div class="chapter-num">Chapter 10</div>
-            <h2 class="chapter-title">綠色智慧接駁專線倡議方案與交通紅線規劃</h2>
-            <p class="report-text">為徹底打破高鐵延伸後「溪北觀光資源邊緣化」的政策诅咒，單靠農場自身力量是不夠的。頭城農場應聯合礁溪、頭城在地觀光聯盟，向交通部與宜蘭縣政府提出強烈政策倡議，爭取建立「高鐵特區直達溪北觀光紅線——智慧綠色接駁專線」。</p>
-            <p class="report-text">此藍圖規劃以純電動大客車或自駕接駁車（Autonomous Shuttle），建立「宜蘭高鐵特區－礁溪溫泉區－頭城老街－頭城農場」之定時、定量、數位聯網智慧接駁網絡。透過App整合高鐵票券與接駁車班次，讓散客下高鐵後不需自行開車，即可在 30 分鐘內直達溪北各核心場域，實質將高鐵帶來的龐大流量平穩引流至頭城段。</p>
-        </article>
-
-        <article class="chapter-block">
-            <div class="chapter-num">Chapter 11</div>
-            <h2 class="chapter-title">120公頃土地永續經營與環境資產信託規劃</h2>
-            <p class="report-text">隨著高鐵特定區的大規模土地開發，宜蘭週邊的地價與房價預期將引發劇烈炒作。面對外部財團的大舉入侵與開發誘惑，頭城農場 120 公頃的珍貴原始森林與生態水源地，必須在法律與公司架構上設立最嚴密的防禦機制，確保 47 年來的綠色志業不被破壞。</p>
-            <p class="report-text">農場可前瞻規劃「環境資產永續信託」或與國內權威環境信託基金合作，將核心生態敏感區劃定為永久保育土地。同時，將林業資產與綠色低碳企業進行「碳匯合作開發」，透過企業契作林場、生物多樣性棲地維護計畫，讓這片 120 公頃的土地在不進行高強度硬體開發的前提下，透過碳權信託與永續租賃產生長期穩健的綠色經濟收益，永續留存給下一代。</p>
-        </article>
-
-        <article class="chapter-block">
-            <div class="chapter-num">Chapter 12</div>
-            <h2 class="chapter-title">轉型行動落地時程表與階段性量化效益評估</h2>
-            <p class="report-text">本報告最終將所有戰略行動轉化為清晰的時間推進矩陣，區分為短期（1-2年）、中期（3-5年）、長期（5年以上直至2036通車）三個演進階段，並設定嚴謹的量化檢驗標準：</p>
-            <table class="report-table">
-                <thead>
-                    <tr>
-                        <th>轉型階段</th>
-                        <th>核心行動方案</th>
-                        <th>預期量化達標效益</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>短期階段 (1-2年)</strong></td>
-                        <td>完成農場全場域碳足跡自主盤查；上線簡化版 Senior-Friendly LINE 智慧無障礙客服介面。</td>
-                        <td>數位渠道銀髮族客服滿意度提升至 95%；完成第一階段企業 ESG 減碳行程示範。</td>
-                    </tr>
-                    <tr>
-                        <td><strong>中期階段 (3-5年)</strong></td>
-                        <td>推動與上市櫃公司之 ESG 綠色員工旅遊剛需契作；正式與大專院校落地實施產學留才宿舍方案。</td>
-                        <td>非假日企業團體營收佔比拉高 +20%；核心技術環教人才留任率達 90% 以上。</td>
-                    </tr>
-                    <tr>
-                        <td><strong>長期階段 (至2036年)</strong></td>
-                        <td>促成「高鐵特區-溪北智慧接駁專線」官方落地通車；完成 120公頃 生態場域之土地信託與企業碳匯合作。</td>
-                        <td>完全對抗一日生活圈快閃衝擊，過夜客房收益維持不衰退；國際客源營收佔比翻倍成長。</td>
-                    </tr>
-                </tbody>
-            </table>
-        </article>
-
-    </div>
-
-    <footer>
-        <div>頭城農場 × 高鐵延伸宜蘭分析報告</div>
-        <div class="footer-text-center">© 2026 頭城休閒農場股份有限公司. 版權所有 │ 智慧型永續產業轉型專用平台 │ 負責人：卓志宏</div>
-        <button class="lang-btn">繁/EN</button>
-    </footer>
-
+<div class="deck">
+<div class="slides" id="slides">
+<div class="slide cover">
+<div class="slide-content" style="max-width:800px">
+<h1 style="font-size:clamp(2.5rem,5vw,4.5rem);color:#fff;text-shadow:0 2px 20px rgba(0,0,0,.3)">頭城農場 · 藏酒酒莊</h1>
+<p style="color:#d4e8d4;font-size:clamp(1.1rem,2vw,1.6rem);margin:20px 0 10px">永續農業 · 生態旅遊 · 在地釀造</p>
+<p style="color:rgba(255,255,255,.7);font-size:.95rem;line-height:1.8">從雪山山脈到太平洋，從120公頃有機農場到國際金牌生態酒莊<br>用近半世紀的堅持，守護這片土地的純淨與美好</p>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin:32px 0 0;text-align:center">
+<div style="background:rgba(255,255,255,.08);border-radius:8px;padding:12px 8px"><div style="font-size:1.8rem;font-weight:900;color:#f0d080">1979</div><div style="font-size:.75rem;color:rgba(255,255,255,.6)">創立 · 逾47年</div></div>
+<div style="background:rgba(255,255,255,.08);border-radius:8px;padding:12px 8px"><div style="font-size:1.8rem;font-weight:900;color:#f0d080">120</div><div style="font-size:.75rem;color:rgba(255,255,255,.6)">公頃 · 生態農場</div></div>
+<div style="background:rgba(255,255,255,.08);border-radius:8px;padding:12px 8px"><div style="font-size:1.8rem;font-weight:900;color:#f0d080">20,000+</div><div style="font-size:.75rem;color:rgba(255,255,255,.6)">株原生樹種復育</div></div>
+<div style="background:rgba(255,255,255,.08);border-radius:8px;padding:12px 8px"><div style="font-size:1.2rem;font-weight:900;color:#f0d080">Grand Or</div><div style="font-size:.75rem;color:rgba(255,255,255,.6)">2026國際金牌</div></div>
 </div>
-
+</div>
+</div>
+<div class="slide">
+<div class="slide-content">
+<div class="slide-header"><h2>頭城農場概覽</h2><p style="color:#666;font-size:.85rem">Toucheng Leisure Farm — 台灣東北角的永續農業典範</p></div>
+<div class="two-col">
+<div>
+<div class="card"><h4>📍 地理位置</h4><p>宜蘭縣頭城鎮更新路125-1號。倚山面海，位於東北角海岸與雪山山脈交界，距台北約2小時車程。屬東北角海岸國家風景區範圍。</p></div>
+<div class="card"><h4>📞 聯絡方式</h4><p>電話：03-9772222（08:00-17:30）<br>Email：tcfarminfo@gmail.com<br>官網：www.tcfarm.com.tw<br>LINE：@tc039772000</p></div>
+</div>
+<div>
+<div class="card"><h4>🏛️ 經營團隊與理念</h4><p><strong>創辦人：</strong>卓陳明女士（教育家出身，人稱卓媽媽）<br><strong>董事長：</strong>卓志宏（宜蘭縣觀光協會理事長）<br><strong>理念：</strong>健康、快樂、體驗、學習、永續<br><strong>集團：</strong>同集團另有藏酒酒莊</p></div>
+<div class="card"><h4>🎯 核心價值</h4><p><strong>三生一體：</strong>農村生態 · 農業生產 · 農民生活<br><strong>五大主軸：</strong>環境教育 · 戶外學習 · 健康養身 · 樂活慢遊 · 生命教育</p></div>
+</div>
+</div>
+<div style="display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-top:10px;text-align:center;font-size:.75rem">
+<div style="background:#e8f0e8;border-radius:6px;padding:8px 4px"><div style="font-weight:900;color:#1a3c1a">1979</div>創立</div>
+<div style="background:#e8f0e8;border-radius:6px;padding:8px 4px"><div style="font-weight:900;color:#1a3c1a">120</div>公頃</div>
+<div style="background:#e8f0e8;border-radius:6px;padding:8px 4px"><div style="font-weight:900;color:#1a3c1a">3</div>條溪流</div>
+<div style="background:#e8f0e8;border-radius:6px;padding:8px 4px"><div style="font-weight:900;color:#1a3c1a">2</div>公頃菜園</div>
+<div style="background:#e8f0e8;border-radius:6px;padding:8px 4px"><div style="font-weight:900;color:#1a3c1a">50</div>公頃竹林</div>
+<div style="background:#e8f0e8;border-radius:6px;padding:8px 4px"><div style="font-weight:900;color:#1a3c1a">500+</div>棵金棗樹</div>
+</div>
+</div>
+<div class="slide-num">壹</div>
+</div>
+<div class="slide">
+<div class="slide-content">
+<div class="slide-header"><h2>創立歷史與轉型歷程</h2><p style="color:#666;font-size:.85rem">從傳統農田到永續標竿 — 半世紀演化</p></div>
+<div class="two-col">
+<div>
+<div class="card"><h4>1979-1990 · 生產型農場</h4><p>傳統農業生產為主，種植果樹、蔬菜。創辦人卓陳明女士原為教師，帶著孩子來到宜蘭落地生根，開創農場事業。</p></div>
+<div class="card"><h4>1990-2000 · 休閒農場轉型</h4><p>順應休閒農業浪潮，開放觀光提供農村體驗。成為北台灣校外教學熱門地點，赤腳插秧、餵牛吃草成為經典童年回憶。</p></div>
+<div class="card"><h4>2000-2015 · 深度體驗旅遊</h4><p>導入DIY手作、生態導覽、住宿餐飲。建立環境教育課程體系，從觀光升級到深度生態旅遊。</p></div>
+</div>
+<div>
+<div class="card"><h4>2015-2019 · 接軌國際永續標準</h4><p>2018年取得GSTC全球永續旅遊認證，為東北角國家風景區首個國際永續認證旅館。導入系統化永續管理架構。</p></div>
+<div class="card"><h4>2020-至今 · ESG與森川里海</h4><p>2021年取得環保標章旅館與綠色餐廳，2023年取得GTS綠色旅行標章。推動森川里海整合策略，從休閒農場進化為山海環境守護者。</p></div>
+</div>
+</div>
+</div>
+<div class="slide-num">貳</div>
+</div>
+<div class="slide">
+<div class="slide-content">
+<div class="slide-header"><h2>地理環境與自然資源</h2><p style="color:#666;font-size:.85rem">雪山山脈與太平洋交會的得天獨厚之地</p></div>
+<div class="grid">
+<div class="card"><h4>🏔️ 地形地貌</h4><p>位於雪山山脈山腳下，海拔50-300公尺。保留原始次生林，林相包含桂竹林（50公頃）、相思樹林、楓香林及果園。屬東北角海岸國家風景區。</p></div>
+<div class="card"><h4>💧 水資源系統</h4><p>三條溪流貫穿：平溪、桃子林溪、梗枋溪（國土生態綠網重點保育）。雪山山脈天然水源，溪畔滿布野薑花，夏季飄香為農場芳香秘境。</p></div>
+<div class="card"><h4>🌿 植物資源</h4><p>50公頃桂竹林（每年清明桂竹筍祭）、500多棵金桔金棗樹、2公頃有機菜園、水稻田、果園。蔬菜供應餐廳及鄰近小學營養午餐。</p></div>
+<div class="card"><h4>🦌 動物生態</h4><p>紅外線監測：山羌、山豬、獼猴、食蟹獴、穿山甲、台灣藍鵲。螢火蟲四種復育：擬紋螢、紅胸黑翅螢、黃緣螢、山窗螢。大白斑蝶、翡翠樹蛙等。</p></div>
+</div>
+<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:8px;text-align:center;font-size:.8rem">
+<div style="background:#e8f0e8;border-radius:6px;padding:10px"><strong>50</strong> 公頃桂竹林</div>
+<div style="background:#e8f0e8;border-radius:6px;padding:10px"><strong>500+</strong> 棵金桔金棗</div>
+<div style="background:#e8f0e8;border-radius:6px;padding:10px"><strong>2</strong> 公頃有機菜園</div>
+<div style="background:#e8f0e8;border-radius:6px;padding:10px"><strong>4</strong> 種螢火蟲復育</div>
+</div>
+</div>
+<div class="slide-num">參</div>
+</div>
+<div class="slide">
+<div class="slide-content">
+<div class="slide-header"><h2>認證體系與國際肯定</h2><p style="color:#666;font-size:.85rem">台灣少數同時取得多項國際與國內永續認證的休閒農場</p></div>
+<div class="grid">
+<div class="card"><h4>🌍 GSTC 全球永續旅遊認證</h4><p>由UN Foundation、UNWTO、Rainforest Alliance於2008年共同發起。2018年通過Control Union稽核，2019年獲頒。東北角首個國際永續旅館認證。證書編號：C863511 GSTC-07-2019</p></div>
+<div class="card"><h4>✅ GTS 綠色旅行標章</h4><p>荷蘭創立，專為中小型旅宿設計。2023年取得。2026年將遵循歐盟強化消費者綠色轉型指令進行轉換升級。</p></div>
+<div class="card"><h4>♻️ 環保標章（環境部）</h4><p>2021年取得環保標章旅館與綠色餐廳。落實廢棄物回收、熱泵鍋爐節能、太陽能熱水系統、汙水處理監測。</p></div>
+<div class="card"><h4>📚 環境教育設施場所</h4><p>核准字號：(102)環署訓證字第EC103001-02號。核准日期：2023/3/18，有效期限：2028/3/17。課程對象：幼稚園至大學/成人。</p></div>
+<div class="card"><h4>🏆 AEN生態旅遊創新大獎</h4><p>亞洲生態旅遊網絡頒發，以綠色廚房與永續餐桌設計獲獎。另獲第一屆大東北角永續實踐故事綠色業者第一名（2025年）。</p></div>
+</div>
+</div>
+<div class="slide-num">肆</div>
+</div>
+<div class="slide">
+<div class="slide-content">
+<div class="slide-header"><h2>永續發展與ESG實踐</h2><p style="color:#666;font-size:.85rem">環境 Environmental × 社會 Social × 治理 Governance</p></div>
+<div class="two-col">
+<div>
+<div class="card"><h4>🌲 環境面 E</h4><p><strong>森林復育：</strong>與林業署合作，5年種植20,000+株原生樹種。日月光投控支持造林。<br><strong>螢火蟲復育：</strong>廢棄菇包→復育介質→螢火蟲棲地→生態旅遊循環。<br><strong>瀕危物種：</strong>2026年4月啟動葦草蘭（鳥仔花）復育。<br><strong>海廢治理：</strong>Eco Box循環箱取代保麗龍，海廢再生板材。<br><strong>廚餘循環：</strong>蚯蚓箱系統→有機微生物土壤→回歸菜園。</p></div>
+</div>
+<div>
+<div class="card"><h4>👥 社會面 S</h4><p><strong>環境教育：</strong>通過認證設施場所，全年提供食農教育、自然生態、文化資產課程。<br><strong>特色生態餐桌：</strong>鳥類、蜜蜂、山豬三種餐桌，用食物說生態故事，獲AEN創新大獎。<br><strong>社區參與：</strong>梗枋學童植樹、桂竹筍祭市集、蔬菜供應小學營養午餐。</p></div>
+<div class="card"><h4>🏛️ 治理面 G</h4><p><strong>企業ESG合作：</strong>日月光投控造林與瀕危物種保育。<br><strong>SDGs對應：</strong>SDG4優質教育、SDG12責任消費、SDG13氣候行動、SDG15陸域生態。<br><strong>國際交流：</strong>50團以上國內外參訪、5場駐台使節交流、GSTC亞太會議。</p></div>
+</div>
+</div>
+</div>
+<div class="slide-num">伍</div>
+</div>
+<div class="slide">
+<div class="slide-content">
+<div class="slide-header"><h2>森川里海核心策略</h2><p style="color:#666;font-size:.85rem">從農場出發，連結山海，串聯企業與社區</p></div>
+<div class="grid">
+<div class="card" style="text-align:center"><h4>🌲 森林 森</h4><p>山林復育與棲地連結。原生樹種種植、除伐撫育、碳匯行動。紅外線監測山羌、穿山甲、食蟹獴。目標成為國土生態綠網行動節點。</p></div>
+<div class="card" style="text-align:center"><h4>🏞️ 溪流 川</h4><p>水域生態守護。梗枋溪列國土生態綠網重點保育。定期水質檢測、生物監測。溪畔環境教育：溪流靜心疊石、花草曼陀羅。</p></div>
+<div class="card" style="text-align:center"><h4>🌊 海洋 海</h4><p>海廢治理與漁業支持。Eco Box循環箱、海廢再生板材。深度旅遊：漁獲拍賣、Eco Box體驗。支持定置漁網、一支釣等永續漁法。</p></div>
+<div class="card" style="text-align:center"><h4>🌾 里山 里</h4><p>社區共好與在地產業。梗枋社區學童參與、桂竹筍祭市集。綠色廚房連結友善生產者與消費者，帶動地方經濟。</p></div>
+</div>
+<div class="box">「頭城農場不再單純只是一處旅遊景點，而是逐步把經營重心從場域內部延伸到更大的山海環境中，以森川里海為核心，推動森林復育、漁港行動、餐桌轉譯與環境教育。」</div>
+</div>
+<div class="slide-num">陸</div>
+</div>
+<div class="slide">
+<div class="slide-content">
+<div class="slide-header"><h2>藏酒酒莊深度介紹</h2><p style="color:#666;font-size:.85rem">Cang Jiu Winery — 台灣第一家六級化產業生態酒莊</p></div>
+<div class="two-col">
+<div>
+<div class="card"><h4>🏠 基本資訊</h4><p>地址：宜蘭縣頭城鎮更新路126-50號<br>電話：03-9778555<br>Email：service@cjwine.com<br>官網：www.cjwine.com<br>LINE：@amb5687a</p></div>
+<div class="card"><h4>🌱 定位與理念</h4><p>台灣第一家結合「農業生產+釀酒加工+體驗休閒+健康療癒」的生態酒莊。核心精神：品佳釀、品美食、品自然、品生活。</p></div>
+<div class="card"><h4>🏗️ 綠建築設計</h4><p>導入完整水系統引進山區水源。運用漂流木與浮標打造南洋庭園風格。深藏梗枋山上，臨濱海坐臥山谷當中。</p></div>
+</div>
+<div>
+<div class="card"><h4>🍷 四季佳釀</h4><div style="display:grid;grid-template-columns:1fr 1fr;gap:6px"><div><strong>🌸 春梅</strong> — 青梅酒</div><div><strong>☀️ 夏葡</strong> — 葡萄酒</div><div><strong>🌾 秋米</strong> — 米酒</div><div><strong>❄️ 冬棗</strong> — 金棗酒</div></div></div>
+<div class="card"><h4>🏆 龜山朝日-金棗酒</h4><p>嚴選莊園老欉金棗，百分之百純釀工法。口感金棗果香微酸，入喉回韻帶蜂蜜香氣。瓶身龜山島景觀圖騰設計。水源來自雪山泉水。</p></div>
+</div>
+</div>
+<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px;text-align:center;font-size:.75rem">
+<div style="background:#e8f0e8;border-radius:6px;padding:8px 4px"><strong>台灣第一家</strong><br>六級化生態酒莊</div>
+<div style="background:#f5e8c8;border-radius:6px;padding:8px 4px"><strong>Grand Or</strong><br>2026國際金牌</div>
+<div style="background:#e8f0e8;border-radius:6px;padding:8px 4px"><strong>雪山泉水</strong><br>純淨釀造水源</div>
+<div style="background:#e8f0e8;border-radius:6px;padding:8px 4px"><strong>四季</strong><br>春梅夏葡秋米冬棗</div>
+</div>
+</div>
+<div class="slide-num">柒</div>
+</div>
+<div class="slide">
+<div class="slide-content">
+<div class="slide-header"><h2>得獎紀錄與國際殊榮</h2><p style="color:#666;font-size:.85rem">台灣金柑釀造工藝站上世界舞台</p></div>
+<div class="box" style="background:#f5e8c8;border-left-color:#b8860b"><h4 style="margin:0 0 6px">🥇 2026年 Vinalies Internationales Grand Or 大金牌獎</h4>
+<div class="two-col" style="font-size:.85rem">
+<div><strong>得獎酒款：</strong>藏金柑（金柑白蘭地）<br><strong>主辦：</strong>法國釀酒師協會<br><strong>獎項：</strong>Grand Or 最高等級</div>
+<div><strong>競賽規模：</strong>全球40多國參賽<br><strong>官方祝賀：</strong>代理縣長林茂盛親赴貼紅榜<br><strong>窖藏年份：</strong>5至6年</div>
+</div>
+</div>
+<div class="grid">
+<div class="card"><h4>2024年 Vinalies 銀牌獎</h4><p>得獎酒款：龜山朝日-金棗酒。該屆台灣農村酒莊共獲2特級金牌、5金牌、3銀牌，展現台灣農村酒莊國際一流水準。</p></div>
+<div class="card"><h4>藏金柑白蘭地產品特色</h4><p>嚴選宜蘭在地金柑，細膩發酵與蒸餾工藝。酒體呈現優雅柑橘果香，細緻油脂氣息，層次分明、尾韻悠長。</p></div>
+<div class="card"><h4>金柑產業背景</h4><p>宜蘭金柑種植面積194公頃，年產量約2,000公噸。藏金柑白蘭地獲Grand Or後，國際訂單湧入，金柑從加工食品躍升國際精品酒款。</p></div>
+</div>
+</div>
+<div class="slide-num">捌</div>
+</div>
+<div class="slide">
+<div class="slide-content">
+<div class="slide-header"><h2>體驗活動與套裝行程</h2><p style="color:#666;font-size:.85rem">從半日遊到二日遊，從賞螢到品酒</p></div>
+<div class="grid">
+<div class="card"><h4>🌙 夏日賞螢季</h4><p>每年4/15-5/15限定。內容：自由遊園、傳統小吃、自助晚餐、賞螢講座。四種螢火蟲：擬紋螢、紅胸黑翅螢、黃緣螢、山窗螢。</p></div>
+<div class="card"><h4>🎨 DIY手作體驗</h4><p>葉拓T恤（植物拓印）、農產品DIY（金桔醋、金棗蜜餞）、草本手作。可將農場自然元素化為專屬紀念品。</p></div>
+<div class="card"><h4>📖 環境教育課程</h4><p>通過認證正式課程：水稻文化體驗（插秧、收割、碾米）、種菜樂趣多、生態探索。全年提供，對象涵蓋幼稚園至成人。</p></div>
+<div class="card"><h4>🏡 住宿體驗</h4><p>頭城休閒旅館35間客房。一泊三食五體驗：住宿、早餐、晚餐、DIY、導覽。近期改善硬體設施更趨友善長者及幼童。</p></div>
+<div class="card"><h4>🧗 高空繩索訓練</h4><p>多處多功能空間及高空繩索訓練場域，適合企業Team Building、團隊凝聚訓練、主管共識營。</p></div>
+<div class="card"><h4>🍷 藏酒酒莊體驗</h4><p>酒窖深度巡禮、微醺品酒搭配無菜單料理、DIY梅燦星空酒手作、森林微醺盛宴。夏季限定藏夏避暑提案。</p></div>
+</div>
+</div>
+<div class="slide-num">玖</div>
+</div>
+<div class="slide">
+<div class="slide-content">
+<div class="slide-header"><h2>在地餐桌與餐飲特色</h2><p style="color:#666;font-size:.85rem">用食物說土地的故事 — 從產地到餐桌的永續飲食革命</p></div>
+<div class="box"><h4 style="margin:0 0 4px">🌿 綠色廚房</h4><p>農場自有品牌餐廳，連結在地友善生產者與消費者。使用農場有機菜園和宜蘭當地肉類海鮮。獲綠色餐飲指南大獎、大東北角永續實踐第一名。</p></div>
+<div class="grid">
+<div class="card" style="text-align:center"><h4>🌳 鳥類的餐桌</h4><p>蜜漬金柑象徵果實、花蜜，代表樹冠層生態。鳥類把大樹當成遊樂場，以果實為食物。</p></div>
+<div class="card" style="text-align:center"><h4>🌸 蜜蜂的餐桌</h4><p>運用海廢做成花朵容器，芳香萬壽菊涼糕沾蜂蜜模仿授粉，代表灌木層生態。</p></div>
+<div class="card" style="text-align:center"><h4>🐗 山豬的餐桌</h4><p>黑糖粉象徵土壤，炸地瓜球模仿山豬掘地覓食，代表地面層生態。</p></div>
+</div>
+<div class="box"><h4 style="margin:0 0 6px">🍽️ 森川里海主題餐桌 — 生態廚師謝燦祥策劃</h4><div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:.82rem"><div><strong>前菜：</strong>林下多層次綠沙拉</div><div><strong>湯品：</strong>古道裡生物多樣性</div><div><strong>主菜：</strong>海洋永續鬼頭刀</div><div><strong>主食：</strong>櫻花蝦米苔目</div><div><strong>甜點：</strong>蜜漬金棗金柑豆沙</div></div></div>
+</div>
+<div class="slide-num">拾</div>
+</div>
+<div class="slide">
+<div class="slide-content">
+<div class="slide-header"><h2>案例分享：企業ESG合作</h2><p style="color:#666;font-size:.85rem">從森林復育到瀕危物種保育</p></div>
+<div class="grid">
+<div class="card" style="text-align:center"><h4>🌲 森林復育</h4><p>2025年起半導體企業支持農場造林計畫。除伐撫育、種植台灣原生樹種，增加碳匯、提升生物多樣性。目標成為國土生態綠網行動節點。</p></div>
+<div class="card" style="text-align:center"><h4>🌱 瀕危物種復育</h4><p>2026年4月啟動葦草蘭棲地復育，恢復東北角原生基因。企業基金會團隊親自參與栽種。作為關鍵蜜源植物，重建淺山生態系。</p></div>
+<div class="card" style="text-align:center"><h4>👨‍👩‍👧‍👦 環境教育扎根</h4><p>在地國小師生走入林場，親手植樹認識瀕危物種。讓學童體悟「森林和大海是連在一起的」，從教育扎根培養下一代環境公民。</p></div>
+</div>
+<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:10px;text-align:center;font-size:.8rem">
+<div style="background:#e8f0e8;border-radius:8px;padding:12px 8px"><strong>碳抵換</strong><br>與生物多樣性貢獻</div>
+<div style="background:#e8f0e8;border-radius:8px;padding:12px 8px"><strong>CSR實踐</strong><br>企業社會責任落實</div>
+<div style="background:#e8f0e8;border-radius:8px;padding:12px 8px"><strong>員工參與</strong><br>志工活動提升認同</div>
+<div style="background:#e8f0e8;border-radius:8px;padding:12px 8px"><strong>量化數據</strong><br>供ESG報告使用</div>
+</div>
+</div>
+<div class="slide-num">拾壹</div>
+</div>
+<div class="slide">
+<div class="slide-content">
+<div class="slide-header"><h2>案例分享：大溪漁港海廢治理</h2><p style="color:#666;font-size:.85rem">Eco Box 循環箱 — 從漁港出發的海洋革命</p></div>
+<div class="two-col">
+<div>
+<div class="card"><h4>👨‍✈️ 發起人：船長黃士洋</h4><p>6年多前開始將撈到的海洋廢棄物帶回岸上。發現海中廢棄物一大部分為漁獲保冰用的保麗龍，決心從源頭解決問題。</p><h4>Eco Box 解決方案</h4><ul style="font-size:.85rem"><li>可重複使用的循環箱取代一次性保麗龍</li><li>海廢經熱壓處理變成再生板材</li><li>已成功設立海廢再生園區</li></ul></div>
+</div>
+<div>
+<div class="card"><h4>🌿 頭城農場的角色</h4><p>農場將大溪漁港納入走讀深度旅遊行程，帶客人體驗漁獲拍賣、實際使用Eco Box。由船長親自介紹撈捕海鮮與海洋廢棄物，親眼見證秤重、紀錄、回收。</p><h4>成果與意義</h4><ul style="font-size:.85rem"><li>公私協力讓永續資源進入漁港最前線</li><li>建立山、川、里、海之間的流動關係</li><li>讓永續不再只是口號，而是人人能實踐的日常行動</li></ul></div>
+</div>
+</div>
+<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px;text-align:center;font-size:.75rem">
+<div style="background:#e8f0e8;border-radius:6px;padding:8px"><strong>6+</strong> 年海廢帶回行動</div>
+<div style="background:#e8f0e8;border-radius:6px;padding:8px"><strong>Eco Box</strong> 循環箱</div>
+<div style="background:#e8f0e8;border-radius:6px;padding:8px"><strong>♻️</strong> 海廢再生板材</div>
+<div style="background:#e8f0e8;border-radius:6px;padding:8px"><strong>🏭</strong> 海廢再生園區</div>
+</div>
+</div>
+<div class="slide-num">拾貳</div>
+</div>
+<div class="slide">
+<div class="slide-content">
+<div class="slide-header"><h2>合作方案與企業對接</h2><p style="color:#666;font-size:.85rem">五種合作模式，滿足多元需求</p></div>
+<div class="grid">
+<div class="card" style="border-top:3px solid #1a3c1a"><h4>📦 方案A：ESG永續旅遊</h4><p>生態遊程、循環體驗、碳匯見學、餐桌轉譯。對應SDG 4、12、13、15。適合企業ESG報告與CSR需求。</p></div>
+<div class="card" style="border-top:3px solid #3d7a3d"><h4>👨‍👩‍👧‍👦 方案B：綠色員工旅遊</h4><p>一至二日行程，農場導覽、DIY體驗、生態旅遊。可客製化調整。適合企業員工福利、家庭親子活動。</p></div>
+<div class="card" style="border-top:3px solid #b8860b"><h4>🤝 方案C：Team Building</h4><p>高空繩索訓練場域，團隊合作挑戰。環境教育課程融入團隊建立。適合主管共識營。</p></div>
+<div class="card" style="border-top:3px solid #4a7c4a"><h4>📖 方案D：環境教育訓練</h4><p>食農教育、森林療育、環境教育正式課程。通過認證之環境教育設施場所。適合人資教育訓練。</p></div>
+<div class="card" style="border-top:3px solid #8f6b1a"><h4>♻️ 方案E：循環經濟夥伴</h4><p>員工志工、在地認養、廢棄物減量。長期合作框架。適合重視永續供應鏈的企業。</p></div>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:10px">
+<div style="background:#1a3c1a;color:#fff;padding:4px 12px;border-radius:20px;font-size:.75rem">Step 1 初步聯繫</div>
+<div style="background:#2d5a2d;color:#fff;padding:4px 12px;border-radius:20px;font-size:.75rem">Step 2 需求確認</div>
+<div style="background:#3d7a3d;color:#fff;padding:4px 12px;border-radius:20px;font-size:.75rem">Step 3 現地勘查</div>
+<div style="background:#b8860b;color:#fff;padding:4px 12px;border-radius:20px;font-size:.75rem">Step 4 客製提案</div>
+<div style="background:#8f6b1a;color:#fff;padding:4px 12px;border-radius:20px;font-size:.75rem">Step 5 簽約確認</div>
+<div style="background:#1a3c1a;color:#fff;padding:4px 12px;border-radius:20px;font-size:.75rem">Step 6 活動執行</div>
+<div style="background:#6a9e6a;color:#1a3c1a;padding:4px 12px;border-radius:20px;font-size:.75rem;font-weight:700">Step 7 成效報告</div>
+</div>
+</div>
+<div class="slide-num">拾參</div>
+</div>
+<div class="slide">
+<div class="slide-content">
+<div class="slide-header"><h2>未來展望</h2><p style="color:#666;font-size:.85rem">從台灣東北角出發，邁向國際永續標竿</p></div>
+<div class="grid">
+<div class="card" style="text-align:center;border-top:4px solid #1a3c1a"><h4>🎯 短期目標 2026-2027</h4><ul style="text-align:left;font-size:.85rem"><li>深化森川里海四大面向整合</li><li>擴大企業ESG合作夥伴網絡</li><li>優化硬體設施全年齡友善</li><li>酒莊拓展國際市場通路</li></ul></div>
+<div class="card" style="text-align:center;border-top:4px solid #3d7a3d"><h4>🚀 中期目標 2027-2029</h4><ul style="text-align:left;font-size:.85rem"><li>建立休閒農業ESG標竿模式</li><li>碳抵換與生物多樣性信用機制</li><li>森川里海永續生活圈示範基地</li><li>國際永續旅遊經驗輸出</li></ul></div>
+<div class="card" style="text-align:center;border-top:4px solid #b8860b"><h4>🌟 長期願景</h4><ul style="text-align:left;font-size:.85rem"><li>成為國土生態綠網關鍵節點</li><li>推動亞洲生態旅遊網絡經驗交流</li><li>建構企業、社區、環境三方共好</li><li>讓台灣休閒農業成為全球永續典範</li></ul></div>
+</div>
+<div class="box">「從農場出發，串連山海，連結企業與社區，讓永續看得見、也吃得到。」</div>
+</div>
+<div class="slide-num">拾肆</div>
+</div>
+<div class="slide end">
+<div class="slide-content" style="max-width:700px">
+<h1 style="color:#fff">感謝您的關注</h1>
+<p style="color:#d4e8d4;font-size:1.1rem;margin:20px 0">歡迎蒞臨頭城農場與藏酒酒莊<br>體驗永續旅遊與在地釀造的美好</p>
+<div class="two-col" style="margin:32px 0;text-align:left;font-size:.85rem">
+<div style="color:rgba(255,255,255,.8)">
+<h4 style="color:#f0d080;margin:0 0 8px">🌿 頭城休閒農場</h4>
+<p style="color:rgba(255,255,255,.7)">宜蘭縣頭城鎮更新路125-1號<br>03-9772222<br>www.tcfarm.com.tw<br>LINE：@tc039772000</p>
+</div>
+<div style="color:rgba(255,255,255,.8)">
+<h4 style="color:#f0d080;margin:0 0 8px">🍷 藏酒酒莊</h4>
+<p style="color:rgba(255,255,255,.7)">宜蘭縣頭城鎮更新路126-50號<br>03-9778555<br>www.cjwine.com<br>LINE：@amb5687a</p>
+</div>
+</div>
+<p style="color:rgba(255,255,255,.35);font-size:.7rem;margin-top:20px">© 2026 頭城休閒農場 &amp; 藏酒酒莊</p>
+<p style="color:rgba(255,255,255,.35);font-size:.7rem">🚫 禁止酒駕 · 未滿18歲禁止飲酒</p>
+</div>
+</div>
+</div>
+<div class="nav">
+<button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">‹</button>
+<span class="counter" id="counter">1 / 16</span>
+<div class="progress"><div class="progress-bar" id="progressBar" style="width:0%"></div></div>
+<span class="page-info" id="pageInfo"></span>
+<button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">›</button>
+</div>
+</div>
+<script>
+const slideNames=['封面','農場概覽','歷史轉型','自然環境','認證體系','ESG實踐','森川里海','酒莊介紹','得獎紀錄','體驗活動','在地餐桌','ESG案例','海廢案例','合作方案','未來展望','結尾'];
+let cur=0,total=0;
+function init(){const s=document.getElementById('slides');total=s.children.length;update();document.addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key==='ArrowDown'){e.preventDefault();changeSlide(1)}else if(e.key==='ArrowLeft'||e.key==='ArrowUp'){e.preventDefault();changeSlide(-1)}});let t=0;document.addEventListener('touchstart',function(e){t=e.changedTouches[0].screenX});document.addEventListener('touchend',function(e){const d=t-e.changedTouches[0].screenX;if(Math.abs(d)>50)changeSlide(d>0?1:-1)})}
+function changeSlide(d){const s=document.getElementById('slides');total=s.children.length;const n=cur+d;if(n<0||n>=total)return;cur=n;s.style.transform='translateX(-'+(cur*100)+'%)';update()}
+function update(){document.getElementById('counter').textContent=(cur+1)+' / '+total;document.getElementById('progressBar').style.width=((cur+1)/total*100)+'%';document.getElementById('pageInfo').textContent=slideNames[cur]||'';document.getElementById('prevBtn').disabled=cur===0;document.getElementById('nextBtn').disabled=cur===total-1}
+init()
+</script>
 </body>
 </html>
