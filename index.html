@@ -212,6 +212,7 @@ tr:hover{background:#f9f6f0}
 
 <script>
 var slides=document.querySelectorAll('.slide'),cur=0;
+slides[0].classList.add('active');
 document.addEventListener('keydown',function(e){
 if(e.key==='ArrowRight'||e.key==='ArrowDown'||e.key===' '){e.preventDefault();if(cur<slides.length-1){slides[cur].classList.remove('active');slides[++cur].classList.add('active')}}
 if(e.key==='ArrowLeft'||e.key==='ArrowUp'){e.preventDefault();if(cur>0){slides[cur].classList.remove('active');slides[--cur].classList.add('active')}}
